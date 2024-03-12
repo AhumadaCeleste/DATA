@@ -1,0 +1,4 @@
+node_modules/
+DATA-WAVE-FRONT/tsconfig.json
+DATA-WAVE-FRONT/tsconfig.node.json
+DATA-WAVE-FRONT/vite.config.ts
