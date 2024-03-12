@@ -3,7 +3,7 @@ const { DataTypes } = require ('sequelize');
 module.exports = (sequelize) =>{
     
                                          // nombre de tabla en BD
-    const venta = sequelize.define("venta", 
+    const ciclos = sequelize.define("ciclos", 
     {
         // id automatico, no se completa
         numero: {
@@ -15,5 +15,5 @@ module.exports = (sequelize) =>{
             allowNull: true,
         }
     })
-    return venta;
+    return ciclos;
 }

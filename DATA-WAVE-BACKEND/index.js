@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const port = require('./CONFIG/env').PORT || 3001;
@@ -16,15 +15,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));                                                                         // Usa la configuración de CORS
 
-// Cargar DB y modelos ACTIVAR AL CREAR 
-//const db = require('./MODELS');
+
+const db = require('./MODELS');
 
 // Carga de rutas ACTIVAR AL CREAR
 // require('./ROUTERS/index.routers')(app)
 
 // conectar con nuestra BD ACTIVAR LUEGO
-/*db.sequelize
-  .sync({alter: true }) //   .sync({ alter: true })
+db.sequelize
+  .sync() //   .sync({ alter: true })
   .then((result) => {
     console.log('conexion exitosa');
   });
@@ -32,4 +31,3 @@ app.use(cors(corsOptions));                                                     
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-*/

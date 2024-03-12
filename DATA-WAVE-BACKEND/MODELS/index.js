@@ -1,3 +1,6 @@
+//cambiar a ciclos
+
+
 const Sequelize = require ('sequelize');
 //con mayus requiere toda la dependencia 
 
@@ -11,7 +14,7 @@ const sequelize = new Sequelize(
     dbConfig.USER,
     dbConfig.PASSWORD,
     {
-        Host: dbConfig.HOST,        //configura la base de datos con los datos en la ruta d.config
+        Host: dbConfig.HOST,  //configura la base de datos con los datos en la ruta d.config
         dialect: dbConfig.dialect,
         port: dbConfig.port,
     }
@@ -24,12 +27,12 @@ db.sequelize = sequelize;
 
 
 //carga de modelos
-db.institutos=require('./instituto.models')(sequelize);
-//db.usuarios=require('./usuarios.models')(sequelize);
-//db.permisos=require('./permisos.models')(sequelize);
-//db.tecnicaturas=require('./tecnicaturas.models')(sequelize);
-//db.ciclos=require('./ciclos.models')(sequelize);
-//db.matriculas=require('./matriculas.models')(sequelize);
+db.institutos=require('./institutos.models')(sequelize);
+db.usuarios=require('./usuarios.models')(sequelize);
+db.permisos=require('./permisos.models')(sequelize);
+db.tecnicaturas=require('./tecnicaturas.models')(sequelize);
+db.ciclos=require('./ciclos.models')(sequelize);
+db.matriculas=require('./matriculas.models')(sequelize);
 
 
 //RELACIONES
@@ -38,12 +41,10 @@ db.institutos=require('./instituto.models')(sequelize);
 db.institutos.hasMany(db.tecnicaturas);
 db.tecnicaturas.hasMany(db.institutos);
 
-//db.institutos.hasMany(db.tecnicaturas,{foreignKey: 'paiId'});
-//db.tecnicaturas.belongsTo(db.institutos,{foreignKey: 'paiId'});
 
 
 // USUARIOS - PERMISOS
-db.ususario.belongsTo(db.permisos);
+db.usuarios.belongsTo(db.permisos);
 db.permisos.hasMany(db.usuarios);
 
 //USUARIOS - INSTITUTOS
