@@ -1,34 +1,26 @@
-const { DataTypes } = require ('sequelize');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     const instituto = sequelize.define('instituto', {
-        id: {
-            type: DataTypes.INTEGER,
+        cue: {
+            type: DataTypes.STRING(15),
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
-        },
-        cue: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
         },
         ee: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(15),
             allowNull: false,
         },
-        tipo: {
-            type: DataTypes.STRING,
+        denominacion: {
+            type: DataTypes.STRING(50),
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        }
-    });
+    },
+    {
+        timestamps: false, 
+        freezeTableName: true, 
+    }
+);
 
     return instituto;
 };

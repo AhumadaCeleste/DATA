@@ -7,6 +7,10 @@ module.exports = (sequelize) =>{
     {
         // id automatico, no se completa
       
+    },
+    {
+        timestamps: false, // Si no necesitas timestamps
+        freezeTableName: true, // Para evitar la pluralización automática del nombre de la tabla
     })
     return permisoxrol;
 }

@@ -1,9 +1,10 @@
 const { DataTypes } = require ('sequelize');
 
 module.exports = (sequelize) => {
-    const departamento = sequelize.define('departamento', {
-        nombre: {
-            type: DataTypes.STRING(30),
+    const egresado = sequelize.define('egresado', {
+  
+        cantidad: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     },
@@ -12,5 +13,5 @@ module.exports = (sequelize) => {
         freezeTableName: true, 
     });
 
-    return departamento;
+    return egresado;
 };

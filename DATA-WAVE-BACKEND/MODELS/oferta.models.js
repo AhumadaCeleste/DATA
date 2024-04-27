@@ -1,26 +1,23 @@
 const { DataTypes } = require ('sequelize');
 
 module.exports = (sequelize) =>{
-    const oferta = sequelize.define('ofertas',
+    const oferta = sequelize.define('oferta',
     {
         // id automatico, no se completa, total, cantidad, fecha, precio total, descuentos, carritoxProducto, etc
-        id: {
+        resolucion:{
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
         },
+        
         nombre:{
             type: DataTypes.STRING(40),
             allowNull: false,
         },
-        resolucion:{
-            type: DataTypes.STRING(20),
-            allowNull: false,
-        },
-        nombre:{
+        
+        sector:{
             type: DataTypes.STRING(30),
-            allowNull: false,
+            allowNull: true,
         },
         descripcion:{
             type: DataTypes.STRING(40),
@@ -28,6 +25,10 @@ module.exports = (sequelize) =>{
         },
         
     },
+    {
+        timestamps: false, 
+        freezeTableName: true, 
+    }
   
     );
     return oferta;

@@ -1,3 +1,4 @@
+const { DataTypes } = require('sequelize');
 const Sequelize = require('sequelize');
 const dbConfig = require('../CONFIG/db.config');
 
@@ -29,30 +30,40 @@ db.permisoxrol = require('./permisoxrol.models')(sequelize);
 db.rol = require('./rol.models')(sequelize);
 db.tipoapertura = require('./tipoapertura.models')(sequelize);
 db.usuario = require('./usuario.models')(sequelize);
+db.egresado = require('./egresado.models')(sequelize);
+db.institutousuario = require('./institutousuario.models')(sequelize);
+db.tipoinstituto = require('./tipoinstituto.model')(sequelize);
 
 // Relaciones
-db.instituto.hasMany(db.usuario);
-db.usuario.belongsTo(db.instituto);
+db.institutousuario.belongsTo(db.instituto);
+db.institutousuario.belongsTo(db.usuario);
+//---------------------------------------
+db.instituto.belongsTo(db.tipoinstituto);
+db.tipoinstituto.hasMany(db.instituto);
 
+db.instituto.belongsTo(db.ciudad);
+db.ciudad.hasMany(db.instituto);
+//--------------------------------------
+db.ofertaxinstituto.belongsTo(db.instituto);
+db.ofertaxinstituto.belongsTo(db.oferta);
+//--------------------------------------
 db.usuario.belongsTo(db.rol);
 db.rol.hasMany(db.usuario);
-
-db.rol.belongsToMany(db.permiso, { through: db.permisoxrol });
-db.permiso.belongsToMany(db.rol, { through: db.permisoxrol });
-
-db.departamento.hasMany(db.ciudad);
+//--------------------------------
+db.permisoxrol.belongsTo(db.rol);
+db.permisoxrol.belongsTo(db.permiso);
+//--------------------------------------
 db.ciudad.belongsTo(db.departamento);
-
-db.ciudad.hasMany(db.instituto);
-db.instituto.belongsTo(db.ciudad);
-
-db.instituto.belongsToMany(db.oferta, { through: db.ofertaxinstituto });
-db.oferta.belongsToMany(db.instituto, { through: db.ofertaxinstituto });
-
-db.oferta.hasMany(db.cohorte);
-db.cohorte.belongsTo(db.oferta);
-
-db.tipoapertura.hasMany(db.cohorte);
+db.departamento.hasMany(db.ciudad);
+//--------------------------------------
+db.oferta.belongsTo(db.cohorte);
+//db.cohorte.belongsTo(db.oferta);
+//--------------------------------------
 db.cohorte.belongsTo(db.tipoapertura);
+db.tipoapertura.hasMany(db.cohorte);
+//--------------------------------------
+db.egresado.belongsTo(db.instituto);
+db.egresado.belongsTo(db.oferta);
+//--------------------------------------
 
 module.exports = db;

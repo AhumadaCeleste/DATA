@@ -25,7 +25,7 @@ const db = require('./MODELS');
 // conectar con nuestra BD
 
 db.sequelize
-  .sync({}) //   .sync({ alter: true })
+  .sync({alter: true}) //   .sync({ alter: true })
   .then((result) => {
     console.log('conexion exitosa');
   });

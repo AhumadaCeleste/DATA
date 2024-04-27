@@ -6,11 +6,6 @@ module.exports = (sequelize) =>{
     const usuario = sequelize.define("usuario", 
     {
         // id automatico, no se completa
-        numero: {
-            type: DataTypes.INTEGER(20),
-            allowNull: false,
-        },
-
             dni: {
             type: DataTypes.INTEGER(20),
             allowNull: false,
@@ -22,7 +17,15 @@ module.exports = (sequelize) =>{
         apellido: {
             type: DataTypes.STRING(30),
             allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
         }
+    },
+    {
+        timestamps: false, // Si no necesitas timestamps
+        freezeTableName: true, // Para evitar la pluralización automática del nombre de la tabla
     })
     return usuario;
 }
