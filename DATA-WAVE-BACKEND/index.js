@@ -20,7 +20,7 @@ app.use(cors(corsOptions)); // Usa la configuración de CORS
 const db = require('./MODELS');
 
 // Carga de rutas
-//require('./ROUTERS/index.routers')(app)
+require('./ROUTERS/index.routers')(app)
 
 // conectar con nuestra BD
 

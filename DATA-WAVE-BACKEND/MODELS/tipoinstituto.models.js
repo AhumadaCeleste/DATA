@@ -8,8 +8,8 @@ module.exports = (sequelize) => {
         },
     },
     {
-        timestamps: false, // Si no necesitas timestamps
-        freezeTableName: true, // Para evitar la pluralización automática del nombre de la tabla
+        timestamps: false, 
+        freezeTableName: true, 
     });
 
     return tipoinstituto;

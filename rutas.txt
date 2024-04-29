@@ -1,0 +1,52 @@
+
+RUTAS GET - POST (Agrega) - PUT (modifica) -DELET (borra)
+____________________________________________________________________________
+
+LISTA INSTITUTOS: "GET"
+http://localhost:3001/instituto/lista
+
+****************************************************************************
+
+CREAR INSTITUTO:
+http://localhost:3001/instituto/nuevo
+
+ {
+    "cue": "141551675",
+    "ee": "303185",
+    "denominacion": "PRUEBA",
+    "tipoinstitutoId": "PRUEBA",
+    "CiudadId":37,
+    "tipoinstitutoID":1,
+    "CiudadID":15,
+    "cuesede":"141551675"
+  }
+
+//carga escuela madre desde un vista, si elij cargar sede repite cue en cuesede de lo contrario permite carga de nuevo cue
+//debera se seleccionar: instituto: puro(id:1) o mixto(id:2) y elegir ciudad y departamento, en menu desplegable
+
+****************************************************************************
+
+GET FILTRAR POR NOMBRE DE INSTITUTO:
+http://localhost:3001/instituto/filtrar/denominacion/noetinger
+
+****************************************************************************
+
+PUT MODIFICAR INSTITUTO: 
+http://localhost:3001/instituto/actualizar/14151617
+
+{
+  "cue": "14151618", 
+}
+ "ee": "VALOR_EE",
+  "denominacion": "",
+  "cuesede": ""
+
+****************************************************************************
+
+DELETE ELIMINAR INSTITUTO.
+http://localhost:3001/categoria/eliminar/7
+delete sin parametros.
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+

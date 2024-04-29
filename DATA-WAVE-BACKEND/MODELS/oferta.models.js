@@ -7,7 +7,6 @@ module.exports = (sequelize) =>{
         resolucion:{
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
         },
         
         nombre:{

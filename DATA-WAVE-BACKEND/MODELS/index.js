@@ -32,7 +32,9 @@ db.tipoapertura = require('./tipoapertura.models')(sequelize);
 db.usuario = require('./usuario.models')(sequelize);
 db.egresado = require('./egresado.models')(sequelize);
 db.institutousuario = require('./institutousuario.models')(sequelize);
-db.tipoinstituto = require('./tipoinstituto.model')(sequelize);
+db.tipoinstituto = require('./tipoinstituto.models')(sequelize);
+db.sucursal = require('./sucursal.models')(sequelize);
+
 
 // Relaciones
 db.institutousuario.belongsTo(db.instituto);
@@ -43,6 +45,9 @@ db.tipoinstituto.hasMany(db.instituto);
 
 db.instituto.belongsTo(db.ciudad);
 db.ciudad.hasMany(db.instituto);
+
+db.instituto.belongsTo(db.sucursal);
+db.sucursal.hasMany(db.instituto);
 //--------------------------------------
 db.ofertaxinstituto.belongsTo(db.instituto);
 db.ofertaxinstituto.belongsTo(db.oferta);

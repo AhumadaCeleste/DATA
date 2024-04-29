@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
+        cuesede: {
+            type: DataTypes.STRING(15),
+            allowNull: false,
+        },
     },
     {
         timestamps: false, 
