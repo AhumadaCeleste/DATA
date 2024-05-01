@@ -6,9 +6,10 @@ LISTA INSTITUTOS: "GET"
 http://localhost:3001/instituto/lista
 
 ****************************************************************************
+INSTITUTO
 
 CREAR INSTITUTO:
-http://localhost:3001/instituto/nuevo
+POST http://localhost:3001/instituto/nuevo
 
  {
     "cue": "141551675",
@@ -50,3 +51,117 @@ delete sin parametros.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+ROL
+
+LISTA ROL: "GET": http://localhost:3001/rol/lista
+
+LISTA ROL FILTRADA:http://localhost:3001/rol/filtrar/descripcion/usuario
+                                                         CAMPO    VALOR
+
+****************************************************************************
+CREAR ROL:
+
+POST http://localhost:3001/rol/nuevo
+
+ {
+    "descripcion": "prueba desde tuder",
+  }                                                        
+
+
+****************************************************************************
+MODIFICAR ROL:
+
+PUT MODIFICAR ROL: http://localhost:3001/rol/actualizar/5
+                                                       id
+{
+    "descripcion": "Nueva descripción del rol"
+}
+
+
+****************************************************************************
+DELETE ELIMINAR ROL.
+http://localhost:3001/rol/eliminar/5
+delete sin parametros.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+LISTA CIUDAD: "GET"
+http://localhost:3001/instituto/lista
+
+****************************************************************************
+CREAR CIUDAD:
+POST http://localhost:3001/ciudad/nuevo
+
+ {
+    "nombre": "prueba"
+  }
+
+*****************************************************************
+ MODIFICAR CIUDAD:
+
+PUT MODIFICAR CIUDAD:http://localhost:3001/ciudad/actualizar/39
+                                                       id
+ {
+    "nombre": "modificado de tunder"
+  }
+
+
+ELIMINAR CIUDAD: (SIN PARAMETRO)
+http://localhost:3001/ciudad/eliminar/39
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+LISTA DEPARTAMENTO: "GET"
+http://localhost:3001/departamento/lista
+
+GET FILTRAR POR NOMBRE DE DEPARTAMENTO:
+http://localhost:3001/departamento/filtrar/nombre/calamuchita
+
+
+CREAR DEPARTAMENTO:
+POST http://localhost:3001/departamento/nuevo
+
+ {
+    "nombre": "prueba"
+  }
+
+ MODIFICAR DEPARTAMENTO:
+
+PUT MODIFICAR DEPARTAMENTO:http://localhost:3001/departamento/actualizar/27
+                                                       id
+ {
+    "nombre": "modificado de tunder"
+  }  
+
+ELIMINAR DEPARTAMENTO: (SIN PARAMETRO)
+http://localhost:3001/departamento/eliminar/27  
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+LISTA PERMISOS: "GET"
+http://localhost:3001/permiso/lista
+
+CREAR PERMISO:
+http://localhost:3001/permiso/nuevo
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+LISTA OFERTA: "GET" 
+http://localhost:3001/cohorte/lista
+
+
+CREAR COHORTE:
+http://localhost:3001/oferta/lista
+
+{
+    "id": 2,
+    "desde": 2022,
+    "hasta": 2024,
+    "tipoaperturaId": 1
+  }
+
+
+
+LISTA COHORTE:
+
+http://localhost:3001/cohorte/nuevo/

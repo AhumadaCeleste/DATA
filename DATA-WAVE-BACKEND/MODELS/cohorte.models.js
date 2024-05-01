@@ -7,6 +7,7 @@ module.exports = (sequelize) =>{
     {
         desde: {
             type: DataTypes.INTEGER,
+            
             allowNull: false,
         },
         hasta: {

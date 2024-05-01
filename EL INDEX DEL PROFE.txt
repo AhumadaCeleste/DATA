@@ -1,4 +1,4 @@
-// 1***** Requiero  librería  express
+// 1*** Requiero  librería  express
 const express = require('express');
 const app = express();
 const port = require('./CONFIG/env').PORT || 3000;
@@ -25,23 +25,16 @@ require('./ROUTERS/index.routers')(app)
 // conectar con nuestra BD
 
 db.sequelize
-.authenticate()//.sync({ alter: true }) //.authenticate() //   .sync({ alter: true })
+  .authenticate()  //.sync() //   .sync({ alter: true })
   .then((result) => {
     console.log('conexion exitosa');
   })
-  .catch((error) => {
-    console.log('ERROR DB al conectar', error.message);  
-    });   
-  app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
-  
-  /*.catch((err) => {
+  .catch((err) => {
     console.log('ERROR DB al conectar', err.message);
   });
-*/
+
   /*;
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(Server running on port ${port});
 });
 */

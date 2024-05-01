@@ -5,15 +5,18 @@ module.exports = (sequelize) =>{
                                          // nombre de tabla en BD
     const permiso = sequelize.define("permiso", 
     {
-        // id automatico, no se completa
-        descripcion: {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true
+            },
+        nombre: {
             type: DataTypes.STRING(30),
             allowNull: false,
-        },
+            },
         palabraclave: {
             type: DataTypes.STRING(25),
             allowNull: false,
-        }
+            }
     },
     {
         timestamps: false, // Si no necesitas timestamps

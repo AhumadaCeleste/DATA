@@ -35,7 +35,6 @@ db.institutousuario = require('./institutousuario.models')(sequelize);
 db.tipoinstituto = require('./tipoinstituto.models')(sequelize);
 db.sucursal = require('./sucursal.models')(sequelize);
 
-
 // Relaciones
 db.institutousuario.belongsTo(db.instituto);
 db.institutousuario.belongsTo(db.usuario);
@@ -51,12 +50,10 @@ db.sucursal.hasMany(db.instituto);
 //--------------------------------------
 db.ofertaxinstituto.belongsTo(db.instituto);
 db.ofertaxinstituto.belongsTo(db.oferta);
-//--------------------------------------
-db.usuario.belongsTo(db.rol);
-db.rol.hasMany(db.usuario);
-//--------------------------------
-db.permisoxrol.belongsTo(db.rol);
-db.permisoxrol.belongsTo(db.permiso);
+//-----------------------------------
+db.usuario.belongsTo(db.rol, { foreignKey: 'idrol'});
+db.rol.belongsToMany(db.permiso, { through: db.permisoxrol, foreignKey: 'idrol'});
+db.permiso.belongsToMany(db.rol, { through: db.permisoxrol, foreignKey: 'idpermiso'});
 //--------------------------------------
 db.ciudad.belongsTo(db.departamento);
 db.departamento.hasMany(db.ciudad);

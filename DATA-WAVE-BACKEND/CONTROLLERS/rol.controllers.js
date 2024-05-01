@@ -3,8 +3,8 @@ const { Op } = require('sequelize');
 
 //-----------------------------------lista
 exports.lista = (req, res) => {
-    console.log('Procesamiento de lista de ciudad');
-    db.ciudad.findAll()
+    console.log('Procesamiento de lista de rol');
+    db.rol.findAll()
         .then(registros => {
             res.status(200).send(registros);
         })
@@ -13,26 +13,14 @@ exports.lista = (req, res) => {
         });
 };
 
-exports.listafull = (req,res) =>{
-    console.log('Procesamiento de cuidades con departamentos');
-    // buscar la lista de usuarios
-    db.ciudad.findAll({include:db.departamento}) 
-        .then( registros => {
-            res.status(200).send(registros);
-        })
-        .catch(error =>{
-            res.status(500).send(error);
-        });
-  };
-
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {
-    console.log('Procesamiento de ciudad filtrado');
+    console.log('Procesamiento de rol filtrado');
     const campo = req.params.campo;
     const valor = req.params.valor;
     console.log(`campo: ${campo} valor:${valor}`)
-    // buscar la lista de ciudad
-    db.ciudad.findAll({ where: { [campo]: valor } })
+    // buscar la lista de rol
+    db.rol.findAll({ where: { [campo]: valor } })
         .then(registros => {
             res.status(200).send(registros);
         })
@@ -43,12 +31,12 @@ exports.filtrar = (req, res) => {
 
 //-----------------------------------nuevo
 exports.nuevo = (req, res) => {
-    console.log('nueva ciudad');
-    console.log(req.body.nombre); // Cambiar de req.body.descripcion a req.body.nombre
-    const datanuevociudad = {   
-        nombre: req.body.nombre, // Cambiar de descripcion a nombre
+    console.log('nuevo rol');
+    console.log(req.body.nombre);
+    const datanuevorol = {   
+        descripcion: req.body.inforol,
     };
-    db.ciudad.create(datanuevociudad)
+    db.rol.create(datanuevorol)
         .then(registro => {
             res.status(201).send(
                 {
@@ -70,13 +58,13 @@ exports.nuevo = (req, res) => {
 //-------------------------------------actualizar
 exports.actualizar = (req, res) => {
     const id = req.params.id;
-    console.log('Actualizar ciudad');
+    console.log('Actualizar rol');
     console.log(req.body.id);
 
-    const dataciudad = {
-        nombre: req.body.nombre,
+    const datarol = {
+        descripcion: req.body.descripcion, // Corregir nombre del campo
     };
-    db.ciudad.update(dataciudad, {
+    db.rol.update(datarol, {
         where: { id: id }
     })
         .then(num => {
@@ -84,16 +72,16 @@ exports.actualizar = (req, res) => {
                 res.status(201).send(
                     {
                         resultado: true,
-                        msg: 'Ciudad actualizado correctamente'
+                        msg: 'Rol actualizado correctamente'
                     }
                 );
             } else {
                 res.status(500).send(
                     {
                         resultado: false,
-                        msg: 'No se pudo actualizar la ciudad',
+                        msg: 'No se pudo actualizar el rol',
                         body: {
-                            data: dataciudad,
+                            data: datarol,
                             id: id
                         }
                     }
@@ -113,7 +101,7 @@ exports.actualizar = (req, res) => {
 //-----------------------------------eliminar
 exports.eliminar = (req, res) => {
     const id = req.params.id;
-    db.ciudad.destroy({
+    db.rol.destroy({
         where: { id: id }
     })
         .then(num => {
@@ -127,11 +115,7 @@ exports.eliminar = (req, res) => {
                 res.status(500).send(
                     {
                         resultado: false,
-                        msg: 'No se pudo eliminar la ciudad',
-                        body: {
-                            data: dataciudad,
-                            id: id
-                        }
+                        msg: 'No se pudo eliminar el rol'
                     }
                 );
             }
@@ -158,7 +142,7 @@ exports.listaPag = (req,res) =>{
     console.log(`pagina: ${pag} texto:${text}`)
     // buscar la lista
     if (!text){
-    db.ciudad.findAndCountAll({limit: limit, offset: offset, order: [['id', 'ASC']]})
+    db.rol.findAndCountAll({limit: limit, offset: offset, order: [['id', 'ASC']]})
         .then( registros => {
             res.status(200).send(registros);
         })
@@ -166,7 +150,7 @@ exports.listaPag = (req,res) =>{
             res.status(500).send(error);
         });
     }else{
-        db.ciudad.findAndCountAll({where: {nombre: {
+        db.rol.findAndCountAll({where: {nombre: {
             [Op.like]: `%${text}%`
         }}, limit: limit, offset: offset, order: [['id', 'ASC']]})
         .then( registros => {

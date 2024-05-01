@@ -1,11 +1,28 @@
 const { DataTypes } = require ('sequelize');
+const Permiso = require('./permiso.models'); // Importa el modelo Permiso
+const Rol = require('./rol.models');
 
 module.exports = (sequelize) =>{
     
                                          // nombre de tabla en BD
     const permisoxrol = sequelize.define("permisoxrol", 
     {
-        // id automatico, no se completa
+        idpermiso: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            references: {
+              model: Permiso,
+              key: 'id'
+                    }
+            },
+         idrol: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            references: {
+              model: Rol,
+              key: 'id'
+                }
+            }
       
     },
     {

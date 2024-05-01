@@ -3,8 +3,8 @@ const { Op } = require('sequelize');
 
 //-----------------------------------lista
 exports.lista = (req, res) => {
-    console.log('Procesamiento de lista de ciudad');
-    db.ciudad.findAll()
+    console.log('Procesamiento de lista de cohortes');
+    db.cohorte.findAll()
         .then(registros => {
             res.status(200).send(registros);
         })
@@ -14,9 +14,9 @@ exports.lista = (req, res) => {
 };
 
 exports.listafull = (req,res) =>{
-    console.log('Procesamiento de cuidades con departamentos');
+    console.log('Procesamiento de cohortes con tipo de apertura');
     // buscar la lista de usuarios
-    db.ciudad.findAll({include:db.departamento}) 
+    db.cohorte.findAll({include:db.tipoapertura}) 
         .then( registros => {
             res.status(200).send(registros);
         })
@@ -27,12 +27,12 @@ exports.listafull = (req,res) =>{
 
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {
-    console.log('Procesamiento de ciudad filtrado');
+    console.log('Procesamiento de cohorte filtrado');
     const campo = req.params.campo;
     const valor = req.params.valor;
     console.log(`campo: ${campo} valor:${valor}`)
-    // buscar la lista de ciudad
-    db.ciudad.findAll({ where: { [campo]: valor } })
+    // buscar la lista de cohorte
+    db.cohorte.findAll({ where: { [campo]: valor } })
         .then(registros => {
             res.status(200).send(registros);
         })
@@ -43,12 +43,13 @@ exports.filtrar = (req, res) => {
 
 //-----------------------------------nuevo
 exports.nuevo = (req, res) => {
-    console.log('nueva ciudad');
+    console.log('nueva cohorte');
     console.log(req.body.nombre); // Cambiar de req.body.descripcion a req.body.nombre
-    const datanuevociudad = {   
-        nombre: req.body.nombre, // Cambiar de descripcion a nombre
+    const datanuevocohorte = {   
+        desde: req.body.desde,
+        hasta: req.body.hasta, 
     };
-    db.ciudad.create(datanuevociudad)
+    db.cohorte.create(datanuevocohorte)
         .then(registro => {
             res.status(201).send(
                 {
@@ -70,13 +71,13 @@ exports.nuevo = (req, res) => {
 //-------------------------------------actualizar
 exports.actualizar = (req, res) => {
     const id = req.params.id;
-    console.log('Actualizar ciudad');
+    console.log('Actualizar cohorte');
     console.log(req.body.id);
 
-    const dataciudad = {
+    const datacohorte = {
         nombre: req.body.nombre,
     };
-    db.ciudad.update(dataciudad, {
+    db.cohorte.update(datacohorte, {
         where: { id: id }
     })
         .then(num => {
@@ -84,16 +85,16 @@ exports.actualizar = (req, res) => {
                 res.status(201).send(
                     {
                         resultado: true,
-                        msg: 'Ciudad actualizado correctamente'
+                        msg: 'Cohorte actualizada correctamente'
                     }
                 );
             } else {
                 res.status(500).send(
                     {
                         resultado: false,
-                        msg: 'No se pudo actualizar la ciudad',
+                        msg: 'No se pudo actualizar la cohorte',
                         body: {
-                            data: dataciudad,
+                            data: datacohorte,
                             id: id
                         }
                     }
@@ -113,7 +114,7 @@ exports.actualizar = (req, res) => {
 //-----------------------------------eliminar
 exports.eliminar = (req, res) => {
     const id = req.params.id;
-    db.ciudad.destroy({
+    db.cohorte.destroy({
         where: { id: id }
     })
         .then(num => {
@@ -127,9 +128,9 @@ exports.eliminar = (req, res) => {
                 res.status(500).send(
                     {
                         resultado: false,
-                        msg: 'No se pudo eliminar la ciudad',
+                        msg: 'No se pudo eliminar la cohorte',
                         body: {
-                            data: dataciudad,
+                            data: datacohorte,
                             id: id
                         }
                     }
@@ -158,7 +159,7 @@ exports.listaPag = (req,res) =>{
     console.log(`pagina: ${pag} texto:${text}`)
     // buscar la lista
     if (!text){
-    db.ciudad.findAndCountAll({limit: limit, offset: offset, order: [['id', 'ASC']]})
+    db.cohorte.findAndCountAll({limit: limit, offset: offset, order: [['id', 'ASC']]})
         .then( registros => {
             res.status(200).send(registros);
         })
@@ -166,7 +167,7 @@ exports.listaPag = (req,res) =>{
             res.status(500).send(error);
         });
     }else{
-        db.ciudad.findAndCountAll({where: {nombre: {
+        db.cohorte.findAndCountAll({where: {nombre: {
             [Op.like]: `%${text}%`
         }}, limit: limit, offset: offset, order: [['id', 'ASC']]})
         .then( registros => {
