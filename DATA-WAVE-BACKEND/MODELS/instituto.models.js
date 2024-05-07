@@ -19,6 +19,18 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(15),
             allowNull: false,
         },
+        tipoinstitutoId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        CiudadId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        sucursalId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
     {
         timestamps: false, 

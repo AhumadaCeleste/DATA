@@ -4,6 +4,8 @@ module.exports = (app) => {
 
     // Importa las rutas:
     const institutoRouters = require('./instituto.routers');
+    const sucursalRouters = require('./sucursal.routers');
+    const tipoinstitutoRouters = require('./tipoinstituto.routers');
     const rolRouters = require('./rol.routers'); 
     const ciudadRouters = require('./ciudad.routers');
     const departamentoRouters = require('./departamento.routers');
@@ -11,9 +13,12 @@ module.exports = (app) => {
     const ofertaRouters = require('./oferta.routers');
     const usuarioRouters = require('./usuario.routers');
     const cohorteRouters = require('./cohorte.routers');
+
     
     // Usa las rutas:
     app.use('/instituto', institutoRouters);
+    app.use('/sucursal', sucursalRouters);
+    app.use('/tipoinstituto', tipoinstitutoRouters);
     app.use('/rol', rolRouters); 
     app.use('/ciudad', ciudadRouters); 
     app.use('/departamento', departamentoRouters); 

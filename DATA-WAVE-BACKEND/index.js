@@ -25,7 +25,7 @@ require('./ROUTERS/index.routers')(app)
 // conectar con nuestra BD
 
 db.sequelize
-.authenticate()//.sync({ alter: true }) //.authenticate() //   .sync({ alter: true })
+.authenticate() //.sync({ alter: true }) //.authenticate() //   .sync({ alter: true })
   .then((result) => {
     console.log('conexion exitosa');
   })

@@ -3,8 +3,8 @@ const { Op } = require('sequelize');
 
 //-----------------------------------lista
 exports.lista = (req, res) => {
-    console.log('Procesamiento de lista de Institutos');
-    db.instituto.findAll()
+    console.log('Procesamiento de lista de los tipos de Institutos');
+    db.tipoinstituto.findAll()
         .then(registros => {
             res.status(200).send(registros);
         })
@@ -15,11 +15,11 @@ exports.lista = (req, res) => {
 
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {
-    console.log('Procesamiento de instituto filtrado');
+    console.log('Procesamiento de tipos de instituto filtrado');
     const campo = req.params.campo;
     const valor = req.params.valor;
     console.log(`campo: ${campo} valor:${valor}`)
-    db.instituto.findAll({ where: { [campo]: { [Op.like]: `%${valor}%` } } })
+    db.tipoinstituto.findAll({ where: { [campo]: { [Op.like]: `%${valor}%` } } })
         .then(registros => {
             res.status(200).send(registros);
         })
@@ -30,18 +30,12 @@ exports.filtrar = (req, res) => {
 
 //-----------------------------------nuevo
 exports.nuevo = (req, res) => {
-    console.log('nuevo instituto');
+    console.log('nuevo tipo de instituto');
     console.log(req.body.denominacion);
-    const datanuevoinstituto = {
-        cue: req.body.cue,
-        ee: req.body.ee,
-        denominacion: req.body.denominacion,
-        cuesede:req.body.cuesede,
-        tipoinstitutoId:req.body.tipoinstitutoId,
-        CiudadId:req.body.CiudadId,
-        sucursalId:req.body.sucursalId,
+    const datanuevotipoinstituto = {
+        descripcion: req.body.descripcion,
     };
-    db.instituto.create(datanuevoinstituto)
+    db.tipoinstituto.create(datanuevotipoinstituto)
         .then(registro => {
             res.status(201).send(
                 {
@@ -63,16 +57,13 @@ exports.nuevo = (req, res) => {
 //-------------------------------------actualizar
 exports.actualizar = (req, res) => {
     const cue = req.params.id; // Usar req.params.id como cue
-    console.log('Actualizar Instituto');
+    console.log('Actualizar tipo de Instituto');
     console.log(req.body.id);
 
-    const datanuevoinstituto = {
-        cue: req.body.cue,
-        ee: req.body.ee,
-        denominacion: req.body.denominacion,
-        cuesede: req.body.cuesede,
+    const datanuevotipoinstituto = {
+        descripcion: req.body.descripcion,
     };
-    db.instituto.update(datanuevoinstituto, {
+    db.tipoinstituto.update(datanuevotipoinstituto, {
         where: { cue: cue }
     })
         .then(num => {
@@ -86,8 +77,8 @@ exports.actualizar = (req, res) => {
                     resultado: false,
                     msg: 'No se pudo actualizar el Instituto',
                     body: {
-                        data: datanuevoinstituto,
-                        cue: cue
+                        descripcion: req.body.descripcion,
+                      
                     }
                 });
             }
@@ -103,7 +94,7 @@ exports.actualizar = (req, res) => {
 //-----------------------------------eliminar
 exports.eliminar = (req, res) => {
     const cue = req.params.cue;
-    db.instituto.destroy({
+    db.tipoinstituto.destroy({
         where: { cue: cue }
     })
         .then(num => {
@@ -114,7 +105,7 @@ exports.eliminar = (req, res) => {
             } else {
                 res.status(500).send({
                     resultado: false,
-                    msg: 'No se pudo eliminar el Instituto',
+                    msg: 'No se pudo eliminar el tipo de Instituto',
                     body: {
                         cue: cue
                     }
@@ -139,9 +130,9 @@ exports.listaPag = (req,res) =>{
     const offset = (pag - 1) * limit;
     console.log(`pagina: ${pag} texto:${text}`)
     
-    const whereCondition = text ? { denominacion: { [Op.like]: `%${text}%` } } : {};
+    const whereCondition = text ? { descripcion: { [Op.like]: `%${text}%` } } : {};
 
-    db.instituto.findAndCountAll({ where: whereCondition, limit: limit, offset: offset, order: [['id', 'ASC']] })
+    db.tipoinstituto.findAndCountAll({ where: whereCondition, limit: limit, offset: offset, order: [['id', 'ASC']] })
         .then(registros => {
             res.status(200).send(registros);
         })

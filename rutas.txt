@@ -11,15 +11,14 @@ INSTITUTO
 CREAR INSTITUTO:
 POST http://localhost:3001/instituto/nuevo
 
- {
-    "cue": "141551675",
-    "ee": "303185",
-    "denominacion": "PRUEBA",
-    "tipoinstitutoId": "PRUEBA",
-    "CiudadId":37,
-    "tipoinstitutoID":1,
-    "CiudadID":15,
-    "cuesede":"141551675"
+  {
+    "cue": "cue_13_3",
+    "ee": "30",
+    "denominacion": "sou",
+    "tipoinstitutoId":1,
+    "CiudadId":1,
+    "sucursalId":1,
+    "cuesede":"14"
   }
 
 //carga escuela madre desde un vista, si elij cargar sede repite cue en cuesede de lo contrario permite carga de nuevo cue
