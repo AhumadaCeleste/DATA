@@ -1,28 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import email2 from "../IMAGES/email2.png";
+import facebook from "../IMAGES/faceboock.jpg";
+import instagram from "../IMAGES/instagram.png";
+import youtube from "../IMAGES/youtube.png";
 
-
-
-//traer imagen whatsapp
-  
-
-const Footer = ()=>{
-
-return (
-  <div className='fixed bottom-0 left-0 w-full p-2'>
-  <hr />
-  <ul className='flex space-x-3'>
-  <div className='instagram hover:hover:bg-sky-700 boton_footermd-3 p-2'>
-  <Link to='https://mail.google.com/mail'>
-            <img src={email2} width="30" alt="E-mail" style={{ borderRadius: '90px' }} />
-            <p>datawave@gmailcom</p>
-          </Link>
+const Footer = () => {
+  return (
+    <div className='fondoAzulLetrablanca fixed bottom-0 left-0 w-full p-2'>
+      <hr />
+      <div className="row fondo_marron"> 
+        <div className="col">
+          <div className="container text-white p-2">
+            <hr />
+            <div className="row">
+              <div className="col-md-6">
+                <p>TM © 2024 Data-Wave Corporation.Todos los derechos reservados.</p>
+              </div>
+              <div className="col-md-6 text-end">
+                <img src={facebook} width="24" alt="Facebook" className="d-inline m-2"/>
+                <img src={instagram} width="24" alt="Instagram" className="d-inline m-2"/>
+                <img src={youtube} width="24" alt="Youtube" className="d-inline m-2"/>
+              </div>
+            </div>        
+          </div>
+        </div>
+      </div> 
     </div>
-  </ul>
-</div>
   )
 }
 
-export default Footer
-
+export default Footer;

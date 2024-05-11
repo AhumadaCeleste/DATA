@@ -1,3 +1,4 @@
+{/*
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CarritoContext } from '../CONTEXT/CarritoContext';
@@ -113,8 +114,10 @@ function Menu(props) {
                 <Link to='/oferta'>Ofertas</Link>
               </span>
             </div>
+             */}
 
             {/* Menú para Cliente */}
+                {/*
             {!authOK && (
               <div
                 className={`px-1 py-1 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl cursor-pointer ${
@@ -144,8 +147,9 @@ function Menu(props) {
                 )}
               </div>
             )}
-
+    {/*
             {/* Menú para Usuario */}
+             {/*
             {!authOKCli && (
               <div
                 className={`px-1 py-1 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl cursor-pointer ${
@@ -162,8 +166,9 @@ function Menu(props) {
                 </span>
               </div>
             )}
-
+*/}
             {/* Ver carrito si está logeado el cliente */}
+              {/*
             {authOKCli && (
   <div
     className={`px-1 py-1 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl ${
@@ -182,8 +187,11 @@ function Menu(props) {
     </div>
   </div>
 )}
+*/}
 
             {/* Menú para ABM Categorias si está logeado usuario */}
+  {/*
+
       {authOK && (
   <div
   className={`relative px-1 py-1 text-center text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl ${
@@ -209,9 +217,10 @@ function Menu(props) {
       </div>
     )}
   </div>
-)}
+)}*/}
 
 {/* Botón para cerrar el menú móvil */}
+{/*
 <div
   className={`px-1 py-1 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl ${
     authOKCli || authOK ? 'hover:bg-sky-700' : 'hover:bg-sky-700'
@@ -237,3 +246,4 @@ function Menu(props) {
 }
 
 export default Menu;
+*/}

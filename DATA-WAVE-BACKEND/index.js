@@ -1,4 +1,3 @@
-// 1***** Requiero  librería  express
 const express = require('express');
 const app = express();
 const port = require('./CONFIG/env').PORT || 3000;
@@ -23,9 +22,8 @@ const db = require('./MODELS');
 require('./ROUTERS/index.routers')(app)
 
 // conectar con nuestra BD
-
 db.sequelize
-.authenticate() //.sync({ alter: true }) //.authenticate() //   .sync({ alter: true })
+.authenticate() //.sync({ alter: true }) //.authenticate() //
   .then((result) => {
     console.log('conexion exitosa');
   })

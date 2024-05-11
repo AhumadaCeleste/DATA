@@ -1,22 +1,31 @@
-* {
-  font-family:'Times New Roman', Times, serif;
-  font-size: 18px;
-  font-style:oblique;
-  color: rgb(66, 187, 208);
-  background-image: url(./IMAGES/DataW.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
-
-fondo{
-  background-image: url(./IMAGES/DataW.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+.bg-color{
+  background-color: #4d82bc;
 }
 
+.fondoAzulLetrablanca{
+  background-color: #4d82bc;
+  color: #eceff1; /* Color blanco */
+};
+
+.header{
+  background-image: url("./IMAGES/Equipo.jpg");
+};
 
 
+.login-form-container {
+  background-image: url("./IMAGES/Equipo.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 1;
+}
 
 /*.App {
   text-align: center;
