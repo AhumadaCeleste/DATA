@@ -12,4 +12,6 @@ Rutas.get('/listafull', usuarioController.listafull);
 
 Rutas.get('/listafull2', usuarioController.listafull2);
 
+Rutas.post('/nuevo',usuarioController.nuevo);
+
 module.exports = Rutas;

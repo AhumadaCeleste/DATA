@@ -34,12 +34,4 @@ db.sequelize
     console.log(`Server running on port ${port}`);
   });
   
-  /*.catch((err) => {
-    console.log('ERROR DB al conectar', err.message);
-  });
-*/
-  /*;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
-*/
+ 

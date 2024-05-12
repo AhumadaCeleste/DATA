@@ -1,6 +1,11 @@
 const db = require('../MODELS');
 const { Op } = require('sequelize');
- /*
+const bcrypt = require('bcrypt'); // Importamos bcrypt para cifrar las contraseñas
+const jwt = require('jsonwebtoken'); // Importamos jsonwebtoken para generar tokens de autenticación
+const llave = require('dotenv').config().parsed.SECRET_KEY; // Importamos la llave secreta para firmar los tokens
+
+
+/*
 Lo que me dio gpt, para implementar jwt bycycrpt
 
 exports.filtrar = async (req, res) => {
@@ -36,11 +41,64 @@ exports.filtrar = async (req, res) => {
     }
 };
 
+*/
 
 
+//nuevo usuario
+exports.nuevo = (req, res, next) => {
+  //if(!req.body.dni ||!req.body.password ||!req.body.idrol){
+  if(!req.body.dni ||!req.body.password){
+      res.status(400).send({
+          message: "Faltan datos" 
+      });
+      return;
+  }
 
+  // controlamos si dni existe
+  db.usuario.findOne({
+      where: {
+          dni: req.body.dni 
+      }
+  })
+  .then(usuarioExistente => {
+      if(usuarioExistente){
+          res.status(400).send({
+              message: "El DNI ya fue ingresado"
+          });
+          return;
+      }
+  
+      // Si no existe el dni generamos nuevo usuraio
+      const datanuevousuario = {
+        id: req.body.id,
+        dni: req.body.dni,
+        nombre: req.body.nombre, 
+        apellido: req.body.apellido, 
+        password: bcrypt.hashSync(req.body.password, 8), // Ciframos la contraseña 
+        //password: req.body.password,
+        idrol: req.body.idrol 
+      }
+      db.usuario.create(datanuevousuario)
+      .then(registro => {
+        res.status(201).send(
+            {
+                resultado: true,
+                data: registro
+            }
+        );
+      })
+      .catch(error => {
+        res.status(500).send(
+            {
+                resultado: false,
+                msg: error
+            }
+        );
+      });
 
- */
+  });
+}
+
 
 exports.filtrar = async (req, res) => {
   const usuarioId = req.params.valor;

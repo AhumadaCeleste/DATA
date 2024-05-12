@@ -2,7 +2,6 @@ const { DataTypes } = require ('sequelize');
 
 module.exports = (sequelize) =>{
     
-                                         // nombre de tabla en BD
     const usuario = sequelize.define("usuario", 
     {
         id: {
@@ -22,8 +21,12 @@ module.exports = (sequelize) =>{
             allowNull: false,
             },
         password: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING(250),
             allowNull: false,
+            },
+        idrol: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
             }
     },
     {

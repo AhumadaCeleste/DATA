@@ -17,8 +17,10 @@ Rutas.post('/nuevo', institutocontroller.nuevo);
 // Eliminar un instituto 
 // no esta funcionando: Rutas.delete('/eliminar/:id', institutocontroller.eliminar);
 Rutas.delete('/eliminar/:cue', institutocontroller.eliminar);
+
 // Actualizar un instituto
-Rutas.put('/actualizar/:id', institutocontroller.actualizar);
+// no esta funcionando: Rutas.delete('/eliminar/:id', institutocontroller.eliminar);
+Rutas.put('/actualizar/:cue', institutocontroller.actualizar);
 
 module.exports = Rutas;
 

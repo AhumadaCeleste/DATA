@@ -24,6 +24,62 @@ POST http://localhost:3001/instituto/nuevo
 //carga escuela madre desde un vista, si elij cargar sede repite cue en cuesede de lo contrario permite carga de nuevo cue
 //debera se seleccionar: instituto: puro(id:1) o mixto(id:2) y elegir ciudad y departamento, en menu desplegable
 
+ASi funciona en el tunder el editar: 
+
+http://localhost:3001/instituto/actualizar/4
+
+{
+    "ee": "125",
+    "denominacion": "Nueva denominación del instituto",
+    "cuesede": "435"
+}
+
+controlador:
+exports.actualizar = (req, res) => {
+    const cue = req.params.cue;
+    console.log('Actualizar Instituto');
+
+    const datanuevoinstituto = {
+        ee: req.body.ee,
+        denominacion: req.body.denominacion,
+        cuesede: req.body.cuesede,
+    };
+    console.log('Data a actualizar:', datanuevoinstituto);
+    db.instituto.update(datanuevoinstituto, {
+        where: { cue: cue }
+    })
+        .then(num => {
+            if (num > 0) {
+                res.status(201).send({
+                    resultado: true,
+                    msg: 'Instituto actualizado correctamente'
+                });
+            } else {
+                res.status(500).send({
+                    resultado: false,
+                    msg: 'No se pudo actualizar el Instituto',
+                    body: {
+                        data: datanuevoinstituto,
+                        cue: cue
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            res.status(501).send({
+                resultado: false,
+                msg: error
+            });
+        });
+};
+
+
+
+
+
+
+
+
 ****************************************************************************
 
 GET FILTRAR POR NOMBRE DE INSTITUTO:

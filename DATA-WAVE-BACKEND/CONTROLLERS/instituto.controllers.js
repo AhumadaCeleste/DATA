@@ -62,16 +62,18 @@ exports.nuevo = (req, res) => {
 
 //-------------------------------------actualizar
 exports.actualizar = (req, res) => {
-    const cue = req.params.id; // Usar req.params.id como cue
+    const cue = req.params.cue;
     console.log('Actualizar Instituto');
-    console.log(req.body.id);
 
     const datanuevoinstituto = {
-        cue: req.body.cue,
         ee: req.body.ee,
         denominacion: req.body.denominacion,
         cuesede: req.body.cuesede,
+        tipoinstitutoId: req.body.tipoinstitutoId,
+        CiudadId: req.body.CiudadId,
+        sucursalId: req.body.sucursalId,
     };
+    console.log('Data a actualizar:', datanuevoinstituto);
     db.instituto.update(datanuevoinstituto, {
         where: { cue: cue }
     })
@@ -99,7 +101,6 @@ exports.actualizar = (req, res) => {
             });
         });
 };
-
 //-----------------------------------eliminar
 exports.eliminar = (req, res) => {
     const cue = req.params.cue;

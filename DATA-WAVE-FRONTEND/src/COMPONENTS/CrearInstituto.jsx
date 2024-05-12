@@ -62,7 +62,7 @@ function CrearInstitutoFull() {
   };
 
   return (
-    <div className="bg-sky-800 text-white py-4 px-8 rounded-md w-auto m-8">
+    <div className="bg-sky-800 text-white py-2 px-4 rounded-md w-[1600px] m-8 mr-32">
       <h2 className="text-lg font-bold mb-4 text-white">Crear Instituto</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <label htmlFor="cue" className="block">
@@ -167,8 +167,8 @@ function CrearInstitutoFull() {
             ))}
           </select>
         </label>
-
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">
+         
+        <button type="submit" className="px-4 py-2 text-sm bg-sky-600 text-white font-bold rounded">
           AGREGAR
         </button>
       </form>
