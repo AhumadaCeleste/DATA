@@ -1,17 +1,15 @@
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Inicio from "./COMPONENTS/Inicio";
 import Footer from "./COMPONENTS/Footer";
 import Home from "./COMPONENTS/Home";
 import CrearInstituto from "./COMPONENTS/CrearInstituto";
+import BMInstituto from "./COMPONENTS/BMInstituto";
 import InstList from "./COMPONENTS/InstList";
 import Adepartamento from "./COMPONENTS/Adepartamento";
 import BMDepartamento from "./COMPONENTS/BMDepartamento";
-import BMInstituto from "./COMPONENTS/BMDepartamento";
-
-// ordenar el codico con beauty: seleccionar el codigo Ctrl+Shift+P y hacer clic
-// en beauty
+import Inspector from "./COMPONENTS/Inspector";
 
 function App() {
     return (
@@ -23,7 +21,13 @@ function App() {
                 <Route path="/instituto/nuevo" element={<CrearInstituto/>}/>
                 <Route path="/instituto/actualizar" element={<BMInstituto/>}/>
                 <Route path="/departamento/nuevo" element={<Adepartamento/>}/>
-                <Route path="/departamento/actualizar" element={<BMDepartamento/>}/>
+                <Route path="/departamento/actualizar" element={<Adepartamento/>}/>
+                <Route path="/inspector" element={<Inspector/>}>
+    <Route path="crear-instituto" element={<CrearInstituto/>}/>
+</Route>
+
+
+
                 <Route path="*" element={<div> 404 - Página no encontrada</div>}/>
             </Routes>
             <Footer/>

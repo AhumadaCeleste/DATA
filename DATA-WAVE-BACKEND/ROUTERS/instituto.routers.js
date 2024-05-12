@@ -15,8 +15,8 @@ Rutas.get('/filtrar/:campo/:valor', institutocontroller.filtrar);
 Rutas.post('/nuevo', institutocontroller.nuevo);
 
 // Eliminar un instituto 
-Rutas.delete('/eliminar/:id', institutocontroller.eliminar);
-
+// no esta funcionando: Rutas.delete('/eliminar/:id', institutocontroller.eliminar);
+Rutas.delete('/eliminar/:cue', institutocontroller.eliminar);
 // Actualizar un instituto
 Rutas.put('/actualizar/:id', institutocontroller.actualizar);
 

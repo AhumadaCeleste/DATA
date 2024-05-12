@@ -1,15 +1,28 @@
 import React from "react";
 import backgroundImage from "../IMAGES/Equipo.jpg";
+import logo from "../IMAGES/LogoDW1.jpg";
+import logo1 from "../IMAGES/LogoTrainingAndDevelopment.jpg";
+import logo2 from "../IMAGES/LogoUniversityOfTexas.jpg";
+import logo3 from "../IMAGES/LogoWashingtonStateUniversity.jpg";
+import logo4 from "../IMAGES/LogoWiseOwl.jpg";
+import logo5 from "../IMAGES/LogoAcademy.png";
 
 const Inicio = () => {
     return (
-        <div
-            style={{
-                backgroundColor: 'rgb(209, 221, 221)'
-            }}>
+        <div className='bg-gray-800'>
+            {/* Logo de Data Wave */}
+            <img src={logo}
+                // Utiliza la variable logo
+                alt="Data Wave Logo" style={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '10px',
+                    height: '115px', // Ajusta el tamaño según tus necesidades
+                    width: 'auto',
+                    borderRadius: '50%',
+                    zIndex: '1000' // Asegura que esté por encima de otros elementos
+                }}/>
             <div className='container-fluid'>
-
-                <div className="text-center"></div>
 
                 {/* Formulario Login */}
                 <div className="row justify-content-center">
@@ -48,16 +61,15 @@ const Inicio = () => {
                                     id="password"
                                     type="password"
                                     placeholder="******************"/>
-                                <p className="text-red-500 text-xs italic">Por favor, ingrese una contraseña.</p>
                             </div>
                             <div className="flex flex-row justify-between p-1">
                                 <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+                                    className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
                                     type="button">
                                     Iniciar sesión
                                 </button>
                                 <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
+                                    className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
                                     type="button">
                                     Solicitar Usuario
                                 </button>
@@ -77,7 +89,7 @@ const Inicio = () => {
                 <br/> {/*Cards* */}
                 <div className="row">
                     <div className="col-md-4">
-                        <div className="p-2 text-white">
+                        <div className="p-2 text-gray-200 text-xl">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="45"
@@ -88,10 +100,10 @@ const Inicio = () => {
                                 <path
                                     d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
                                 <path
-                                    d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                                    d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
                             </svg>
-                            <h1>Reportes Personalizados</h1>
-                            <p>
+                            <h1 className="font-bold mb-2 p-2">Reportes Personalizados</h1>
+                            <p className="font-bold">
                                 Genera informes detallados y personalizados para analizar el desempeño
                                 académico, la asistencia y otros aspectos clave de tu institución educativa. Con
                                 nuestra herramienta de reportes, puedes visualizar datos de manera efectiva y
@@ -101,7 +113,7 @@ const Inicio = () => {
                     </div>
 
                     <div className="col-md-4">
-                        <div className="p-2 text-white">
+                        <div className="p-2 text-gray-200 text-xl">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="45"
@@ -116,29 +128,17 @@ const Inicio = () => {
                                     fillRule="evenodd"
                                     d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
                             </svg>
-                            <h1>acceso desdes la nuve</h1>
-                            <h1>Acceso desde la Nube</h1>
-                            <p>
-                                Accede a tus datos en cualquier momento y desde cualquier lugar con Data Wave.
-                                Nuestra plataforma te permite acceder a la información de tu institución
-                                educativa de forma segura y conveniente, directamente desde la nube.
-                            </p>
-                            <p>
-                                Con la capacidad de acceder a tus datos desde la nube, puedes gestionar y
-                                analizar la información de manera eficiente, sin importar dónde te encuentres.
-                                Ya sea que estés en la escuela, en casa o en movimiento, siempre tendrás acceso
-                                a los datos que necesitas.
-                            </p>
-                            <p>
-                                Descubre cómo el acceso desde la nube en Data Wave puede mejorar la flexibilidad
-                                y la accesibilidad de tus datos. Únete a nosotros y experimenta la conveniencia
-                                de acceder a tus datos desde cualquier lugar.
+                            <h1 className="font-bold mb-2 p-2">Acceso desde la Nube</h1>
+                            <p className="font-bold">
+                            Accede a tus datos en cualquier momento y lugar con Data Wave. 
+                            Nuestra plataforma te permite acceder de forma segura y conveniente a 
+                            la información de tu institución educativa desde la nube. Con esta capacidad, puedes gestionar y analizar la información eficientemente, sin importar tu ubicación. Descubre cómo el acceso desde la nube en Data Wave puede mejorar la flexibilidad y accesibilidad de tus datos. Únete a nosotros y experimenta la 
+                            conveniencia de acceder a tus datos desde cualquier lugar.
                             </p>
                         </div>
                     </div>
-
                     <div className="col-md-4">
-                        <div className="p-2 text-white">
+                        <div className="p-2 text-gray-200 text-xl">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="45"
@@ -152,52 +152,85 @@ const Inicio = () => {
                                 <path
                                     d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
                             </svg>
-                            <h1>Carga de Datos Segura</h1>
-                            <p>
-                                En Data Wave, la seguridad de tus datos es nuestra prioridad. Nuestra plataforma
-                                garantiza una carga de datos segura y fiable, protegiendo la información
-                                sensible de tu institución educativa.
+                            <h1 className="font-bold mb-2 p-2">Carga de Datos Segura</h1>
+                            <p className="font-bold">
+                            En Data Wave, la seguridad de tus datos es nuestra prioridad. 
+                            Garantizamos una carga segura y fiable, protegiendo la información 
+                            sensible de tu institución educativa. Utilizamos tecnologías de seguridad 
+                            avanzadas, incluyendo cifrado y autenticación, para asegurar la integridad de tus datos en todo momento. Con Data Wave, tus datos están protegidos contra amenazas externas y se mantienen confidenciales. Únete a nosotros y experimenta la tranquilidad 
+                            de saber que tus datos están seguros.
                             </p>
-                            <p>
-                                Utilizamos las últimas tecnologías de seguridad para garantizar que tus datos
-                                estén protegidos en todo momento. Además, ofrecemos opciones de cifrado y
-                                autenticación avanzadas para asegurar la integridad de tus datos durante la
-                                carga y almacenamiento.
-                            </p>
-                            <p>
-                                Con Data Wave, puedes estar tranquilo sabiendo que tus datos están en buenas
-                                manos. Nuestro enfoque en la seguridad de los datos garantiza que tu información
-                                esté protegida contra amenazas externas y se mantenga confidencial en todo
-                                momento.
-                            </p>
-                            <p>
-                                Descubre cómo la carga de datos segura en Data Wave puede ayudarte a proteger y
-                                gestionar tus datos de manera eficiente y segura. Únete a nosotros y experimenta
-                                la tranquilidad de saber que tus datos están protegidos.
-                            </p>
+                          
                         </div>
                     </div>
                 </div>
                 <hr/>
             </div>
-            <div class="card">
-  <div class="card-header">
-    PORQUE NOS ELIGEN
-  </div>
-  <div class="card-body">
-    <p class="card-text"><p>
-  En Data Wave, nos eligen nuestros clientes por nuestra dedicación a la excelencia en la gestión educativa. Nuestra plataforma ofrece soluciones innovadoras y fiables que ayudan a las instituciones educativas a mejorar su eficiencia y rendimiento.
-</p>
-<p>
-  Nuestros clientes valoran especialmente nuestra capacidad para proporcionar informes detallados y personalizados, así como para garantizar la seguridad y confidencialidad de sus datos. Además, nuestro enfoque en la accesibilidad y facilidad de uso nos ha convertido en la opción preferida para instituciones educativas de todo el mundo.
-</p>
-<p>
-  Descubre por qué tantas instituciones educativas eligen Data Wave para gestionar sus datos y mejorar sus procesos educativos. Únete a nosotros y experimenta la diferencia que puede hacer Data Wave en tu institución.
-</p></p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-  <h5 class="card-title">NUESTROS CLIENTES</h5>
-</div>
+            <div className="d-flex justify-content-center align-items-center flex-wrap bg-gray-300">
+                <h1 className="p-2 text-gray-800 text-xl font-bold">NUESTROS CLIENTES</h1>
+                <div className="d-flex justify-content-around align-items-center flex-wrap w-100">
+                    <img
+                        src={logo1}
+                        width="190"
+                        alt="Logo University of Bridgewater"
+                        className="m-2"
+                        style={{ borderRadius: "5px" }}
+                    />
+                    <img
+                        src={logo2}
+                        width="170"
+                        alt="Logo University of Texas"
+                        className="m-2"
+                        style={{ borderRadius: "90px" }}
+                    />
+                    <img
+                        src={logo3}
+                        width="300"
+                        alt="Logo University of Washington"
+                        className="m-2"
+                        style={{ borderRadius: "5px" }}
+                    />
+                    <img
+                        src={logo4}
+                        width="200"
+                        alt="Logo University of WiseOwl"
+                        className="m-2"
+                        style={{ borderRadius: "5px" }}
+                    />
+                    <img
+                        src={logo5}
+                        width="145"
+                        alt="Logo University of Academy"
+                        className="m-2"
+                        style={{ borderRadius: "5px" }}
+                    />
+                </div>
+            </div>
+            <div class="bg-gray-200 font-bold mb-2 text-lg p-4">
+    <div class="card-body">
+        <p class="card-text">
+            <p>
+                <h1 class="text-xl font-bold mb-2">PORQUE NOS ELIGEN</h1>
+                En Data Wave, nos eligen nuestros clientes por nuestra dedicación a la
+                excelencia en la gestión educativa. Nuestra plataforma ofrece soluciones
+                innovadoras y fiables que ayudan a las instituciones educativas a mejorar su
+                eficiencia y rendimiento.
+            </p>
+            <p>
+                Nuestros clientes valoran especialmente nuestra capacidad para proporcionar
+                informes detallados y personalizados, así como para garantizar la seguridad y
+                confidencialidad de sus datos. Además, nuestro enfoque en la accesibilidad y
+                facilidad de uso nos ha convertido en la opción preferida para instituciones
+                educativas de todo el mundo.
+            </p>
+            <p>
+                Descubre por qué tantas instituciones educativas eligen Data Wave para gestionar
+                sus datos y mejorar sus procesos educativos.
+            </p>
+        </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
         </div>
     );
 }

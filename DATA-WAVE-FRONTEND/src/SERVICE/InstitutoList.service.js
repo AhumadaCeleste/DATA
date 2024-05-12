@@ -1,9 +1,9 @@
 import axios from "axios";
 const API_URL = "http://localhost:3001";
 
-export async function getProductDetail(institutoId) {
+export async function getInstitutoDetail(institutoId) {
   try {
-    const response = await axios.get(`${API_URL}/instituto/lista${institutoId}`);
+    const response = await axios.get(`${API_URL}/instituto/lista/${institutoId}`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener el detalle del instituto:", error);
@@ -13,7 +13,7 @@ export async function getProductDetail(institutoId) {
 
 export async function updateInstituto(institutoId, newNombre) {
   try {
-    const response = await axios.put(`${API_URL}/instituto/actualizar${institutoId}`, {
+    const response = await axios.put(`${API_URL}/instituto/actualizar/${institutoId}`, {
       denominacion: newNombre
     });
     return response.data;

@@ -1,19 +1,36 @@
-import React, { createContext, useState } from "react";
-//contex, comparte informacion entre componentes
+import React, { createContext, useState } from 'react';
 
-// props en Null?
+// Contexto para compartir información entre componentes
 export const RolContext = createContext(null);
-    // se le asigna el nombre //aqui se crea el contex 
 
-    //se puede pasar (props) o (children) es lo mismo
-export const Rolcontext = ({ children }) => {
-// Carrito provaider recibe a todos los componentes hijos
+// Proveedor de RolContext que recibe a todos los componentes hijos
+export const RolProvider = ({ children }) => {
   const [rol, setRol] = useState([]);
 
-
   return (
-    <Rolcontext.Provider value={[rol, setRol]}>
+    <RolContext.Provider value={[rol, setRol]}>
       {children}
-    </Rolcontext.Provider>
+    </RolContext.Provider>
   );
 };
+
+{/*import React, {createContext, useContext, useState} from 'react';
+
+const RolContext = createContext();
+
+export const useRol = () => useContext(RolContext);
+
+export const RolProvider = ({children}) => {
+    const [rol, setRol] = useState('secretario');
+    return (
+        <RolContext.Provider
+            value={{
+                rol,
+                setRol
+            }}>
+            {children}
+        </RolContext.Provider>
+    );
+};
+*/
+}
