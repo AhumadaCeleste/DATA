@@ -14,15 +14,17 @@ import Inspector from './COMPONENTS/Inspector';
 
 function App() {
   return (
-    <div>
+    <div style={{ marginBottom: '50px' }}>
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/Footer" element={<Footer />} />
         <Route path="/instituto/lista" element={<InstList />} />
         <Route path="/instituto/nuevo" element={<CrearInstituto />} />
         <Route path="/instituto/editar" element={<BMInstituto />} />
         <Route path="/departamento/nuevo" element={<Adepartamento />} />
         <Route path="/departamento/actualizar" element={<Adepartamento />} />
+        <Route path="/secretario" element={<Inspector />}></Route>
         <Route path="/inspector" element={<Inspector />}>
           <Route path="crear-instituto" element={<CrearInstituto />} />
           <Route path="editar-instituto" element={<BMInstituto />} />

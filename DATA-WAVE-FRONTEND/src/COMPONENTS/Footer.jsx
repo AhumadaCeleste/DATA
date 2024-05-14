@@ -5,7 +5,7 @@ import youtube from "../IMAGES/youtube.png";
 
 const Footer = () => {
   return (
-    <div className='fondoAzulLetrablanca fixed bottom-0 left-0 w-full p-2'>
+    <div className='bg-sky-900 fixed bottom-0 left-0 w-full'>
       <hr />
       <div className="row fondo_marron"> 
         <div className="col">

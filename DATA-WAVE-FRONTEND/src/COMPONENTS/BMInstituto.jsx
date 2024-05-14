@@ -7,10 +7,19 @@ function BMInstituto(props) {
   const [newDenominacion, setNewDenominacion] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredInstitutos, setFilteredInstitutos] = useState([]);
+  const [tipoinstitutos, setTipoInstitutos] = useState([]);
+  const [ciudades, setCiudades] = useState([]);
+  const [sucursales, setSucursales] = useState([]);
+  const [tipoInstitutoId, setTipoInstitutoId] = useState(null);
+  const [ciudadId, setCiudadId] = useState(null);
+  const [sucursalId, setSucursalId] = useState(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
     loadInstitutos();
+    loadTiposInstitutos();
+    loadCiudades();
+    loadSucursales();
   }, []);
 
   const loadInstitutos = (isSearch = false) => {
@@ -32,17 +41,53 @@ function BMInstituto(props) {
     }
   };
 
+  const loadTiposInstitutos = () => {
+    axios.get("http://localhost:3001/tipoinstituto/lista")
+      .then((response) => {
+        setTipoInstitutos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los tipos de instituto:", error);
+      });
+  };
+
+  const loadCiudades = () => {
+    axios.get("http://localhost:3001/ciudad/lista")
+      .then((response) => {
+        setCiudades(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las ciudades:", error);
+      });
+  };
+
+  const loadSucursales = () => {
+    axios.get("http://localhost:3001/sucursal/lista")
+      .then((response) => {
+        setSucursales(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las sucursales:", error);
+      });
+  };
+
   const editInstituto = (institutoId) => {
     const institutoToEdit = institutos.find((instituto) => instituto.id === institutoId);
     if (institutoToEdit) {
       setSelectedInstituto(institutoToEdit);
       setNewDenominacion(institutoToEdit.denominacion);
+      setTipoInstitutoId(institutoToEdit.tipoinstitutoId);
+      setCiudadId(institutoToEdit.CiudadId);
+      setSucursalId(institutoToEdit.sucursalId);
     }
   };
 
   const cancelEdit = () => {
     setSelectedInstituto(null);
     setNewDenominacion("");
+    setTipoInstitutoId(null);
+    setCiudadId(null);
+    setSucursalId(null);
   };
 
   const confirmEdit = () => {
@@ -51,13 +96,16 @@ function BMInstituto(props) {
         denominacion: newDenominacion,
         ee: selectedInstituto.ee,
         cuesede: selectedInstituto.cuesede,
-        tipoinstitutoId: selectedInstituto.tipoinstitutoId,
-        CiudadId: selectedInstituto.CiudadId,
-        sucursalId: selectedInstituto.sucursalId,
+        tipoinstitutoId: tipoInstitutoId,
+        CiudadId: ciudadId,
+        sucursalId: sucursalId,
       })
       .then((response) => {
         setSelectedInstituto(null);
         setNewDenominacion("");
+        setTipoInstitutoId(null);
+        setCiudadId(null);
+        setSucursalId(null);
         loadInstitutos();
         console.log("Instituto editado correctamente");
       })
@@ -73,6 +121,9 @@ function BMInstituto(props) {
         loadInstitutos();
         setSelectedInstituto(null);
         setNewDenominacion("");
+        setTipoInstitutoId(null);
+        setCiudadId(null);
+        setSucursalId(null);
         console.log("Instituto eliminado correctamente");
       })
       .catch((error) => {
@@ -81,14 +132,14 @@ function BMInstituto(props) {
   };
 
   return (
-    <div div className="bg-sky-800 text-white py-2 px-4 rounded-md w-auto">
+    <div className="bg-sky-800 text-white py-2 px-4 rounded-md w-auto">
       <h2 className="text-lg font-bold mb-4 text-white">Edición de Institutos</h2>
 
       <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
         <div className="rounded-md w-[800px] bg-sky-600 text-white font-bol">
           <input
             id="searchQuery"
-            className="border-2 border-primary rounded-md w-full h-[50px] "
+            className=" border-primary rounded-md w-full h-[50px] "
             placeholder="Buscar instituto"
             value={searchQuery}
             onChange={(e) => {
@@ -112,18 +163,69 @@ function BMInstituto(props) {
             value={newDenominacion}
             onChange={(e) => setNewDenominacion(e.target.value)}
           />
-          <button
-            className="bg-primary rgb(100, 193, 218) cursor-pointer p-3 m-2 rounded-md"
-            onClick={confirmEdit}
-          >
-            Confirmar
-          </button>
-          <button
-            className="bg-primary rgb(100, 193, 218) cursor-pointer p-3 m-2 rounded-md"
-            onClick={cancelEdit}
-          >
-            Cancelar
-          </button>
+
+          <label htmlFor="tipoinstitutoId" className="block">
+            Tipoinstituto:
+            <select
+              id="tipoinstitutoId"
+              name="tipoinstitutoId"
+              value={tipoInstitutoId}
+              onChange={(e) => setTipoInstitutoId(e.target.value)}
+              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            >
+              <option value="">Seleccionar Tipo de Instituto</option>
+              {tipoinstitutos.map(tipo => (
+                <option key={tipo.id} value={tipo.id}>{tipo.descripcion}</option>
+              ))}
+            </select>
+          </label>
+
+          <label htmlFor="ciudadId" className="block">
+            Ciudad:
+            <select
+              id="ciudadId"
+              name="ciudadId"
+              value={ciudadId}
+              onChange={(e) => setCiudadId(e.target.value)}
+              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            >
+              <option value="">Seleccionar Ciudad</option>
+              {ciudades.map(ciudad => (
+                <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>
+              ))}
+            </select>
+          </label>
+
+          <label htmlFor="sucursalId" className="block">
+            Sucursal:
+            <select
+              id="sucursalId"
+              name="sucursalId"
+              value={sucursalId}
+              onChange={(e) => setSucursalId(e.target.value)}
+              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            >
+              <option value="">Seleccionar Sucursal</option>
+              {sucursales.map(sucursal => (
+                <option key={sucursal.id} value={sucursal.id}>{sucursal.descripcion}</option>
+              ))}
+            </select>
+          </label>
+
+          <div className="flex items-center space-x-4 mt-2">
+            <button
+              className="border-2 rounded-lg h-10 w-20 text-sm bg-blue-300 text-white"
+              onClick={confirmEdit}
+            >
+              Confirmar
+            </button>
+            <button
+              className="border-2 rounded-lg border-red-300 h-10 w-20 text-sm bg-red-300 text-white"
+              onClick={cancelEdit}
+            >
+              Cancelar
+            </button>
+          </div>
         </div>
       ) : null}
 
@@ -142,7 +244,7 @@ function BMInstituto(props) {
             <div className="flex items-center space-x-4">
               <button
                 className="border-2 rounded-lg h-10 w-20 text-sm bg-blue-300 text-white"
-                onClick={() => editInstituto(instituto.cue)}
+                onClick={() => editInstituto(instituto.id)} // Cambia instituto.cue por instituto.id
               >
                 Editar
               </button>

@@ -1,3 +1,4 @@
+
 import React, { createContext, useState } from 'react';
 
 // Contexto para compartir información entre componentes
@@ -14,7 +15,9 @@ export const RolProvider = ({ children }) => {
   );
 };
 
-{/*import React, {createContext, useContext, useState} from 'react';
+
+/*
+import React, {createContext, useContext, useState} from 'react';
 
 const RolContext = createContext();
 
@@ -33,4 +36,3 @@ export const RolProvider = ({children}) => {
     );
 };
 */
-}

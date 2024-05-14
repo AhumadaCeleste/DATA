@@ -1,53 +1,55 @@
 const db = require('../MODELS');
 const { Op } = require('sequelize');
-const bcrypt = require('bcrypt'); // Importamos bcrypt para cifrar las contraseñas
-const jwt = require('jsonwebtoken'); // Importamos jsonwebtoken para generar tokens de autenticación
-const llave = require('dotenv').config().parsed.SECRET_KEY; // Importamos la llave secreta para firmar los tokens
+const bcrypt = require('bcrypt'); 
+const jwt = require('jsonwebtoken'); 
+const llave ='secreto';
 
+//login usuario
+exports.login = (req, res) => {
+  db.usuario.findOne({
+      where: {
+          dni: req.body.dni 
+      }
+  })
+  .then(usuario => {
+      if(!usuario){
+          res.status(404).send({
+              message: "Usuario no encontrado" 
+          });
+          return;
+      }
+      const passwordValido = bcrypt.compareSync(req.body.password, usuario.password); 
+      if(!passwordValido){
+          res.status(401).send({
+              message: "Contraseña incorrecta"
+          });
+          return;
+      }
 
-/*
-Lo que me dio gpt, para implementar jwt bycycrpt
+      const token = jwt.sign({id: usuario.id}, llave, {
+          expiresIn: '1h' // Generamos un token de autenticación que expira en 24 horas
+      });
+      
+      let usuarioToSend = {...usuario.dataValues}; // Hacemos una copia del objeto de datos del usuario
+      delete usuarioToSend.password; // Eliminamos la propiedad de la contraseña
+      usuarioToSend.token = token; // Agregamos el token al objeto de datos del usuario
+      usuarioToSend.msg = 'Login exitoso'; 
+      usuario = usuarioToSend;
 
-exports.filtrar = async (req, res) => {
-    const palabrasClave = req.body.palabrasClave; // Suponiendo que las palabras clave vienen en el cuerpo de la solicitud
-    const token = req.headers.authorization.split(' ')[1]; // Obtener el token de autorización
+      res.status(200).send({
+          usuario
+      });
+      console.log(usuario) 
 
-    try {
-        const decodedToken = jwt.verify(token, 'secreto'); // Verificar el token
-        if (!decodedToken) {
-            return res.status(401).json({ message: 'Token inválido' });
-        }
-
-        const usuarios = await Promise.all(palabrasClave.map(async (palabraClave) => {
-            const usuario = await db.usuario.findByPk(usuarioId, {
-                include: [{
-                    model: db.rol,
-                    include: [db.permiso]
-                }]
-            });
-            return usuario;
-        }));
-
-        const permisos = usuarios.map((usuario) => {
-            return usuario.roles ? usuario.roles.reduce((acc, rol) => {
-                return acc.concat(rol.permisos);
-            }, []) : [];
-        });
-
-        res.json(permisos);
-    } catch (error) {
-        console.error('Error al obtener los permisos de los usuarios:', error);
-        res.status(500).json({ message: 'Error interno del servidor' });
-    }
-};
-
-*/
+  }).catch(error => {
+    res.status(500).send(error);
+    });
+}
 
 
 //nuevo usuario
 exports.nuevo = (req, res, next) => {
-  //if(!req.body.dni ||!req.body.password ||!req.body.idrol){
-  if(!req.body.dni ||!req.body.password){
+  if(!req.body.dni ||!req.body.password ||!req.body.idrol){
       res.status(400).send({
           message: "Faltan datos" 
       });
@@ -140,7 +142,7 @@ exports.lista = (req, res) => {
 exports.listafull = (req,res) =>{
   console.log('Procesamiento de lista');
   // buscar la lista de usuarios
-  db.usuario.findAll({include:db.rol}) /*include: db.roles*/
+  db.usuario.findAll({include:db.rol}) 
       .then( registros => {
           res.status(200).send(registros);
       })

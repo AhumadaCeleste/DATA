@@ -1,6 +1,6 @@
 import React from "react";
 import backgroundImage from "../IMAGES/Equipo.jpg";
-import logo from "../IMAGES/LogoDW1.jpg";
+import logo from "../IMAGES/Logo Data-wave.png";
 import logo1 from "../IMAGES/LogoTrainingAndDevelopment.jpg";
 import logo2 from "../IMAGES/LogoUniversityOfTexas.jpg";
 import logo3 from "../IMAGES/LogoWashingtonStateUniversity.jpg";
@@ -227,8 +227,11 @@ const Inicio = () => {
                 Descubre por qué tantas instituciones educativas eligen Data Wave para gestionar
                 sus datos y mejorar sus procesos educativos.
             </p>
-        </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        </p><div className="row">
+    <div className="col-md-12 d-flex justify-content-center">
+        <a href="#" className="btn btn-primary mt-4 bg-sky-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Regresar al inicio</a>
+    </div>
+</div>
                 </div>
             </div>
         </div>
