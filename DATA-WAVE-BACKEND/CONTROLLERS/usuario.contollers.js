@@ -33,7 +33,7 @@ exports.login = (req, res) => {
       let usuarioToSend = {...usuario.dataValues}; // Hacemos una copia del objeto de datos del usuario
       delete usuarioToSend.password; // Eliminamos la propiedad de la contraseña
       usuarioToSend.token = token; // Agregamos el token al objeto de datos del usuario
-      usuarioToSend.msg = 'Login exitoso'; 
+      usuarioToSend.msg = 'Login exitoso___'; 
       usuario = usuarioToSend;
 
       res.status(200).send({
@@ -100,6 +100,39 @@ exports.nuevo = (req, res, next) => {
 
   });
 }
+
+exports.verificar = (req, res) => {
+  console.log('Entrando al verificador: ',req.body.token);
+  const token = req.body.token; 
+  if(!token){
+      res.status(403).send({
+          message: "No se proporcionó un token" 
+      });
+      return;
+  }
+  jwt.verify(token, llave, (err, decoded) => {
+      if(err){
+          res.status(401).send({
+              message: "Token inválido" 
+          });
+          console.log('Token inválido');
+          return;
+      }
+      db.usuario.findByPk(decoded.id)
+      .then(usuario => {
+          let usuarioToSend = {...usuario.dataValues}; // Hacemos una copia del objeto de datos del usuario
+          delete usuarioToSend.password; 
+          usuario = usuarioToSend;
+          res.status(200).send({
+              usuario
+          });
+          console.log(usuario)
+      }).catch(error => {
+        res.status(500).send(error);
+        });
+  });
+};
+
 
 
 exports.filtrar = async (req, res) => {
