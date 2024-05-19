@@ -1,5 +1,3 @@
-/*
-SEGUIR
 import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -141,5 +139,4 @@ function CrearOferta() {
   );
 }
 
-export default AltaProducto;
-*/
+export default CrearOferta;

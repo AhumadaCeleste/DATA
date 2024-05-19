@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-//import { useRol } from "../CONTEXT/RolContext";
-import { useNavigate } from "react-router-dom";
-import { loginUser } from "../SERVICE/Usuariologin.service";
+import React, {useState, useEffect} from "react";
+import { useRol } from "../CONTEXT/RolContext";
+import {useNavigate} from "react-router-dom";
+import {loginUser} from "../SERVICE/Usuariologin.service";
 import backgroundImage from "../IMAGES/Equipo.jpg";
 import logo from "../IMAGES/Logo Data-wave.png";
 import logo1 from "../IMAGES/LogoTrainingAndDevelopment.jpg";
@@ -11,136 +11,124 @@ import logo4 from "../IMAGES/LogoWiseOwl.jpg";
 import logo5 from "../IMAGES/LogoAcademy.png";
 
 const Inicio = () => {
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); 
-  const [SiglaRol, setSiglaRol] = useState(0);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const [SiglaRol, setSiglaRol] = useState(0);
 
+    const handleLogin = async () => {
+        try {
+            const dni = document
+                .getElementById('dni')
+                .value;
+            const password = document
+                .getElementById('password')
+                .value;
+            const res = await loginUser(dni, password);
+            console.log("entro a Usuario inicio---- res");
+            console.log("res.idrol:", res.usuario.idrol);
+            // El res regresa con todos lo datos, pero al querer acceder a una propiedad del
+            // objeto idrol retorna = undefined
+            if (res) {
+                console.log('resultado in');
+                setSiglaRol(res.usuario.idrol);
+                console.log("*******", res.usuario.idrol);
+            } else {
+                alert("DNI o contraseña incorrecta");
+            }
+            if (res.usuario.idrol === 1) {
+                console.log("******* inspector");
+                navigate("/inspector");
+            } else if (res.usuario.idrol === 2) {
+                console.log("******* director");
+                navigate("/director");
+            } else if (res.usuario.idrol === 3) {
+                console.log("******* secretario");
+                navigate("/secretario");
+            }
+        } catch (error) {
+            setError('DNI o contraseña incorrectos');
+        }
+    };
 
-  const handleLogin = async () => {
-    try {
-      const dni = document.getElementById('dni').value;
-      const password = document.getElementById('password').value;
-      const res = await loginUser(dni, password);
-      console.log("entro a Usuario inicio---- res")
-      console.log("res:", res);
-      console.log("res.idrol:", res.id);
-      //El res regresa con todos lo datos, pero al querer 
-      //acceder a una propiedad del objeto 
-      //idrol retorna = undefined
-      if (res) {
-        console.log('resultado in');
-        debugger; 
-        setSiglaRol(res.idrol);
-        console.log("*******", SiglaRol);
-      } else {
-        alert("DNI o contraseña incorrecta");
-      }
-
-      
-      /*
-      if (res.idrol === 1) {
-        navigate("/inspector");
-      } else if (res.idrol === 2) {
-        navigate("/director");
-      } else if (res.idrol === 3) {
-        navigate("/secretario");
-      }
-      */
-   
-      navigate("/inspector");
-
-    } catch (error) {
-      setError('DNI o contraseña incorrectos');
-    }
-  };
-
-  return (
-    <div className="bg-gray-800">
-      <img
-        src={logo}
-        alt="Data Wave Logo"
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          height: "115px",
-          width: "auto",
-          borderRadius: "50%",
-          zIndex: "1000",
-        }}
-      />
-      <div className="container-fluid">
-        <div className="row justify-content-center">
-          <div
-            className="col-md-12 d-flex justify-content-end align-items-center"
-            style={{
-              backgroundImage: `url(${backgroundImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              padding: "50px",
-              borderRadius: "10px",
-              height: "500px",
-            }}
-          >
-            <div
-              className="bg-color shadow-md rounded px-10 pt-6 pb-8 mb-8 mt-5"
-              style={{
-                maxWidth: "600px",
-              }}
-            >
-              <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2" htmlFor="username">
-                  Usuario
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="dni"
-                  type="text"
-                  placeholder="D.N.I"
-                />
-              </div>
-              <div className="mb-6">
-                <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
-                  Contraseña
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="password"
-                  type="password"
-                  placeholder="******************"
-                />
-              </div>
-              <div className="flex flex-row justify-between p-1">
-                <button
-                  className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-                  type="button"
-                  onClick={handleLogin}
-                >
-                  Iniciar sesión
-                </button>
-                <button
-                  className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
-                  type="button"
-                >
-                  Solicitar Usuario
-                </button>
-              </div>
-              <br />
-              <br />
-              <div className="mt-4">
-                <a
-                  className="inline-block align-baseline font-bold text-sm text-white hover:text-blue-800"
-                  href="#"
-                >
-                  ¿Olvidaste tu contraseña?
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br /> 
-        <div className="row">
+    return (
+        <div className="bg-gray-800">
+            <img
+                src={logo}
+                alt="Data Wave Logo"
+                style={{
+                    position: "absolute",
+                    top: "10px",
+                    left: "10px",
+                    height: "115px",
+                    width: "auto",
+                    borderRadius: "50%",
+                    zIndex: "1000"
+                }}/>
+            <div className="container-fluid">
+                <div className="row justify-content-center">
+                    <div
+                        className="col-md-12 d-flex justify-content-end align-items-center"
+                        style={{
+                            backgroundImage: `url(${backgroundImage})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundColor: "rgba(255, 255, 255, 0.8)",
+                            padding: "50px",
+                            borderRadius: "10px",
+                            height: "500px"
+                        }}>
+                        <div
+                            className="bg-color shadow-md rounded px-10 pt-6 pb-8 mb-8 mt-5"
+                            style={{
+                                maxWidth: "600px"
+                            }}>
+                            <div className="mb-4">
+                                <label className="block text-white text-sm font-bold mb-2" htmlFor="username">
+                                    Usuario
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="dni"
+                                    type="text"
+                                    placeholder="D.N.I"/>
+                            </div>
+                            <div className="mb-6">
+                                <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
+                                    Contraseña
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="password"
+                                    type="password"
+                                    placeholder="******************"/>
+                            </div>
+                            <div className="flex flex-row justify-between p-1">
+                                <button
+                                    className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+                                    type="button"
+                                    onClick={handleLogin}>
+                                    Iniciar sesión
+                                </button>
+                                <button
+                                    className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
+                                    type="button">
+                                    Solicitar Usuario
+                                </button>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div className="mt-4">
+                                <a
+                                    className="inline-block align-baseline font-bold text-sm text-white hover:text-blue-800"
+                                    href="#">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div className="row">
                     <div className="col-md-4">
                         <div className="p-2 text-gray-200 text-xl">
                             <svg
@@ -183,10 +171,13 @@ const Inicio = () => {
                             </svg>
                             <h1 className="font-bold mb-2 p-2">Acceso desde la Nube</h1>
                             <p className="font-bold">
-                            Accede a tus datos en cualquier momento y lugar con Data Wave. 
-                            Nuestra plataforma te permite acceder de forma segura y conveniente a 
-                            la información de tu institución educativa desde la nube. Con esta capacidad, puedes gestionar y analizar la información eficientemente, sin importar tu ubicación. Descubre cómo el acceso desde la nube en Data Wave puede mejorar la flexibilidad y accesibilidad de tus datos. Únete a nosotros y experimenta la 
-                            conveniencia de acceder a tus datos desde cualquier lugar.
+                                Accede a tus datos en cualquier momento y lugar con Data Wave. Nuestra
+                                plataforma te permite acceder de forma segura y conveniente a la información de
+                                tu institución educativa desde la nube. Con esta capacidad, puedes gestionar y
+                                analizar la información eficientemente, sin importar tu ubicación. Descubre cómo
+                                el acceso desde la nube en Data Wave puede mejorar la flexibilidad y
+                                accesibilidad de tus datos. Únete a nosotros y experimenta la conveniencia de
+                                acceder a tus datos desde cualquier lugar.
                             </p>
                         </div>
                     </div>
@@ -207,84 +198,96 @@ const Inicio = () => {
                             </svg>
                             <h1 className="font-bold mb-2 p-2">Carga de Datos Segura</h1>
                             <p className="font-bold">
-                            En Data Wave, la seguridad de tus datos es nuestra prioridad. 
-                            Garantizamos una carga segura y fiable, protegiendo la información 
-                            sensible de tu institución educativa. Utilizamos tecnologías de seguridad 
-                            avanzadas, incluyendo cifrado y autenticación, para asegurar la integridad de tus datos en todo momento. Con Data Wave, tus datos están protegidos contra amenazas externas y se mantienen confidenciales. Únete a nosotros y experimenta la tranquilidad 
-                            de saber que tus datos están seguros.
+                                En Data Wave, la seguridad de tus datos es nuestra prioridad. Garantizamos una
+                                carga segura y fiable, protegiendo la información sensible de tu institución
+                                educativa. Utilizamos tecnologías de seguridad avanzadas, incluyendo cifrado y
+                                autenticación, para asegurar la integridad de tus datos en todo momento. Con
+                                Data Wave, tus datos están protegidos contra amenazas externas y se mantienen
+                                confidenciales. Únete a nosotros y experimenta la tranquilidad de saber que tus
+                                datos están seguros.
                             </p>
-                          
+
                         </div>
                     </div>
                 </div>
                 <hr/>
             </div>
-            <div className="d-flex justify-content-center align-items-center flex-wrap bg-gray-300">
+            <div
+                className="d-flex justify-content-center align-items-center flex-wrap bg-gray-300">
                 <h1 className="p-2 text-gray-800 text-xl font-bold">NUESTROS CLIENTES</h1>
-                <div className="d-flex justify-content-around align-items-center flex-wrap w-100">
+                <div
+                    className="d-flex justify-content-around align-items-center flex-wrap w-100">
                     <img
                         src={logo1}
                         width="190"
                         alt="Logo University of Bridgewater"
                         className="m-2"
-                        style={{ borderRadius: "5px" }}
-                    />
+                        style={{
+                            borderRadius: "5px"
+                        }}/>
                     <img
                         src={logo2}
                         width="170"
                         alt="Logo University of Texas"
                         className="m-2"
-                        style={{ borderRadius: "90px" }}
-                    />
+                        style={{
+                            borderRadius: "90px"
+                        }}/>
                     <img
                         src={logo3}
                         width="300"
                         alt="Logo University of Washington"
                         className="m-2"
-                        style={{ borderRadius: "5px" }}
-                    />
+                        style={{
+                            borderRadius: "5px"
+                        }}/>
                     <img
                         src={logo4}
                         width="200"
                         alt="Logo University of WiseOwl"
                         className="m-2"
-                        style={{ borderRadius: "5px" }}
-                    />
+                        style={{
+                            borderRadius: "5px"
+                        }}/>
                     <img
                         src={logo5}
                         width="145"
                         alt="Logo University of Academy"
                         className="m-2"
-                        style={{ borderRadius: "5px" }}
-                    />
+                        style={{
+                            borderRadius: "5px"
+                        }}/>
                 </div>
             </div>
             <div class="bg-gray-200 font-bold mb-2 text-lg p-4">
-    <div class="card-body">
-        <p class="card-text">
-            <p>
-                <h1 class="text-xl font-bold mb-2">PORQUE NOS ELIGEN</h1>
-                En Data Wave, nos eligen nuestros clientes por nuestra dedicación a la
-                excelencia en la gestión educativa. Nuestra plataforma ofrece soluciones
-                innovadoras y fiables que ayudan a las instituciones educativas a mejorar su
-                eficiencia y rendimiento.
-            </p>
-            <p>
-                Nuestros clientes valoran especialmente nuestra capacidad para proporcionar
-                informes detallados y personalizados, así como para garantizar la seguridad y
-                confidencialidad de sus datos. Además, nuestro enfoque en la accesibilidad y
-                facilidad de uso nos ha convertido en la opción preferida para instituciones
-                educativas de todo el mundo.
-            </p>
-            <p>
-                Descubre por qué tantas instituciones educativas eligen Data Wave para gestionar
-                sus datos y mejorar sus procesos educativos.
-            </p>
-        </p><div className="row">
-    <div className="col-md-12 d-flex justify-content-center">
-        <a href="#" className="btn btn-primary mt-4 bg-sky-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Regresar al inicio</a>
-    </div>
-</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <p>
+                            <h1 class="text-xl font-bold mb-2">PORQUE NOS ELIGEN</h1>
+                            En Data Wave, nos eligen nuestros clientes por nuestra dedicación a la
+                            excelencia en la gestión educativa. Nuestra plataforma ofrece soluciones
+                            innovadoras y fiables que ayudan a las instituciones educativas a mejorar su
+                            eficiencia y rendimiento.
+                        </p>
+                        <p>
+                            Nuestros clientes valoran especialmente nuestra capacidad para proporcionar
+                            informes detallados y personalizados, así como para garantizar la seguridad y
+                            confidencialidad de sus datos. Además, nuestro enfoque en la accesibilidad y
+                            facilidad de uso nos ha convertido en la opción preferida para instituciones
+                            educativas de todo el mundo.
+                        </p>
+                        <p>
+                            Descubre por qué tantas instituciones educativas eligen Data Wave para gestionar
+                            sus datos y mejorar sus procesos educativos.
+                        </p>
+                    </p>
+                    <div className="row">
+                        <div className="col-md-12 d-flex justify-content-center">
+                            <a
+                                href="#"
+                                className="btn btn-primary mt-4 bg-sky-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Regresar al inicio</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

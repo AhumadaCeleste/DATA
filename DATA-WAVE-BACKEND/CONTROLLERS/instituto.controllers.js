@@ -107,28 +107,28 @@ exports.eliminar = (req, res) => {
     db.instituto.destroy({
         where: { cue: cue }
     })
-        .then(num => {
-            if (num > 0) {
-                res.status(201).send({
-                    resultado: true
-                });
-            } else {
-                res.status(500).send({
-                    resultado: false,
-                    msg: 'No se pudo eliminar el Instituto',
-                    body: {
-                        cue: cue
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            res.status(501).send({
-                resultado: false,
-                msg: error
+    .then(num => {
+        if (num > 0) {
+            res.status(200).send({
+                resultado: true,
+                msg: 'Instituto eliminado correctamente'
             });
+        } else {
+            res.status(404).send({
+                resultado: false,
+                msg: 'No se pudo encontrar el Instituto',
+                body: { cue: cue }
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error al eliminar el Instituto:', error);
+        res.status(500).send({
+            resultado: false,
+            msg: 'Error al eliminar el Instituto',
+            error: error.message
         });
+    });
 };
 
 //-----------------------------------listaPag

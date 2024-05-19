@@ -1,4 +1,4 @@
 module.exports = {
     PORT: 3001,
-    OPEN_AI:"dfeg23235dfgsdgfs" //NO SE QUE ES ESTO PREGUNTAR AL PROFE
+    OPEN_AI:"dfeg23235dfgsdgfs" 
 };

@@ -1,3 +1,5 @@
+const { ofertaxinstituto } = require('../MODELS');
+
 module.exports = (app) => {
 
     const Auth = require('../MIDDLEWARES/Auth'); // Importa el módulo 'Auth'
@@ -13,6 +15,8 @@ module.exports = (app) => {
     const ofertaRouters = require('./oferta.routers');
     const usuarioRouters = require('./usuario.routers');
     const cohorteRouters = require('./cohorte.routers');
+    const ofertaxinstitutoRouters = require('./ofertaxinstituto.routers');
+
 
     
     // Usa las rutas:
@@ -26,11 +30,8 @@ module.exports = (app) => {
     app.use('/oferta', ofertaRouters); 
     app.use('/usuario',usuarioRouters);
     app.use('/cohorte',cohorteRouters);
+    app.use('/ofertaxinstituto', ofertaxinstitutoRouters);
+   
+   
 
-    
-    
-    /*
-    //app.use('/usuario',usuarioRouters);
-    //eJ: SI USARA AUTH EN UNA RUTA CLIENTE: app.use('/cliente', auth, ClienteRoutes)
-    */
-}
+} 

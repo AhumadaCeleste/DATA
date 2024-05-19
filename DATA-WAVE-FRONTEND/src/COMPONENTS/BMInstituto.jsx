@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 
 function BMInstituto(props) {
   const [institutos, setInstitutos] = useState([]);
@@ -14,6 +16,8 @@ function BMInstituto(props) {
   const [ciudadId, setCiudadId] = useState(null);
   const [sucursalId, setSucursalId] = useState(null);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     loadInstitutos();
@@ -71,6 +75,8 @@ function BMInstituto(props) {
       });
   };
 
+ 
+
   const editInstituto = (institutoId) => {
     const institutoToEdit = institutos.find((instituto) => instituto.id === institutoId);
     if (institutoToEdit) {
@@ -82,6 +88,11 @@ function BMInstituto(props) {
     }
   };
 
+  
+  const cancelCerrar = () => {
+    navigate("/inspector");
+  };
+
   const cancelEdit = () => {
     setSelectedInstituto(null);
     setNewDenominacion("");
@@ -90,6 +101,7 @@ function BMInstituto(props) {
     setSucursalId(null);
   };
 
+  
   const confirmEdit = () => {
     axios
       .put(`http://localhost:3001/instituto/actualizar/${selectedInstituto.cue}`, {
@@ -131,15 +143,16 @@ function BMInstituto(props) {
       });
   };
 
+
   return (
-    <div className="bg-sky-800 text-white py-2 px-4 rounded-md w-auto">
+    <div className="bg-sky-800 text-white py-2 px-4 rounded-md w-auto sm:w-[150px]">
       <h2 className="text-lg font-bold mb-4 text-white">Edición de Institutos</h2>
 
       <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
-        <div className="rounded-md w-[800px] bg-sky-600 text-white font-bol">
+        <div className="rounded-md w-full sm:w-[800px] bg-sky-600 text-white font-bol">
           <input
             id="searchQuery"
-            className=" border-primary rounded-md w-full h-[50px] "
+            className="border-primary rounded-md w-full h-[50px]"
             placeholder="Buscar instituto"
             value={searchQuery}
             onChange={(e) => {
@@ -151,7 +164,7 @@ function BMInstituto(props) {
       </div>
 
       {selectedInstituto ? (
-        <div className="mt-4 rounded-md w-[800px]">
+        <div className="mt-4 rounded-md w-full sm:w-[800px]">
           <h3 className="text-xl font-bold mb-2 cursor-pointer">
             Editar Instituto: {selectedInstituto.denominacion}
           </h3>
@@ -212,55 +225,73 @@ function BMInstituto(props) {
             </select>
           </label>
 
-          <div className="flex items-center space-x-4 mt-2">
-            <button
-              className="border-2 rounded-lg h-10 w-20 text-sm bg-blue-300 text-white"
-              onClick={confirmEdit}
-            >
-              Confirmar
-            </button>
-            <button
-              className="border-2 rounded-lg border-red-300 h-10 w-20 text-sm bg-red-300 text-white"
-              onClick={cancelEdit}
-            >
-              Cancelar
-            </button>
-          </div>
+          <div class="">
+  <button
+    class="mt-2 w-24 bg-sky-600 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+    onClick={confirmEdit}
+  >
+    Confirmar
+  </button>
+  <button
+    class="mt-2 w-24 border-red-300 font-bold bg-red-300 text-white hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+    onClick={cancelEdit}
+  >
+    Cancelar
+  </button>
+  
+</div>
         </div>
       ) : null}
 
-      <ul className="mt-4 bg-sky-600 text-white font-bold rounded">
+      <ul className="rounded-md w-[800px] mt-4 space-y-5">
         {filteredInstitutos.map((instituto) => (
-          <div
-            className=" bg-sky-600 text-white shadow-lg rounded-lg p-6 mb-4 flex justify-between items-center h-20 w-[800px]"
-            key={instituto.cue}
+          <li
+            key={instituto.id} //"bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline mb-8 text-center block w-full
+            className="bg-sky-600 text-white font-bold rounded cursor-pointer flex justify-between items-center"
           >
-            <input
-              className="text-left align-middle w-1/2 p-2 mr-2 bg-sky-600 text-white"
-              readOnly={true}
-              type="text"
-              value={instituto.denominacion}
-            />
-            <div className="flex items-center space-x-4">
+            {instituto.denominacion}
+            <div>
               <button
-                className="border-2 rounded-lg h-10 w-20 text-sm bg-blue-300 text-white"
-                onClick={() => editInstituto(instituto.id)} // Cambia instituto.cue por instituto.id
+                className=" px-4 py-2 text-sm border bg-sky-600 text-white font-bold hover:bg-gray-700 rounded-md mr-2"
+                onClick={() => editInstituto(instituto.id)}
               >
                 Editar
               </button>
-              
               <button
-                className="border-2 rounded-lg border-red-300 h-10 w-20 text-sm bg-red-300 text-white"
-                onClick={() => deleteInstituto(instituto.cue)}
-              >
-                Eliminar
-              </button>
-            </div>
-          </div>
-        ))}
-      </ul>
+        className="border-2 rounded-lg border-red-300 h-10 w-20 text-sm bg-red-300 text-white"
+        onClick={() => deleteInstituto(instituto.cue)}
+      >
+        Eliminar
+      </button>
     </div>
-  );
+    {instituto.tipoinstituto && (
+      <div>
+        Tipo de Instituto: {instituto.tipoinstituto.descripcion}
+      </div>
+    )}
+    {instituto.ciudad && (
+      <div>
+        Ciudad: {instituto.ciudad.nombre}
+      </div>
+    )}
+    {instituto.sucursal && (
+      <div>
+        Sucursal: {instituto.sucursal.descripcion}
+      </div>
+    )}
+  </li>
+))}
+</ul>
+
+  <button
+    class="mt-2 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+    onClick={cancelCerrar}
+  >
+    Cerrar
+  </button>
+  
+</div>
+);
 }
 
 export default BMInstituto;

@@ -9,39 +9,15 @@ import BMInstituto from './COMPONENTS/BMInstituto';
 import InstList from './COMPONENTS/InstList';
 import Adepartamento from './COMPONENTS/Adepartamento';
 import Inspector from './COMPONENTS/Inspector';
+import Director from './COMPONENTS/Director';
+import Secretario from './COMPONENTS/Secretario';
+import OfertaMatricula from './COMPONENTS/OfertaMatricula';
 import { loginUser } from './SERVICE/Usuariologin.service';
-import { AuthProvider } from './CONTEXT/RolContext';
+
+//import { AuthProvider } from './CONTEXT/RolContext';
 
 function App() {
-  // Lógica de login
-  const [dni, setDni] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  const login = async () => {
-    const res = await loginUser(dni, password);
-    console.log(`resultado: `, res);
-    console.log("Desde App");
-    if (res.resultado) {
-      console.log(res.data);
-      if (res.idrol === 1) {
-        console.log("pagina inspector");
-        navigate("/inspector");
-      } else if (res.idrol === 2) {
-        navigate("/director");
-      } else if (res.idrol === 3) {
-        navigate("/secretario");
-      } 
-    } else {
-      alert("DNI o contraseña de usuario incorrecta");
-    }
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    navigate("/"); 
-  };
-
+ 
   return (
       <div style={{ marginBottom: '50px' }}>
         <Routes>
@@ -52,11 +28,14 @@ function App() {
           <Route path="/instituto/editar" element={<BMInstituto />} />
           <Route path="/departamento/nuevo" element={<Adepartamento />} />
           <Route path="/departamento/actualizar" element={<Adepartamento />} />
-          <Route path="/secretario" element={<Inspector />} />
+          <Route path="/secretario" element={<Secretario />} />
+            <Route path="/cargar-matricula" element={<OfertaMatricula />} />
+          <Route path="/director" element={<Director />} />
           <Route path="/inspector" element={<Inspector />}>
             <Route path="crear-instituto" element={<CrearInstituto />} />
             <Route path="editar-instituto" element={<BMInstituto />} />
           </Route>
+          // Corrige esta línea
           <Route path="*" element={<div>404 - Página no encontrada</div>} />
         </Routes>
         <Footer />

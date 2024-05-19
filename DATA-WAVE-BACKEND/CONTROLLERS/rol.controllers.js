@@ -12,7 +12,6 @@ exports.lista = (req, res) => {
             res.status(500).send(error);
         });
 };
-
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {
     console.log('Procesamiento de rol filtrado');
