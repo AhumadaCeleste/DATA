@@ -44,8 +44,8 @@ exports.filtrar = (req, res) => {
 exports.nuevo = (req, res) => {
     console.log('Nueva oferta por instituto');
     const datanuevoofertaxinstituto = {
-        institutoId: req.body.institutoId,
-        ofertaId: req.body.ofertaId,
+        institutoCue: req.body.institutoCue,
+        ofertumId: req.body.ofertumId,
         matricula: req.body.matricula,
         año: req.body.año,
     };
@@ -67,8 +67,8 @@ exports.actualizar = (req, res) => {
     const id = req.params.id;
     console.log('Actualizar oferta por instituto');
     const dataActualizada = {
-        institutoId: req.body.institutoId,
-        ofertaId: req.body.ofertaId,
+        institutoCue: req.body.institutoCue,
+        ofertumId: req.body.ofertumId,
         matricula: req.body.matricula,
         año: req.body.año,
     };

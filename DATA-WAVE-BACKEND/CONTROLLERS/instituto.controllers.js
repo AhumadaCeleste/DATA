@@ -13,6 +13,18 @@ exports.lista = (req, res) => {
         });
 };
 
+//-----------------------------------listafull
+exports.listafull = (req,res) =>{
+    console.log('Procesamiento de lista de Institutos full');
+    db.instituto.findAll({include:db.tipoinstituto}) 
+        .then( registros => {
+            res.status(200).send(registros);
+        })
+        .catch(error =>{
+            res.status(500).send(error);
+        });
+  };
+
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {
     console.log('Procesamiento de instituto filtrado');

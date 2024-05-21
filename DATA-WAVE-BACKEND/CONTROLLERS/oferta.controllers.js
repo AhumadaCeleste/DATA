@@ -14,6 +14,18 @@ exports.lista = (req, res) => {
         });
 };
 
+//-----------------------------------listafull
+exports.listafull = (req,res) =>{
+    console.log('Procesamiento de lista de Ofertas full');
+    db.oferta.findAll({include:db.cohorte}) 
+        .then( registros => {
+            res.status(200).send(registros);
+        })
+        .catch(error =>{
+            res.status(500).send(error);
+        });
+  };
+
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {
     console.log('Procesamiento de oferta filtrado');

@@ -14,7 +14,7 @@ export async function getInstitutoDetail(institutoId) {
 
 export async function getOfertas() {
   try {
-    const response = await axios.get(`${API_URL}/ofertaxinstituto/lista`);
+    const response = await axios.get(`${API_URL}/oferta/lista`);
     return response.data;
   } catch (error) {
     console.error('Error al obtener las ofertas:', error);

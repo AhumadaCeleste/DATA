@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import { useRol } from "../CONTEXT/RolContext";
 import {useNavigate} from "react-router-dom";
 import {loginUser} from "../SERVICE/Usuariologin.service";
 import backgroundImage from "../IMAGES/Equipo.jpg";
@@ -26,8 +25,6 @@ const Inicio = () => {
             const res = await loginUser(dni, password);
             console.log("entro a Usuario inicio---- res");
             console.log("res.idrol:", res.usuario.idrol);
-            // El res regresa con todos lo datos, pero al querer acceder a una propiedad del
-            // objeto idrol retorna = undefined
             if (res) {
                 console.log('resultado in');
                 setSiglaRol(res.usuario.idrol);
@@ -128,49 +125,68 @@ const Inicio = () => {
                     </div>
                 </div>
                 <br/>
-                <div className="row">
+                <div className="p-8 bg-color shadow-md rounded text-white text-sm text-center">
+                    <div className="bg-gray-600 rounded">
+
+                        <p className="ml-2 font-bold text-lg text-gray-300 p-6">
+                            Bienvenido a Data Wave! Esta es una plataforma integral de gestión educativa
+                            diseñada para transformar la manera en que las instituciones educativas
+                            administran y analizan sus datos. Con una interfaz intuitiva y poderosas
+                            herramientas analíticas, Data Wave permite la tomar decisiones informadas y
+                            estratégicas para mejorar el rendimiento estudiantil y la eficiencia operativa.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row mb-4">
                     <div className="col-md-4">
-                        <div className="p-2 text-gray-200 text-xl">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="45"
-                                height="45"
-                                fill="currentColor"
-                                className="bi bi-file-earmark-text"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-                                <path
-                                    d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
-                            </svg>
-                            <h1 className="font-bold mb-2 p-2">Reportes Personalizados</h1>
-                            <p className="font-bold">
-                                Genera informes detallados y personalizados para analizar el desempeño
-                                académico, la asistencia y otros aspectos clave de tu institución educativa. Con
-                                nuestra herramienta de reportes, puedes visualizar datos de manera efectiva y
-                                tomar decisiones fundamentadas para mejorar la calidad educativa.
+                        <div className="p-2 text-gray-300 text-xl">
+                            <div className="flex items-center mb-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="45"
+                                    height="45"
+                                    fill="currentColor"
+                                    className="bi bi-file-earmark-text"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                    <path
+                                        d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
+                                </svg>
+                                <h1 className="font-bold ml-2 text-2xl text-gray-200">Reportes Personalizados</h1>
+                            </div>
+                            <p className="text-gray-300 font-bold text-lg">
+                                Data-Wave genera informes detallados y personalizados para analizar la
+                                eficiencia y el rendimiento de las prestaciones educativas, optimizando los
+                                recursos y la asistencia, así como otros aspectos clave de las instituciones
+                                educativas. Con nuestra herramienta de reportes, puedes visualizar datos de
+                                manera efectiva y tomar decisiones fundamentadas para mejorar la calidad
+                                educativa.
                             </p>
                         </div>
                     </div>
 
                     <div className="col-md-4">
                         <div className="p-2 text-gray-200 text-xl">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="45"
-                                height="45"
-                                fill="currentColor"
-                                className="bi bi-person-workspace"
-                                viewBox="0 0 16 16">
-                                <path
-                                    fillRule="evenodd"
-                                    d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                                <path
-                                    fillRule="evenodd"
-                                    d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
-                            </svg>
-                            <h1 className="font-bold mb-2 p-2">Acceso desde la Nube</h1>
-                            <p className="font-bold">
+                            <div className="flex items-center mb-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="45"
+                                    height="45"
+                                    fill="currentColor"
+                                    className="bi bi-person-workspace"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M4 16s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-5.95a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.4 5.4 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
+                                </svg>
+                                <h1 className="font-bold ml-2 text-2xl text-gray-200">Acceso desde la Nube</h1>
+                            </div>
+                            <p className="text-gray-300 font-bold text-lg">
                                 Accede a tus datos en cualquier momento y lugar con Data Wave. Nuestra
                                 plataforma te permite acceder de forma segura y conveniente a la información de
                                 tu institución educativa desde la nube. Con esta capacidad, puedes gestionar y
@@ -183,21 +199,23 @@ const Inicio = () => {
                     </div>
                     <div className="col-md-4">
                         <div className="p-2 text-gray-200 text-xl">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="45"
-                                height="45"
-                                fill="currentColor"
-                                className="bi bi-cloud-arrow-down"
-                                viewBox="0 0 16 16">
-                                <path
-                                    fillRule="evenodd"
-                                    d="M7.646 10.854a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 9.293V5.5a.5.5 0 0 0-1 0v3.793L6.354 8.146a.5.5 0 1 0-.708.708z"/>
-                                <path
-                                    d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
-                            </svg>
-                            <h1 className="font-bold mb-2 p-2">Carga de Datos Segura</h1>
-                            <p className="font-bold">
+                            <div className="flex items-center mb-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="45"
+                                    height="45"
+                                    fill="currentColor"
+                                    className="bi bi-cloud-arrow-down"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M7.646 10.854a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 9.293V5.5a.5.5 0 0 0-1 0v3.793L6.354 8.146a.5.5 0 1 0-.708.708z"/>
+                                    <path
+                                        d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
+                                </svg>
+                                <h1 className="font-bold ml-2 text-2xl text-gray-200">Carga de Datos Segura</h1>
+                            </div>
+                            <p className="text-gray-300 font-bold text-lg">
                                 En Data Wave, la seguridad de tus datos es nuestra prioridad. Garantizamos una
                                 carga segura y fiable, protegiendo la información sensible de tu institución
                                 educativa. Utilizamos tecnologías de seguridad avanzadas, incluyendo cifrado y
@@ -206,15 +224,14 @@ const Inicio = () => {
                                 confidenciales. Únete a nosotros y experimenta la tranquilidad de saber que tus
                                 datos están seguros.
                             </p>
-
                         </div>
                     </div>
                 </div>
                 <hr/>
             </div>
             <div
-                className="d-flex justify-content-center align-items-center flex-wrap bg-gray-300">
-                <h1 className="p-2 text-gray-800 text-xl font-bold">NUESTROS CLIENTES</h1>
+                className="mb-4 d-flex justify-content-center align-items-center flex-wrap bg-gray-300">
+                <h1 className="p-2 text-gray-800 font-bold ml-2 text-2xl">NUESTROS CLIENTES</h1>
                 <div
                     className="d-flex justify-content-around align-items-center flex-wrap w-100">
                     <img
@@ -285,7 +302,9 @@ const Inicio = () => {
                         <div className="col-md-12 d-flex justify-content-center">
                             <a
                                 href="#"
-                                className="btn btn-primary mt-4 bg-sky-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Regresar al inicio</a>
+                                className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2 m-4">
+                                Regresar al inicio
+                            </a>
                         </div>
                     </div>
                 </div>

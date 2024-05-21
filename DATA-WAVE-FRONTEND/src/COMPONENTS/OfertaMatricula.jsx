@@ -1,50 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate desde react-router-dom
 
 function OfertaMatricula() {
-  const navigate = useNavigate(); // Usa useNavigate en lugar de useHistory
+
+  const [matricula, setMatricula] = useState("");
+  const currentYear = new Date().getFullYear();
+  const [año, setAño] = useState(currentYear);
+  const [institutoCue, setInstitutoCue] = useState("");
+  const [ofertumId, setOfertumId] = useState("");
   const [institutos, setInstitutos] = useState([]);
-  const [selectedInstituto, setSelectedInstituto] = useState("");
-  const [cue, setCue] = useState("");
-  const [ee, setEe] = useState("");
-  const [cuesede, setCuesede] = useState("");
-  const [tipoinstitutoId, setTipoinstitutoId] = useState("");
-  const [CiudadId, setCiudadId] = useState("");
-  const [sucursalId, setSucursalId] = useState("");
-  const [ciudades, setCiudades] = useState([]);
-  const [tipoinstituto, setTipoinstituto] = useState([]);
-  const [sucursal, setSucursal] = useState([]);
-  const [oferta, setOferta] = useState([]);
-  const [filteredOferta, setFilteredOferta] = useState([]);
-  const [cohorte, setCohorte] = useState([]);
+  const [ofertas, setOfertas] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/ciudad/lista")
-      .then(response => {
-        setCiudades(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener ciudades:", error);
-      });
-
-    axios.get("http://localhost:3001/tipoinstituto/lista")
-      .then(response => {
-        setTipoinstituto(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener tipo instituto:", error);
-      });
-
-    axios.get("http://localhost:3001/cohorte/lista")
-      .then(response => {
-        setCohorte(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener cohorte:", error);
-      });
-
-    axios.get("http://localhost:3001/instituto/lista")
+    axios.get("http://localhost:3001/instituto/listafull")
       .then(response => {
         setInstitutos(response.data);
       })
@@ -52,50 +20,29 @@ function OfertaMatricula() {
         console.error("Error al obtener institutos:", error);
       });
 
-    axios.get("http://localhost:3001/oferta/lista")
+    axios.get("http://localhost:3001/oferta/listafull")
       .then(response => {
-        setOferta(response.data);
+        setOfertas(response.data);
       })
       .catch(error => {
         console.error("Error al obtener oferta:", error);
       });
 
-    axios.get("http://localhost:3001/sucursal/lista")
-      .then(response => {
-        setSucursal(response.data);
-      })
-      .catch(error => {
-        console.error("Error al obtener la sucursal:", error);
-      });
   }, []);
-
-  useEffect(() => {
-    if (selectedInstituto) {
-      const ofertasFiltradas = oferta.filter(o => o.institutoId === parseInt(selectedInstituto));
-      setFilteredOferta(ofertasFiltradas);
-    } else {
-      setFilteredOferta([]);
-    }
-  }, [selectedInstituto, oferta]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const CargaMatricula = {
-      cue,
-      ee,
-      denominacion: selectedInstituto,
-      cuesede,
-      tipoinstitutoId,
-      CiudadId,
-      sucursalId,
-      oferta,
-      cohorte,
+      institutoCue,
+      ofertumId,
+      matricula,
+      año,
     };
     try {
-      const res = await axios.post("http://localhost:3001/instituto/nuevo", CargaMatricula);
+      const res = await axios.post("http://localhost:3001/ofertaxinstituto/nuevo", CargaMatricula);
       console.log(res);
-      alert("Instituto Agregado");
-      navigate('/secretario'); // Redirige a otra ruta después de agregar el instituto
+      alert("Instituto Oferta Agregada");
+      //navigate('/secretario');
     } catch (error) {
       alert(`Error tipo: ${error.response.data.msg}`);
       console.log("Error al enviar el mensaje al back:", error);
@@ -103,165 +50,92 @@ function OfertaMatricula() {
   };
 
   const cancelCerrar = () => {
-    navigate("/inspector"); // Función para redirigir a la ruta "/inspector"
+    //navigate("/secretario");
   };
 
   return (
-    <div className="flex flex-col justify-between h-screen my-4 sm:my-0">
-      <div className="bg-sky-800 text-white py-2 px-4 rounded-md w-[50vw] max-w-screen-lg mx-auto">
+    <div className="flex items-center justify-center h-screen">
+      <div className="bg-sky-800 text-white py-4 px-6 rounded-md w-[50vw] max-w-screen-lg">
         <h2 className="text-lg font-bold mb-4 text-sky-800">Cargar Instituto</h2>
         <form onSubmit={handleSubmit} className="space-y-6 font-bold">
-          <label htmlFor="denominacion" className="block">
+          <label htmlFor="institutoCue" className="block">
             Seleccione el Instituto a cargar Matricula:
             <select
-              id="denominacion"
-              name="denominacion"
-              value={selectedInstituto}
-              onChange={(e) => setSelectedInstituto(e.target.value)}
+              id="institutoCue"
+              name="institutoCue"
+              value={institutoCue}
+              onChange={(e) => setInstitutoCue(e.target.value)}
               required
               className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
             >
               <option value="">Seleccionar Instituto</option>
               {institutos.map(instituto => (
-                <option key={instituto.id} value={instituto.id}>{instituto.denominacion}</option>
+                <option key={instituto.cue} value={instituto.cue}>{`cue: ${instituto.cue} - ee: ${instituto.ee} - ${instituto.denominacion} - tipo: ${instituto.tipoinstituto.descripcion}`}</option>
               ))}
             </select>
           </label>
 
-          <label htmlFor="cue" className="block">
-            Cue:
+          <label htmlFor="ofertumId" className="block ">
+            Seleccione la Oferta a cargar Matricula:
             <select
-              id="cue"
-              name="cue"
-              value={cue}
-              onChange={(e) => setCue(e.target.value)}
+              id="ofertumId"
+              name="ofertumId"
+              value={ofertumId}
+              onChange={(e) => setOfertumId(e.target.value)}
               required
               className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
             >
               <option value="">Seleccionar Oferta</option>
-              {filteredOferta.map(o => (
-                <option key={o.id} value={o.id}>{o.descripcion}</option>
+              {ofertas.map(oferta => (
+                <option key={oferta.id} value={oferta.id}>{`Res: ${oferta.resolucion} - ${oferta.nombre} - Cohorte desde: ${oferta.cohorte.desde} - hasta: ${oferta.cohorte.hasta}`}</option>
               ))}
             </select>
           </label>
 
-          <label htmlFor="ee" className="block text-sky-800">
-            Ee:
+          <label htmlFor="año" className="block text-white">
+            Año: 2024=3°, 2023=2°, 2022=1°
             <input
               type="text"
-              id="ee"
-              name="ee"
-              value={ee}
-              onChange={(e) => setEe(e.target.value)}
+              id="año"
+              name="año"
+              value={año}
+              onChange={(e) => {
+                console.log("Valor de ofertumId:", ofertumId);
+                setAño(e.target.value);
+              }}
               required
               className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
             />
           </label>
 
-          <label htmlFor="cuesede" className="block text-sky-800">
-            Cuesede:
+          <label htmlFor="matricula" className="block text-white">
+            Matricula:
             <input
               type="text"
-              id="cuesede"
-              name="cuesede"
-              value={cuesede}
-              onChange={(e) => setCuesede(e.target.value)}
+              id="matricula"
+              name="matricula"
+              value={matricula}
+              onChange={(e) => setMatricula(e.target.value)}
               required
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
+              className="text-sky-800 w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             />
           </label>
 
-          <label htmlFor="tipoinstitutoId" className="block">
-            Tipo de Instituto:
-            <select
-              id="tipoinstitutoId"
-              name="tipoinstitutoId"
-              value={tipoinstitutoId}
-              onChange={(e) => setTipoinstitutoId(e.target.value)}
-              required
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
+          <div className="flex space-x-2 mt-6">
+            <button
+              type="submit"
+              className="w-24 bg-sky-600 text-white font-bold hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
             >
-              <option value="">Seleccionar Tipo Instituto</option>
-              {tipoinstituto.map(tipoinstituto => (
-                <option key={tipoinstituto.id} value={tipoinstituto.id}>{tipoinstituto.descripcion}</option>
-              ))}
-            </select>
-          </label>
-
-          <label htmlFor="CiudadId" className="block">
-            Ciudad:
-            <select
-              id="CiudadId"
-              name="CiudadId"
-              value={CiudadId}
-              onChange={(e) => setCiudadId(e.target.value)}
-              required
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
+              Agregar
+            </button>
+            <button
+              type="button"
+              className="w-24 bg-red-300 text-white font-bold hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
+              onClick={cancelCerrar}
             >
-              <option value="">Seleccionar ciudad</option>
-              {ciudades.map(ciudad => (
-                <option key={ciudad.id} value={ciudad.id}>{ciudad.nombre}</option>
-              ))}
-            </select>
-          </label>
-
-          <label htmlFor="sucursalId" className="block">
-            Sucursal:
-            <select
-              id="sucursalId"
-              name="sucursalId"
-              value={sucursalId}
-              onChange={(e) => setSucursalId(e.target.value)}
-              required
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
-            >
-              <option value="">Seleccionar la sucursal</option>
-              {sucursal.map(sucursal => (
-                <option key={sucursal.id} value={sucursal.id}>{sucursal.descripcion}</option>
-              ))}
-            </select>
-          </label>
-
-          <label htmlFor="oferta" className="block">
-            Oferta:
-            <select
-              id="oferta"
-              name="oferta"
-              value={oferta}
-              onChange={(e) => setOferta(e.target.value)}
-              required
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
-            >
-              <option value="">Seleccionar oferta</option>
-              {filteredOferta.map(oferta => (
-                <option key={oferta.id} value={oferta.id}>{oferta.descripcion}</option>
-              ))}
-            </select>
-          </label>
-
-          <label htmlFor="cohorte" className="block">
-            Cohorte:
-            <select
-              id="cohorte"
-              name="cohorte"
-              value={cohorte}
-              onChange={(e) => setCohorte(e.target.value)}
-              required
-              className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"
-            >
-              <option value="">Seleccionar cohorte</option>
-              {cohorte.map(cohorte => (
-                <option key={cohorte.id} value={cohorte.id}>{cohorte.descripcion}</option>
-              ))}
-            </select>
-          </label>
-
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
-          >
-            Agregar Instituto
-          </button>
+              Cancelar
+            </button>
+          </div>
         </form>
       </div>
     </div>

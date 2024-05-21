@@ -9,7 +9,15 @@ module.exports = (sequelize) => {
         año: {
             type: DataTypes.INTEGER,
             allowNull: false
-        }
+        },
+        institutoCue: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        ofertumId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
     {
         timestamps: false, // Si no necesitas timestamps

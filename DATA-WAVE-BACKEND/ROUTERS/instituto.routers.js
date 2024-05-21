@@ -5,6 +5,8 @@ const institutocontroller = require('../CONTROLLERS/instituto.controllers');
 // Retornar todos los instituto http://localhost:3001/instituto/lista
 Rutas.get('/lista', institutocontroller.lista);
 
+Rutas.get('/listafull', institutocontroller.listafull);
+
 Rutas.get('/lista/:pag', institutocontroller.listaPag);
 Rutas.get('/lista/:pag/:text', institutocontroller.listaPag);
 

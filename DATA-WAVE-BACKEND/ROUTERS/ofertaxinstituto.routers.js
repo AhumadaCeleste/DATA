@@ -18,6 +18,6 @@ Rutas.delete('/eliminar/:id', ofertaxinstitutocontroller.eliminar);
 Rutas.put('/actualizar/:id', ofertaxinstitutocontroller.actualizar);
 
 // Retornar ofertas por instituto
-Rutas.get('/institutes/:institutoId/offers', ofertaxinstitutocontroller.listaPorInstituto);
+Rutas.get('/instituto/:institutoId/ofertas', ofertaxinstitutocontroller.listaPorInstituto);
 
 module.exports = Rutas;
