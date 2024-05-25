@@ -4,6 +4,7 @@ const ofertacontroller = require('../CONTROLLERS/oferta.controllers');
 // Retornar todos los oferta http://localhost:3001/oferta/lista
 Rutas.get('/lista', ofertacontroller.lista);
 Rutas.get('/listafull', ofertacontroller.listafull);
+Rutas.get('/listafullquery', ofertacontroller.listafullquery);
 
 Rutas.get('/lista/:pag', ofertacontroller.listaPag);
 Rutas.get('/lista/:pag/:text', ofertacontroller.listaPag);

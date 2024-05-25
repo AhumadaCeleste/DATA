@@ -52,6 +52,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "auto": "^11.0.4",
     "postcss": "^8.4.29",
     "prefixer": "^0.0.3",

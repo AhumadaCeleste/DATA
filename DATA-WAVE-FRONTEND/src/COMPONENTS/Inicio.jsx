@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {loginUser} from "../SERVICE/Usuariologin.service";
 import backgroundImage from "../IMAGES/Equipo.jpg";
@@ -10,9 +10,9 @@ import logo4 from "../IMAGES/LogoWiseOwl.jpg";
 import logo5 from "../IMAGES/LogoAcademy.png";
 
 const Inicio = () => {
-    const [error, setError] = useState('');
+    const [, setError] = useState('');
     const navigate = useNavigate();
-    const [SiglaRol, setSiglaRol] = useState(0);
+    const [, setSiglaRol] = useState(0);
 
     const handleLogin = async () => {
         try {
@@ -117,7 +117,7 @@ const Inicio = () => {
                             <div className="mt-4">
                                 <a
                                     className="inline-block align-baseline font-bold text-sm text-white hover:text-blue-800"
-                                    href="#">
+                                    href="datawave.com">
                                     ¿Olvidaste tu contraseña?
                                 </a>
                             </div>
@@ -276,7 +276,7 @@ const Inicio = () => {
                         }}/>
                 </div>
             </div>
-            <div class="bg-gray-200 font-bold mb-2 text-lg p-4">
+            <div class="bg-gray-200 font-bold mb- text-lg p-4">
                 <div class="card-body">
                     <p class="card-text">
                         <p>
@@ -300,11 +300,6 @@ const Inicio = () => {
                     </p>
                     <div className="row">
                         <div className="col-md-12 d-flex justify-content-center">
-                            <a
-                                href="#"
-                                className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2 m-4">
-                                Regresar al inicio
-                            </a>
                         </div>
                     </div>
                 </div>

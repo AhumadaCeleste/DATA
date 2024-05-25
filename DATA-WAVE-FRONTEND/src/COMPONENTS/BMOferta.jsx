@@ -1,8 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-
-
   // video profe: "h-screen:text-size-1xl sm:text-3xl md:text-5xl xl:text-7xl
 
 const BMOferta = () => {

@@ -129,6 +129,28 @@ exports.eliminar = (req, res) => {
 };
 
 // Retornar ofertas por instituto
+
+exports.listaPorInstituto = (req, res) => {
+    console.log('Procesamiento de lista de ofertas por instituto');
+    const institutoId = req.params.institutoId;
+    db.ofertaxinstituto.findAll({
+        where: { institutoCue: institutoId },
+        include: [{
+            model: db.oferta,
+            attributes: ['nombre']
+        }]
+    })
+    .then(ofertas => {
+        res.status(200).send(ofertas);
+    })
+    .catch(error => {
+        console.error('Error al obtener lista de ofertas por instituto:', error);
+        res.status(500).send({ error: 'Error al obtener lista de ofertas por instituto' });
+    });
+};
+
+
+/*
 exports.listaPorInstituto = (req, res) => {
     console.log('Procesamiento de lista de ofertas por instituto');
     const institutoId = req.params.institutoId;
@@ -147,3 +169,4 @@ exports.listaPorInstituto = (req, res) => {
         res.status(500).send({ error: 'Error al obtener lista de ofertas por instituto' });
     });
 };
+*/

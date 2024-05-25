@@ -1,4 +1,5 @@
 const db = require('../MODELS');
+const sequelize = db.sequelize;
 const { Op } = require('sequelize');
 
 //-----------------------------------lista
@@ -25,6 +26,24 @@ exports.listafull = (req,res) =>{
             res.status(500).send(error);
         });
   };
+
+  exports.listafullquery = async (req, res) => {
+    console.log('Procesamiento de lista de Ofertas full');
+    try {
+        const registros = await sequelize.query (`
+        select v.id_oferta, v.resolucion, v.nombre, v.sector, v.descripcion,
+        v.id_cohorte, v.desde, v.hasta, v.id_tipoapertura, v.apertura
+        from v_oferta_full v
+        order by v.nombre, v.desde, v.hasta, v.apertura ` ,
+        {
+            type: sequelize.QueryTypes.SELECT
+        });
+        res.status(200).send(registros);
+    } catch (error) {
+        console.error('Error al obtener la lista completa de Ofertas Cohorte con Tipo Apertura:', error);
+        res.status(500).send({ error: 'Error al obtener la lista completa de Ofertas' });
+    }
+};
 
 //-----------------------------------filtrar
 exports.filtrar = (req, res) => {

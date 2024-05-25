@@ -1,4 +1,5 @@
 const db = require('../MODELS');
+const sequelize = db.sequelize;
 const { Op } = require('sequelize');
 
 //-----------------------------------lista
@@ -11,6 +12,55 @@ exports.lista = (req, res) => {
         .catch(error => {
             res.status(500).send(error);
         });
+};
+
+// lista con query
+exports.listaquery = async (req, res) => {
+    console.log('Procesamiento de lista de Institutos full');
+    try {
+        const registros = await sequelize.query (`
+        SELECT i.cue, i.ee, i.denominacion, i.cuesede,
+	t.id as id_tipo, t.descripcion as instituto, 
+    c.id as id_ciudad, c.nombre as ciudad,
+    d.id as id_dpto, d.nombre as departamento,
+    s.id as id_sucursal, s.descripcion as sucursal
+from instituto i
+	inner join tipoinstituto t ON i.tipoinstitutoId = t.id
+    inner join ciudad c on i.CiudadId=c.id
+    inner join sucursal s on i.sucursalId=s.id
+    inner join departamento d on c.departamentoId=d.id `,
+        {
+            type: sequelize.QueryTypes.SELECT
+        });
+        res.status(200).send(registros);
+    } catch (error) {
+        console.error('Error al obtener la lista completa de Institutos con tipo y sucursal:', error);
+        res.status(500).send({ error: 'Error al obtener la lista completa de Institutos con Ofertas' });
+    }
+};
+
+// lista con query con filtado
+exports.listaqueryfiltro = async (req, res) => {
+    console.log('Procesamiento de lista de Institutos full');
+    const institutoId = req.params.institutoId;  // Obtener el parámetro de entrada
+
+    try {
+        const registros = await sequelize.query(`
+        SELECT i.cue, i.ee, t.descripcion as tipo_isntituto, c.nombre as ciudad, s.descripcion as sucursal
+        from instituto i 
+        inner join tipoinstituto t ON i.tipoinstitutoId = t.id 
+        inner join ciudad c on i.CiudadId=c.id 
+        inner join sucursal s on i.sucursalId=s.id 
+        where i.cue=:institutoId
+        `, {
+            replacements: { institutoId: institutoId },  
+            type: sequelize.QueryTypes.SELECT
+        });
+        res.status(200).send(registros);
+    } catch (error) {
+        console.error('Error al obtener la lista completa de Institutos con Ofertas:', error);
+        res.status(500).send({ error: 'Error al obtener la lista completa de Institutos con Ofertas' });
+    }
 };
 
 //-----------------------------------listafull

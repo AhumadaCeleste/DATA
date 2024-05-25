@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -17,7 +17,14 @@ function BMInstituto(props) {
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
-  const loadInstitutos = useCallback((isSearch = false) => {
+  useEffect(() => {
+    loadInstitutos();
+    loadTiposInstitutos();
+    loadCiudades();
+    loadSucursales();
+  }, []);
+
+  const loadInstitutos = (isSearch = false) => {
     if (!isSearch) {
       axios.get("http://localhost:3001/instituto/lista")
         .then((response) => {
@@ -34,9 +41,9 @@ function BMInstituto(props) {
       );
       setFilteredInstitutos(filtered);
     }
-  }, [institutos]);
+  };
 
-  const loadTiposInstitutos = useCallback(() => {
+  const loadTiposInstitutos = () => {
     axios.get("http://localhost:3001/tipoinstituto/lista")
       .then((response) => {
         setTipoInstitutos(response.data);
@@ -44,9 +51,9 @@ function BMInstituto(props) {
       .catch((error) => {
         console.error("Error al obtener los tipos de instituto:", error);
       });
-  }, []);
+  };
 
-  const loadCiudades = useCallback(() => {
+  const loadCiudades = () => {
     axios.get("http://localhost:3001/ciudad/lista")
       .then((response) => {
         setCiudades(response.data);
@@ -54,9 +61,9 @@ function BMInstituto(props) {
       .catch((error) => {
         console.error("Error al obtener las ciudades:", error);
       });
-  }, []);
+  };
 
-  const loadSucursales = useCallback(() => {
+  const loadSucursales = () => {
     axios.get("http://localhost:3001/sucursal/lista")
       .then((response) => {
         setSucursales(response.data);
@@ -64,14 +71,7 @@ function BMInstituto(props) {
       .catch((error) => {
         console.error("Error al obtener las sucursales:", error);
       });
-  }, []);
-
-  useEffect(() => {
-    loadInstitutos();
-    loadTiposInstitutos();
-    loadCiudades();
-    loadSucursales();
-  }, [loadInstitutos, loadTiposInstitutos, loadCiudades, loadSucursales]);
+  };
 
   const editInstituto = (institutoId) => {
     const institutoToEdit = institutos.find((instituto) => instituto.id === institutoId);
@@ -138,151 +138,151 @@ function BMInstituto(props) {
   };
 
   return (
-    <div className="bg-sky-800 text-white py-4 px-6 rounded-md w-full max-w-2xl mx-auto">
-      <h2 className="text-lg font-bold mb-4 text-white">Edición de Institutos</h2>
-      
-      <div className="bg-sky-600 text-white font-bold rounded mb-4 p-2">
-        <input
-          id="searchQuery"
-          className="border-primary rounded-md w-full h-10 p-2"
-          placeholder="Buscar instituto"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            loadInstitutos(true);
-          }}
-        />
-      </div>
+    <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
+        <h2 className="text-lg font-bold text-center py-2 ">EDITAR - ELIMINAR INSTITUTO</h2>
 
-      {selectedInstituto ? (
-        <div className="mt-4 bg-sky-700 p-4 rounded-md">
-          <h3 className="text-xl font-bold mb-2">
-            Editar Instituto: {selectedInstituto.denominacion}
-          </h3>
-          <input
-            ref={inputRef}
-            autoFocus={true}
-            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
-            type="text"
-            value={newDenominacion}
-            onChange={(e) => setNewDenominacion(e.target.value)}
-          />
-
-          <label htmlFor="tipoinstitutoId" className="block mb-2">
-            Tipoinstituto:
-            <select
-              id="tipoinstitutoId"
-              name="tipoinstitutoId"
-              value={tipoInstitutoId}
-              onChange={(e) => setTipoInstitutoId(e.target.value)}
-              className="w-full py-1 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
-            >
-              <option value="">Seleccionar Tipo de Instituto</option>
-              {tipoinstitutos.map((tipo) => (
-                <option key={tipo.id} value={tipo.id}>
-                  {tipo.descripcion}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label htmlFor="ciudadId" className="block mb-2">
-            Ciudad:
-            <select
-              id="ciudadId"
-              name="ciudadId"
-              value={ciudadId}
-              onChange={(e) => setCiudadId(e.target.value)}
-              className="w-full py-1 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
-            >
-              <option value="">Seleccionar Ciudad</option>
-              {ciudades.map((ciudad) => (
-                <option key={ciudad.id} value={ciudad.id}>
-                  {ciudad.nombre}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label htmlFor="sucursalId" className="block mb-4">
-            Sucursal:
-            <select
-              id="sucursalId"
-              name="sucursalId"
-              value={sucursalId}
-              onChange={(e) => setSucursalId(e.target.value)}
-              className="w-full py-1 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
-            >
-              <option value="">Seleccionar Sucursal</option>
-              {sucursales.map((sucursal) => (
-                <option key={sucursal.id} value={sucursal.id}>
-                  {sucursal.descripcion}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <div className="flex space-x-2">
-            <button
-              className="w-24 bg-sky-600 text-white font-bold hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
-              onClick={confirmEdit}
-            >
-              Confirmar
-            </button>
-            <button
-              className="w-24 border-red-300 font-bold bg-red-300 text-white hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
-              onClick={cancelEdit}
-            >
-              Cancelar
-            </button>
-          </div>
+        <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
+            <div className="rounded-md w-full bg-sky-600 text-white font-bold">
+                <input
+                    id="searchQuery"
+                    className="border-primary rounded-md w-full h-[50px]"
+                    placeholder="Buscar instituto"
+                    value={searchQuery}
+                    onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        loadInstitutos(true);
+                    }}
+                />
+            </div>
         </div>
-      ) : null}
 
-      <ul className="mt-4 space-y-2">
-        {filteredInstitutos.map((instituto) => (
-          <li
-            key={instituto.id}
-            className=" text-white font-bold rounded p-2 flex justify-between items-center"
-          >
-            <div>
-              <div className="table-cell">{instituto.denominacion}</div>
-              {instituto.tipoinstituto && (
-                <div className="text-sm">Tipo de Instituto: {instituto.tipoinstituto.descripcion}</div>
-              )}
-              {instituto.ciudad && (
-                <div className="text-sm">Ciudad: {instituto.ciudad.nombre}</div>
-              )}
-              {instituto.sucursal && (
-                <div className="text-sm">Sucursal: {instituto.sucursal.descripcion}</div>
-              )}
-            </div>
-            <div className="flex space-x-2">
-              <button
-                className="w-24 bg-sky-600 text-white font-bold hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
-                onClick={() => editInstituto(instituto.id)}
-              >
-                Editar
-              </button>
-              <button
-                className="w-24 border-red-300 font-bold bg-red-300 text-white hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
-                onClick={() => deleteInstituto(instituto.cue)}
-              >
-                Eliminar
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+        {selectedInstituto ? (
+            <div className="mt-4 rounded-md w-full">
+                <h3 className="text-xl font-bold mb-2 cursor-pointer">
+                    Editar Instituto: {selectedInstituto.denominacion}
+                </h3>
+                <input
+                    ref={inputRef}
+                    autoFocus={true}
+                    className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+                    type="text"
+                    value={newDenominacion}
+                    onChange={(e) => setNewDenominacion(e.target.value)}
+                />
 
-      <button
-        className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-800 py-1 rounded focus:outline-none focus:shadow-outline"
-        onClick={cancelCerrar}
-      >
-        Cerrar
-      </button>
+                <label htmlFor="tipoinstitutoId" className="block">
+                    Tipoinstituto:
+                    <select
+                        id="tipoinstitutoId"
+                        name="tipoinstitutoId"
+                        value={tipoInstitutoId}
+                        onChange={(e) => setTipoInstitutoId(e.target.value)}
+                        className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+                    >
+                        <option value="">Seleccionar Tipo de Instituto</option>
+                        {tipoinstitutos.map((tipo) => (
+                            <option key={tipo.id} value={tipo.id}>
+                                {tipo.descripcion}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
+                <label htmlFor="ciudadId" className="block">
+                    Ciudad:
+                    <select
+                        id="ciudadId"
+                        name="ciudadId"
+                        value={ciudadId}
+                        onChange={(e) => setCiudadId(e.target.value)}
+                        className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+                    >
+                        <option value="">Seleccionar Ciudad</option>
+                        {ciudades.map((ciudad) => (
+                            <option key={ciudad.id} value={ciudad.id}>
+                                {ciudad.nombre}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
+                <label htmlFor="sucursalId" className="block">
+                    Sucursal:
+                    <select
+                        id="sucursalId"
+                        name="sucursalId"
+                        value={sucursalId}
+                        onChange={(e) => setSucursalId(e.target.value)}
+                        className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+                    >
+                        <option value="">Seleccionar Sucursal</option>
+                        {sucursales.map((sucursal) => (
+                            <option key={sucursal.id} value={sucursal.id}>
+                                {sucursal.descripcion}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+
+                <div className="flex space-x-2">
+                    <button
+                        className="mt-2 w-24 bg-sky-600 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+                        onClick={confirmEdit}
+                    >
+                        Confirmar
+                    </button>
+                    <button
+                        className="mt-2 w-24 border-red-300 font-bold bg-red-300 text-white hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+                        onClick={cancelEdit}
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        ) : null}
+
+        <ul className="rounded-md mt-4 space-y-5 overflow-x-auto">
+            {filteredInstitutos.map((instituto) => (
+                <li
+                    key={instituto.id}
+                    className="bg-sky-600 text-white font-bold rounded cursor-pointer flex justify-between items-center px-4 py-2"
+                >
+                    {instituto.denominacion}
+                    {instituto.tipoinstituto && (
+                        <div className="text-sm">Tipo de Instituto: {instituto.tipoinstituto.descripcion}</div>
+                    )}
+                    {instituto.ciudad && (
+                        <div className="text-sm">Ciudad: {instituto.ciudad.nombre}</div>
+                    )}
+                    {instituto.sucursal && (
+                        <div className="text-sm">Sucursal: {instituto.sucursal.descripcion}</div>
+                    )}
+                    <div className="flex space-x-2">
+                        <button
+                            className="px-4 py-2 text-sm border bg-sky-600 text-white font-bold hover:bg-gray-700 rounded-md mr-2"
+                            onClick={() => editInstituto(instituto.id)}
+                        >
+                            Editar
+                        </button>
+                        <button
+                            className="border-2 rounded-lg border-red-300 h-10 w-20 text-sm bg-red-300 text-white"
+                            onClick={() => deleteInstituto(instituto.cue)}
+                        >
+                            Eliminar
+                        </button>
+                    </div>
+                </li>
+            ))}
+        </ul>
+
+        <button
+            className="mt-2 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+            onClick={cancelCerrar}
+        >
+            Cerrar
+        </button>
     </div>
-  );
+);
 }
 
 export default BMInstituto;
