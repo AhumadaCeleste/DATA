@@ -1,6 +1,5 @@
-const Rutas =  require('express').Router();
+const Rutas = require('express').Router();
 const rolcontroller = require('../CONTROLLERS/rol.controllers');
-
 
 // Retornar todos losrol http://localhost:3001/rol/lista
 Rutas.get('/lista', rolcontroller.lista);
@@ -14,7 +13,7 @@ Rutas.get('/filtrar/:campo/:valor', rolcontroller.filtrar);
 // Nuevo rol http://localhost:3001/rol/nuevo
 Rutas.post('/nuevo', rolcontroller.nuevo);
 
-// Eliminar un rol 
+// Eliminar un rol
 Rutas.delete('/eliminar/:id', rolcontroller.eliminar);
 
 // Actualizar un rol

@@ -19,7 +19,7 @@
     "react-slick": "^0.29.0",
     "react-switch": "^7.0.0",
     "slick-carousel": "^1.8.1",
-    "sweetalert2": "^11.9.0",
+    "sweetalert2": "^11.11.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -32,7 +32,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-restricted-globals": [
+        "error",
+        "event",
+        "fdescribe"
+      ]
+    }
   },
   "browserslist": {
     "production": [

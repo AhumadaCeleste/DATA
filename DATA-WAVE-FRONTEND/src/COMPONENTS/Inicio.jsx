@@ -23,12 +23,9 @@ const Inicio = () => {
                 .getElementById('password')
                 .value;
             const res = await loginUser(dni, password);
-            console.log("entro a Usuario inicio---- res");
             console.log("res.idrol:", res.usuario.idrol);
             if (res) {
-                console.log('resultado in');
                 setSiglaRol(res.usuario.idrol);
-                console.log("*******", res.usuario.idrol);
             } else {
                 alert("DNI o contraseña incorrecta");
             }
@@ -156,7 +153,7 @@ const Inicio = () => {
                                 </svg>
                                 <h1 className="font-bold ml-2 text-2xl text-gray-200">Reportes Personalizados</h1>
                             </div>
-                            <p className="text-gray-300 font-bold text-lg">
+                            <p className="text-gray-300 font-bold text-base">
                                 Data-Wave genera informes detallados y personalizados para analizar la
                                 eficiencia y el rendimiento de las prestaciones educativas, optimizando los
                                 recursos y la asistencia, así como otros aspectos clave de las instituciones
@@ -186,7 +183,7 @@ const Inicio = () => {
                                 </svg>
                                 <h1 className="font-bold ml-2 text-2xl text-gray-200">Acceso desde la Nube</h1>
                             </div>
-                            <p className="text-gray-300 font-bold text-lg">
+                            <p className="text-gray-300 font-bold text-base">
                                 Accede a tus datos en cualquier momento y lugar con Data Wave. Nuestra
                                 plataforma te permite acceder de forma segura y conveniente a la información de
                                 tu institución educativa desde la nube. Con esta capacidad, puedes gestionar y
@@ -215,7 +212,7 @@ const Inicio = () => {
                                 </svg>
                                 <h1 className="font-bold ml-2 text-2xl text-gray-200">Carga de Datos Segura</h1>
                             </div>
-                            <p className="text-gray-300 font-bold text-lg">
+                            <p className="text-gray-300 font-bold text-base">
                                 En Data Wave, la seguridad de tus datos es nuestra prioridad. Garantizamos una
                                 carga segura y fiable, protegiendo la información sensible de tu institución
                                 educativa. Utilizamos tecnologías de seguridad avanzadas, incluyendo cifrado y
@@ -231,12 +228,12 @@ const Inicio = () => {
             </div>
             <div
                 className="mb-4 d-flex justify-content-center align-items-center flex-wrap bg-gray-300">
-                <h1 className="p-2 text-gray-800 font-bold ml-2 text-2xl">NUESTROS CLIENTES</h1>
+                <h1 className="p-2 text-gray-800 font-bold ml-2 text-lg">NUESTROS CLIENTES</h1>
                 <div
                     className="d-flex justify-content-around align-items-center flex-wrap w-100">
                     <img
                         src={logo1}
-                        width="190"
+                        width="120"
                         alt="Logo University of Bridgewater"
                         className="m-2"
                         style={{
@@ -244,7 +241,7 @@ const Inicio = () => {
                         }}/>
                     <img
                         src={logo2}
-                        width="170"
+                        width="120"
                         alt="Logo University of Texas"
                         className="m-2"
                         style={{
@@ -252,7 +249,7 @@ const Inicio = () => {
                         }}/>
                     <img
                         src={logo3}
-                        width="300"
+                        width="200"
                         alt="Logo University of Washington"
                         className="m-2"
                         style={{
@@ -260,7 +257,7 @@ const Inicio = () => {
                         }}/>
                     <img
                         src={logo4}
-                        width="200"
+                        width="130"
                         alt="Logo University of WiseOwl"
                         className="m-2"
                         style={{
@@ -268,20 +265,20 @@ const Inicio = () => {
                         }}/>
                     <img
                         src={logo5}
-                        width="145"
+                        width="120"
                         alt="Logo University of Academy"
-                        className="m-2"
+                        className="m-4"
                         style={{
                             borderRadius: "5px"
                         }}/>
                 </div>
             </div>
-            <div class="bg-gray-200 font-bold mb- text-lg p-4">
+            <div class="bg-gray-200 font-bold p-4">
                 <div class="card-body">
                     <p class="card-text">
                         <p>
-                            <h1 class="text-xl font-bold mb-2">PORQUE NOS ELIGEN</h1>
-                            En Data Wave, nos eligen nuestros clientes por nuestra dedicación a la
+                            <h1 class=" font-bold mb-2">PORQUE NOS ELIGEN</h1>
+                            Por nuestra dedicación a la
                             excelencia en la gestión educativa. Nuestra plataforma ofrece soluciones
                             innovadoras y fiables que ayudan a las instituciones educativas a mejorar su
                             eficiencia y rendimiento.

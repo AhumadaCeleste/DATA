@@ -1,8 +1,11 @@
 const express = require('express');
 const Rutas = express.Router();
-const ofertaxinstitutocontroller = require('../CONTROLLERS/ofertaxinstituto.controllers');
+const ofertaxinstitutocontroller = require(
+    '../CONTROLLERS/ofertaxinstituto.controllers'
+);
 
-// Retornar todos los ofertaxinstituto http://localhost:3001/ofertaxinstituto/lista
+// Retornar todos los ofertaxinstituto
+// http://localhost:3001/ofertaxinstituto/lista
 Rutas.get('/lista', ofertaxinstitutocontroller.lista);
 
 // Retornar ofertaxinstituto según filtro
@@ -18,6 +21,9 @@ Rutas.delete('/eliminar/:id', ofertaxinstitutocontroller.eliminar);
 Rutas.put('/actualizar/:id', ofertaxinstitutocontroller.actualizar);
 
 // Retornar ofertas por instituto
-Rutas.get('/instituto/:institutoId/ofertas', ofertaxinstitutocontroller.listaPorInstituto);
+Rutas.get(
+    '/instituto/:institutoId/ofertas',
+    ofertaxinstitutocontroller.listaPorInstituto
+);
 
 module.exports = Rutas;

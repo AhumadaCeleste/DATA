@@ -6,7 +6,7 @@ export const RolContext = createContext(null);
 export const useRol = () => useContext(RolContext);
 
 export const RolProvider = ({children}) => {
-    const [rol, setRol] = useState('secretario');
+    const [rol, setRol] = useState('');//secretario
     return (
         <RolContext.Provider
             value={{
@@ -17,5 +17,3 @@ export const RolProvider = ({children}) => {
         </RolContext.Provider>
     );
 };
-
-

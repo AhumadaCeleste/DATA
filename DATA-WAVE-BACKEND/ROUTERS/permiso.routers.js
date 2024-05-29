@@ -8,7 +8,7 @@ Rutas.get('/lista/:pag', permisocontroller.listaPag);
 Rutas.get('/lista/:pag/:text', permisocontroller.listaPag);
 
 // Retornar permiso según filtro
-Rutas.get('/filtrar', permisocontroller.filtrar); // Cambiada la ruta
+Rutas.get('/filtrar', permisocontroller.filtrar);
 
 // Nuevo permiso http://localhost:3001/permiso/nuevo
 Rutas.post('/nuevo', permisocontroller.nuevo);

@@ -9,6 +9,7 @@ const Secretario = () => {
     const rol = useContext(RolContext);
     const navigate = useNavigate();
     const [institutosMenuOpen, setInstitutosMenuOpen] = useState(false);
+    const [reportesMenuOpen, setReportesMenuOpen] = useState(false);
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
     const [mainComponent, setMainComponent] = useState(null);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -28,8 +29,9 @@ const Secretario = () => {
     const toggleInstitutosMenu = () => {
         setInstitutosMenuOpen(!institutosMenuOpen);
     };
-
-    const [reportesMenuOpen] = useState(false);
+    const toggleReportesMenu = () => {
+        setInstitutosMenuOpen(!institutosMenuOpen);
+    };
 
     const handleLogout = () => {
         setShowLogoutConfirm(true);
@@ -63,11 +65,11 @@ const Secretario = () => {
                         className="h-28 rounded-full border-4 border-gray-400"/>
                 </div>
 
-                <button onClick={toggleInstitutosMenu} className={buttonClass}>
+                <button onClick={toggleReportesMenu} className={buttonClass}>
                     REPORTES
                 </button>
                 {
-                    institutosMenuOpen && (
+                    reportesMenuOpen && (
                         <div
                             className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-3">
                             <Link
@@ -88,7 +90,7 @@ const Secretario = () => {
                     onClick={handleOfertaMatriculaClick}
                     className={buttonClass}
                     type="button">
-                    CARGA MATRICULA
+                    MATRICULA
                 </button>
                 {
                     reportesMenuOpen && (

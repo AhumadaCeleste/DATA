@@ -150,23 +150,3 @@ exports.listaPorInstituto = (req, res) => {
 };
 
 
-/*
-exports.listaPorInstituto = (req, res) => {
-    console.log('Procesamiento de lista de ofertas por instituto');
-    const institutoId = req.params.institutoId;
-    db.ofertaxinstituto.findAll({
-        where: { institutoId: institutoId },
-        include: [{
-            model: db.oferta,
-            attributes: ['nombre']
-        }]
-    })
-    .then(ofertas => {
-        res.status(200).send(ofertas);
-    })
-    .catch(error => {
-        console.error('Error al obtener lista de ofertas por instituto:', error);
-        res.status(500).send({ error: 'Error al obtener lista de ofertas por instituto' });
-    });
-};
-*/

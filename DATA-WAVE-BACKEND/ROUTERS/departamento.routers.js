@@ -1,6 +1,7 @@
-const Rutas =  require('express').Router();
-const departamentocontroller = require('../CONTROLLERS/departamento.controllers');
-
+const Rutas = require('express').Router();
+const departamentocontroller = require(
+    '../CONTROLLERS/departamento.controllers'
+);
 
 // Retornar todos los ciudad http://localhost:3001/ciudad/lista
 Rutas.get('/lista', departamentocontroller.lista);
@@ -14,7 +15,7 @@ Rutas.get('/filtrar/:campo/:valor', departamentocontroller.filtrar);
 // Nuevo ciudad http://localhost:3001/ciudad/nuevo
 Rutas.post('/nuevo', departamentocontroller.nuevo);
 
-// Eliminar un ciudad 
+// Eliminar un ciudad
 Rutas.delete('/eliminar/:id', departamentocontroller.eliminar);
 
 // Actualizar un ciudad

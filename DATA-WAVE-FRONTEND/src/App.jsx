@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import './App.css';
 
 import Inicio from './COMPONENTS/Inicio';
@@ -14,8 +14,9 @@ import CrearInstituto from './COMPONENTS/CrearInstituto';
 import BMInstituto from './COMPONENTS/BMInstituto';
 import Adepartamento from './COMPONENTS/Adepartamento';
 import OfertaList from "./COMPONENTS/OfertaList";
-import OfertaPorInstitutoList from "./COMPONENTS/OfertaXInstituto"; 
-import InstitutoTipo from "./COMPONENTS/InstitutoTipo"; 
+import OfertaPorInstitutoList from "./COMPONENTS/OfertaXInstituto";
+import InstitutoTipo from "./COMPONENTS/InstitutoTipo";
+import Egresados from "./COMPONENTS/Egresados"
 // Rol Director
 import Director from './COMPONENTS/Director';
 import InstList from './COMPONENTS/InstList';
@@ -25,40 +26,42 @@ import ConsultaEgresados from './COMPONENTS/ConsultaEgresados';
 function App() {
     return (
         <div className="flex flex-col min-h-screen">
-        <div className="flex-grow">
-            <Routes>
-                <Route path="/" element={<Inicio />} />
-                {/* Rol Secretario */}
-                <Route path="/secretario" element={<Secretario />} />
-                <Route path="/cargar-matricula" element={<OfertaMatricula />} />
-                <Route path="/crear-oferta" element={<AltaOferta />} />
-                <Route path="/gestionar-oferta" element={<BMOferta />} />
-                {/* Rol Inspector */}
-                <Route path="/inspector" element={<Inspector />}>
-                    <Route path="crear-instituto" element={<CrearInstituto />} />
-                    <Route path="editar-instituto" element={<BMInstituto />} />
-                    <Route path="instituto/nuevo" element={<CrearInstituto />} />
-                    <Route path="instituto/editar" element={<BMInstituto />} />
-                    <Route path="departamento/nuevo" element={<Adepartamento />} />
-                    <Route path="departamento/actualizar" element={<Adepartamento />} />
-                    <Route path="instituto-lista" element={<InstList />} />
-                    <Route path="consulta-oferta" element={<OfertaList />} />
-                    <Route path="instituto/:institutoId/ofertas" element={<OfertaPorInstitutoList />} />  
-                    <Route path="instituto/listaqueryfiltro" element={<InstitutoTipo />} />
-                    <Route path="crear-oferta" element={<AltaOferta />} /> 
-                    <Route path="gestionar-oferta" element={<BMOferta />} /> 
-                
-                </Route>
-                {/* Rol Director */}
-                <Route path="/director" element={<Director />} />
-                <Route path="/consulta-matricula" element={<ConsultaMatricula />} />
-                <Route path="/consulta-egresados" element={<ConsultaEgresados />} />
-                <Route path="/instituto-lista" element={<InstList />} />
-                {/* Ruta para 404 */}
-                <Route path="*" element={<div>404 - Página no encontrada</div>} />
-            </Routes>
-            <Footer />
-        </div>
+            <div className="flex-grow">
+                <Routes>
+                    <Route path="/" element={<Inicio />}/> {/* Rol Secretario */}
+                    <Route path="/secretario" element={<Secretario />}/>
+                    <Route path="/cargar-matricula" element={<OfertaMatricula />}/>
+                    <Route path="/crear-oferta" element={<AltaOferta />}/>
+                    <Route path="/gestionar-oferta" element={<BMOferta />}/> {/* Rol Inspector */}
+                    <Route path="/inspector" element={<Inspector />}>
+                        <Route path="crear-instituto" element={<CrearInstituto />}/>
+                        <Route path="editar-instituto" element={<BMInstituto />}/>
+                        <Route path="instituto/nuevo" element={<CrearInstituto />}/>
+                        <Route path="instituto/editar" element={<BMInstituto />}/>
+                        <Route path="departamento/nuevo" element={<Adepartamento />}/>
+                        <Route path="departamento/actualizar" element={<Adepartamento />}/>
+                        <Route path="instituto-lista" element={<InstList />}/>
+                        <Route path="consulta-oferta" element={<OfertaList />}/>
+                        <Route
+                            path="instituto/oferta-por-instituto"
+                            element={<OfertaPorInstitutoList />
+                            }
+                        />
+                        <Route path="instituto/listaqueryfiltro" element={<InstitutoTipo />}/>
+                        <Route path="crear-oferta" element={<AltaOferta />}/>
+                        <Route path="gestionar-oferta" element={<BMOferta />}/>
+                        <Route path="egresados" element={<Egresados />}/>
+
+                    </Route>
+                    {/* Rol Director */}
+                    <Route path="/director" element={<Director />}/>
+                    <Route path="/consulta-matricula" element={<ConsultaMatricula />}/>
+                    <Route path="/consulta-egresados" element={<ConsultaEgresados />}/>
+                    <Route path="/instituto-lista" element={<InstList />}/> {/* Ruta para 404 */}
+                    <Route path="*" element={<div> 404 - Página no encontrada</div>}/>
+                </Routes>
+                <Footer/>
+            </div>
         </div>
     );
 }

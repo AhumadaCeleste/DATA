@@ -12,7 +12,7 @@ function OfertaPorInstitutoList() {
 
   const loadOfertasPorInstituto = () => {
     axios
-      .get(`http://localhost:3001/ofertaxinstituto/instituto/${institutoId}/ofertas`)
+      .get(`http://localhost:3001/instituto/oferta-por-instituto`)
       .then((response) => {
         setOfertas(response.data);
       })

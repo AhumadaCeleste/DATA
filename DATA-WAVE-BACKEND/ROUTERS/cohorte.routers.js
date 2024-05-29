@@ -1,6 +1,5 @@
-const Rutas =  require('express').Router();
+const Rutas = require('express').Router();
 const cohortecontroller = require('../CONTROLLERS/cohorte.controllers');
-
 
 // Retornar todos los cohorte http://localhost:3001/cohorte/lista
 Rutas.get('/lista', cohortecontroller.lista);
@@ -15,7 +14,7 @@ Rutas.get('/filtrar/:campo/:valor', cohortecontroller.filtrar);
 // Nuevo cohorte http://localhost:3001/cohorte/nuevo
 Rutas.post('/nuevo', cohortecontroller.nuevo);
 
-// Eliminar un cohorte 
+// Eliminar un cohorte
 Rutas.delete('/eliminar/:id', cohortecontroller.eliminar);
 
 // Actualizar un cohorte

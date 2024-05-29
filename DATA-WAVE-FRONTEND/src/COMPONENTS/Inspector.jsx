@@ -4,13 +4,16 @@ import { RolContext } from '../CONTEXT/RolContext';
 import logo from '../IMAGES/Logo Data-wave.png';
 import bgImage from '../IMAGES/bg.Data-Wave.png';
 
+//inicializar varios
 const Inspector = () => {
     const rol = useContext(RolContext);
     const [institutosMenuOpen, setInstitutosMenuOpen] = useState(false);
     const [ofertasMenuOpen, setOfertasMenuOpen] = useState(false);
     const [consultasMenuOpen, setConsultasMenuOpen] = useState(false);
+    const [reportesMenuOpen, setReportesMenuOpen] = useState(false); 
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
     const { institutoId } = useParams();
     const navigate = useNavigate();
 
@@ -24,14 +27,30 @@ const Inspector = () => {
 
     const toggleInstitutosMenu = () => {
         setInstitutosMenuOpen(!institutosMenuOpen);
+        setOfertasMenuOpen(false);
+        setConsultasMenuOpen(false);
+        setReportesMenuOpen(false);
     };
 
     const toggleOfertasMenu = () => {
         setOfertasMenuOpen(!ofertasMenuOpen);
+        setInstitutosMenuOpen(false);
+        setConsultasMenuOpen(false);
+        setReportesMenuOpen(false);
     };
 
     const toggleConsultasMenu = () => {
         setConsultasMenuOpen(!consultasMenuOpen);
+        setInstitutosMenuOpen(false);
+        setOfertasMenuOpen(false);
+        setReportesMenuOpen(false);
+    };
+
+    const toggleReportesMenu = () => {
+        setReportesMenuOpen(!reportesMenuOpen);
+        setInstitutosMenuOpen(false);
+        setOfertasMenuOpen(false);
+        setConsultasMenuOpen(false);
     };
 
     const handleLogout = () => {
@@ -44,6 +63,10 @@ const Inspector = () => {
         setShowLogoutConfirm(false);
     };
 
+    const cancelLogout = () => {
+        setShowLogoutConfirm(false);
+    };
+    
     return (
         <div className="flex min-h-screen">
             <div className="flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center min-h-screen">
@@ -57,7 +80,7 @@ const Inspector = () => {
                 <div className="flex flex-col items-center flex-1">
                     <button
                         onClick={toggleInstitutosMenu}
-                        className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
                     >
                         INSTITUTOS
                     </button>
@@ -73,14 +96,14 @@ const Inspector = () => {
                                 to="/inspector/editar-instituto"
                                 className="block px-4 py-2 text-sm hover:bg-gray-700"
                             >
-                                MODIFICAR INSTITUTO
+                                GESTIONAR INSTITUTO
                             </Link>
                         </div>
                     )}
 
                     <button
                         onClick={toggleOfertasMenu}
-                        className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
                     >
                         OFERTAS
                     </button>
@@ -103,7 +126,7 @@ const Inspector = () => {
 
                     <button
                         onClick={toggleConsultasMenu}
-                        className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
                     >
                         CONSULTAS
                     </button>
@@ -121,41 +144,56 @@ const Inspector = () => {
                             >
                                 OFERTAS
                             </Link>
+                        </div>
+                    )}
+
+                    <button
+                        onClick={toggleReportesMenu}
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
+                    >
+                        REPORTES
+                    </button>
+                    {reportesMenuOpen && (
+                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4">
                             <Link
-                                to="/inspector/consulta-egresados"
+                                to="/inspector/instituto/oferta-por-instituto"
+                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                            >
+                                OFERTA POR INSTITUTO
+                            </Link>
+                            <Link
+                                to="/inspector/egresados"
                                 className="block px-4 py-2 text-sm hover:bg-gray-700"
                             >
                                 EGRESADOS
-                            </Link>
-                            <Link
-                                to={`/inspector/instituto/${institutoId}/ofertas`}
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                OFERTAS POR INSTITUTO
                             </Link>
                         </div>
                     )}
 
                     <button
-                        className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline text-center block w-full"
-                        type="button"
                         onClick={handleLogout}
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4"
                     >
                         CERRAR SESION
                     </button>
+                    {showLogoutConfirm && (
+                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4">
+                            <button
+                                className="bg-sky-400 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline"
+                                onClick={logout}
+                            >
+                                CONFIRMAR
+                            </button>
+                            <button
+                                className="bg-gray-400 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline"
+                                onClick={cancelLogout}
+                            >
+                                CANCELAR
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
-
-            {showLogoutConfirm && (
-                <div className="bg-primary py-16 px-16 rounded-md w-auto m-8">
-                    <button
-                        className="border-2 bg- rounded-lg border-gray-300 py-3 titulo_tarjetas m-4 hover:bg-sky-700 text-sm md:text-base"
-                        onClick={logout}
-                    >
-                        ¿Confirmas el cierre de sesión?
-                    </button>
-                </div>
-            )}
 
             <div
                 className="flex flex-col justify-center items-center flex-1 bg-gray-300 relative min-h-screen overflow-y-auto"
@@ -173,9 +211,7 @@ const Inspector = () => {
                             alt="Data Wave Logo"
                             className="h-48 w-auto rounded-full border-4 border-gray-400 mb-5"
                         />
-                        <p
-                            className="font-arial text-4xl font-bold text-blue-700 mb-5 transition-opacity duration-4000 ease-in-out opacity-100"
-                        >
+                        <p className="font-arial text-4xl font-bold text-blue-700 mb-5 transition-opacity duration-4000 ease-in-out opacity-100">
                             {rol === 'inspector' ? 'Bienvenido Inspector' : 'Bienvenido'}
                         </p>
                     </div>

@@ -79,7 +79,7 @@ function CrearInstitutoFull() {
                 <h2 className="text-lg font-bold mb-4">Crear Instituto</h2>
                 <form onSubmit={handleSubmit} className="space-y-6 font-bold flex-1">
                     <label htmlFor="cue" className="block text-white">
-                        Cue:
+                        CUE:
                         <input
                             type="text"
                             id="cue"
@@ -103,7 +103,7 @@ function CrearInstitutoFull() {
                     </label>
 
                     <label htmlFor="denominacion" className="block text-white">
-                        Denominacion:
+                        DENOMINACION:
                         <input
                             type="text"
                             id="denominacion"
@@ -115,7 +115,7 @@ function CrearInstitutoFull() {
                     </label>
 
                     <label htmlFor="cuesede" className="block text-white">
-                        Cue Anexo - Extensión Aulica:
+                        CUE: SEDE - ANEXO - EXTENSION - ÁULICA
                         <input
                             type="text"
                             id="cuesede"
@@ -127,7 +127,7 @@ function CrearInstitutoFull() {
                     </label>
 
                     <label htmlFor="tipoinstitutoId" className="block text-white">
-                        Tipo de Instituto:
+                        TIPO DE INSTITUTO:
                         <select
                             id="tipoinstitutoId"
                             name="tipoinstitutoId"
@@ -145,7 +145,7 @@ function CrearInstitutoFull() {
                     </label>
 
                     <label htmlFor="CiudadId" className="block text-white">
-                        Ciudad:
+                        CIUDAD:
                         <select
                             id="CiudadId"
                             name="CiudadId"
@@ -163,7 +163,7 @@ function CrearInstitutoFull() {
                     </label>
 
                     <label htmlFor="sucursalId" className="block text-white">
-                        Sucursal:
+                        SUCURSAL:
                         <select
                             id="sucursalId"
                             name="sucursalId"

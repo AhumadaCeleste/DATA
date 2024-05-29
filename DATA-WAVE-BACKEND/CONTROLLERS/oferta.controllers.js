@@ -1,47 +1,63 @@
 const db = require('../MODELS');
 const sequelize = db.sequelize;
-const { Op } = require('sequelize');
+const {Op} = require('sequelize');
 
 //-----------------------------------lista
 exports.lista = (req, res) => {
     console.log('Procesamiento de lista de Oferta');
-    db.oferta.findAll()
+    db
+        .oferta
+        .findAll()
         .then(registros => {
-            res.status(200).send(registros);
+            res
+                .status(200)
+                .send(registros);
         })
         .catch(error => {
             console.error('Error al obtener la lista de ofertas:', error);
-            res.status(500).send({ error: 'Error al obtener la lista de ofertas' });
+            res
+                .status(500)
+                .send({error: 'Error al obtener la lista de ofertas'});
         });
 };
 
 //-----------------------------------listafull
-exports.listafull = (req,res) =>{
+exports.listafull = (req, res) => {
     console.log('Procesamiento de lista de Ofertas full');
-    db.oferta.findAll({include:db.cohorte}) 
-        .then( registros => {
-            res.status(200).send(registros);
+    db
+        .oferta
+        .findAll({include: db.cohorte})
+        .then(registros => {
+            res
+                .status(200)
+                .send(registros);
         })
-        .catch(error =>{
-            res.status(500).send(error);
+        .catch(error => {
+            res
+                .status(500)
+                .send(error);
         });
-  };
+};
 
-  exports.listafullquery = async (req, res) => {
+exports.listafullquery = async (req, res) => {
     console.log('Procesamiento de lista de Ofertas full');
     try {
-        const registros = await sequelize.query (`
-        select v.id_oferta, v.resolucion, v.nombre, v.sector, v.descripcion,
-        v.id_cohorte, v.desde, v.hasta, v.id_tipoapertura, v.apertura
-        from v_oferta_full v
-        order by v.nombre, v.desde, v.hasta, v.apertura ` ,
-        {
-            type: sequelize.QueryTypes.SELECT
-        });
-        res.status(200).send(registros);
+        //         Select * from v_oferta_full 
+        const registros = await sequelize.query(
+            ` Select * from v_oferta_full `,
+            {type: sequelize.QueryTypes.SELECT}
+        );
+        res
+            .status(200)
+            .send(registros);
     } catch (error) {
-        console.error('Error al obtener la lista completa de Ofertas Cohorte con Tipo Apertura:', error);
-        res.status(500).send({ error: 'Error al obtener la lista completa de Ofertas' });
+        console.error(
+            'Error al obtener la lista completa de Ofertas Cohorte con Tipo Apertura:',
+            error
+        );
+        res
+            .status(500)
+            .send({error: 'Error al obtener la lista completa de Ofertas'});
     }
 };
 
@@ -51,15 +67,27 @@ exports.filtrar = (req, res) => {
     const campo = req.params.campo;
     const valor = req.params.valor;
     console.log(`campo: ${campo} valor:${valor}`)
-    //aqui adecue usando op.like ya que tengo oferta con nombre similares 
-    //en la cedena de texto del campo
-    db.oferta.findAll({ where: { [campo]: { [Op.like]: `%${valor}%` } } })
+    // aqui adecue usando op.like ya que tengo oferta con nombre similares en la
+    // cedena de texto del campo
+    db
+        .oferta
+        .findAll({
+            where: {
+                [campo]: {
+                    [Op.like]: `%${valor}%`
+                }
+            }
+        })
         .then(registros => {
-            res.status(200).send(registros);
+            res
+                .status(200)
+                .send(registros);
         })
         .catch(error => {
             console.error('Error al filtrar las ofertas:', error);
-            res.status(500).send({ error: 'Error al filtrar las ofertas' });
+            res
+                .status(500)
+                .send({error: 'Error al filtrar las ofertas'});
         });
 };
 
@@ -71,20 +99,21 @@ exports.nuevo = (req, res) => {
         resolucion: req.body.resolucion,
         nombre: req.body.nombre,
         sector: req.body.sector,
-        descripcion:req.body.descripcion,
+        descripcion: req.body.descripcion
     };
-    db.oferta.create(datanuevooferta)
+    db
+        .oferta
+        .create(datanuevooferta)
         .then(registro => {
-            res.status(201).send(
-                {
-                    resultado: true,
-                    data: registro
-                }
-            );
+            res
+                .status(201)
+                .send({resultado: true, data: registro});
         })
         .catch(error => {
             console.error('Error al crear la oferta:', error);
-            res.status(500).send({ error: 'Error al crear la oferta' });
+            res
+                .status(500)
+                .send({error: 'Error al crear la oferta'});
         });
 };
 
@@ -98,90 +127,131 @@ exports.actualizar = (req, res) => {
         resolucion: req.body.resolucion,
         nombre: req.body.nombre,
         sector: req.body.sector,
-        descripcion:req.body.descripcion,
+        descripcion: req.body.descripcion
     };
-    db.oferta.update(datanuevooferta, {
-        where: { cue: cue }
-    })
+    db
+        .oferta
+        .update(datanuevooferta, {
+            where: {
+                cue: cue
+            }
+        })
         .then(num => {
             if (num > 0) {
-                res.status(201).send({
-                    resultado: true,
-                    msg: 'Oferta actualizado correctamente'
-                });
+                res
+                    .status(201)
+                    .send({resultado: true, msg: 'Oferta actualizado correctamente'});
             } else {
-                res.status(500).send({
-                    resultado: false,
-                    msg: 'No se pudo actualizar la oferta',
-                    body: {
-                        data: datanuevooferta,
-                        cue: cue
-                    }
-                });
+                res
+                    .status(500)
+                    .send({
+                        resultado: false,
+                        msg: 'No se pudo actualizar la oferta',
+                        body: {
+                            data: datanuevooferta,
+                            cue: cue
+                        }
+                    });
             }
         })
         .catch(error => {
             console.error('Error al actualizar la oferta:', error);
-            res.status(501).send({ error: 'Error al actualizar la oferta' });
+            res
+                .status(501)
+                .send({error: 'Error al actualizar la oferta'});
         });
 };
 //-----------------------------------eliminar
 exports.eliminar = (req, res) => {
     const cue = req.params.cue;
-    db.oferta.destroy({
-        where: { cue: cue }
-    })
+    db
+        .oferta
+        .destroy({
+            where: {
+                cue: cue
+            }
+        })
         .then(num => {
             if (num > 0) {
-                res.status(201).send({
-                    resultado: true
-                });
+                res
+                    .status(201)
+                    .send({resultado: true});
             } else {
-                res.status(500).send({
-                    resultado: false,
-                    msg: 'No se pudo eliminar el Oferta',
-                    body: {
-                        cue: cue
-                    }
-                });
+                res
+                    .status(500)
+                    .send({
+                        resultado: false,
+                        msg: 'No se pudo eliminar el Oferta',
+                        body: {
+                            cue: cue
+                        }
+                    });
             }
         })
         .catch(error => {
             console.log(error);
-            res.status(501).send({
-                resultado: false,
-                msg: error
-            });
+            res
+                .status(501)
+                .send({resultado: false, msg: error});
         });
 };
 
 //-----------------------------------listaPag
-exports.listaPag = (req,res) =>{
+exports.listaPag = (req, res) => {
     console.log('Procesamiento de lista filtrada por pagina');
     let pag = req.params.pag;
     const text = req.params.text;
-    if(!pag) {pag = 1;}
-    const limit = 3;   // number of records per page
+    if (!pag) {
+        pag = 1;
+    }
+    const limit = 3; // number of records per page
     const offset = (pag - 1) * limit;
     console.log(`pagina: ${pag} texto:${text}`)
     // buscar la lista
-    if (!text){
-    db.oferta.findAndCountAll({limit: limit, offset: offset, order: [['id', 'ASC']]})
-        .then( registros => {
-            res.status(200).send(registros);
-        })
-        .catch(error =>{
-            res.status(500).send(error);
-        });
-    }else{
-        db.oferta.findAndCountAll({where: {denominacion: {
-            [Op.like]: `%${text}%`
-        }}, limit: limit, offset: offset, order: [['id', 'ASC']]})
-        .then( registros => {
-            res.status(200).send(registros);
-        })
-        .catch(error =>{
-            res.status(500).send(error);
-        });
+    if (!text) {
+        db
+            .oferta
+            .findAndCountAll({
+                limit: limit,
+                offset: offset,
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
+            .then(registros => {
+                res
+                    .status(200)
+                    .send(registros);
+            })
+            .catch(error => {
+                res
+                    .status(500)
+                    .send(error);
+            });
+    } else {
+        db
+            .oferta
+            .findAndCountAll({
+                where: {
+                    denominacion: {
+                        [Op.like]: `%${text}%`
+                    }
+                },
+                limit: limit,
+                offset: offset,
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
+            .then(registros => {
+                res
+                    .status(200)
+                    .send(registros);
+            })
+            .catch(error => {
+                res
+                    .status(500)
+                    .send(error);
+            });
     }
 };
