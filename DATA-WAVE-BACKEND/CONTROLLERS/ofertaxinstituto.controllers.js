@@ -1,5 +1,6 @@
 const db = require('../MODELS');
-const { Op } = require('sequelize');
+const sequelize = db.sequelize;
+const {Op} = require('sequelize');
 
 // Retornar todos los ofertaxinstituto
 exports.lista = (req, res) => {
@@ -40,6 +41,21 @@ exports.filtrar = (req, res) => {
     });
 };
 
+//Vista v_instituto_oferta_matricula
+exports.listaInstitutoOfertaMatricula = async (req, res) => {
+    console.log('Procesamiento de lista de Instituto, Oferta y Matrícula');
+    try {
+        const registros = await sequelize.query(
+            `Select * from v_instituto_oferta_matricula`,
+            { type: sequelize.QueryTypes.SELECT }
+        );
+        res.status(200).send(registros);
+    } catch (error) {
+        console.error('Error al obtener la lista completa de Instituto, Oferta y Matrícula:', error);
+        res.status(500).send({ error: 'Error al obtener la lista completa de Instituto, Oferta y Matrícula' });
+    }
+};
+
 // Crear nueva ofertaxinstituto
 exports.nuevo = (req, res) => {
     console.log('Nueva oferta por instituto');
@@ -47,7 +63,8 @@ exports.nuevo = (req, res) => {
         institutoCue: req.body.institutoCue,
         ofertumId: req.body.ofertumId,
         matricula: req.body.matricula,
-        año: req.body.año,
+        matricula2: req.body.matricula2,
+        matricula3: req.body.matricula3,
     };
     db.ofertaxinstituto.create(datanuevoofertaxinstituto)
     .then(registro => {
@@ -70,7 +87,8 @@ exports.actualizar = (req, res) => {
         institutoCue: req.body.institutoCue,
         ofertumId: req.body.ofertumId,
         matricula: req.body.matricula,
-        año: req.body.año,
+        matricula2: req.body.matricula2,
+        matricula3: req.body.matricula3,
     };
     db.ofertaxinstituto.update(dataActualizada, {
         where: { id: id }

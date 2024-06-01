@@ -15,22 +15,25 @@ const Secretario = () => {
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
     const handleOfertaMatriculaClick = () => {
-        setMainComponent(<OfertaMatricula/>);
+        setMainComponent(<OfertaMatricula />);
     };
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowWelcomeMessage(false);
-        }, 3000); // 3000 ms = 3 seconds
+        }, 3000);
 
-        return() => clearTimeout(timer); // Cleanup the timer
+        return () => clearTimeout(timer);
     }, []);
 
     const toggleInstitutosMenu = () => {
         setInstitutosMenuOpen(!institutosMenuOpen);
+        setReportesMenuOpen(false);
     };
+
     const toggleReportesMenu = () => {
-        setInstitutosMenuOpen(!institutosMenuOpen);
+        setReportesMenuOpen(!reportesMenuOpen);
+        setInstitutosMenuOpen(false);
     };
 
     const handleLogout = () => {
@@ -47,124 +50,92 @@ const Secretario = () => {
         setShowLogoutConfirm(false);
     };
 
-    const buttonClass = "bg-sky-800 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outl" +
-            "ine-none focus:shadow-outline text-center block w-full mb-3 h-12";
-    const buttonClassCierre = "bg-green-300 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:ou" +
-            "tline-none focus:shadow-outline text-center block w-full mb-3 h-12";
-    const buttonClassCancelar = "bg-red-300 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outl" +
-            "ine-none focus:shadow-outline text-center block w-full mb-3 h-12";
-
     return (
-        <div className="flex h-screen">
-            <div
-                className="flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center justify-start h-screen">
+        <div className="flex min-h-screen">
+            <div className="flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center min-h-screen">
                 <div className="bg-gray-800 rounded-full p-1 shadow-md mb-4">
                     <img
                         src={logo}
                         alt="Data Wave Logo"
-                        className="h-28 rounded-full border-4 border-gray-400"/>
+                        className="h-15 w-28 object-cover rounded-full border-4 border-gray-400 sm:h-25 sm:w-25"
+                    />
                 </div>
-
-                <button onClick={toggleReportesMenu} className={buttonClass}>
-                    REPORTES
-                </button>
-                {
-                    reportesMenuOpen && (
-                        <div
-                            className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-3">
+                <div className="flex flex-col items-center flex-1">
+                    <button
+                        onClick={toggleReportesMenu}
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                    >
+                        REPORTES
+                    </button>
+                    {reportesMenuOpen && (
+                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 ">
                             <Link
                                 to="/instituto/lista/"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                            >
                                 LISTADO DE INSTITUTOS
                             </Link>
                             <Link
                                 to="/secretario"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700">
+                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                            >
                                 EGRESADOS
                             </Link>
                         </div>
-                    )
-                }
-
-                <button
-                    onClick={handleOfertaMatriculaClick}
-                    className={buttonClass}
-                    type="button">
-                    MATRICULA
-                </button>
-                {
-                    reportesMenuOpen && (
-                        <div
-                            className="bg-sky-800 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-3">
-                            <Link
-                                to="/instituto/lista/"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700">
-                                LISTADO DE INSTITUTOS
-                            </Link>
-                            <Link
-                                to="/inspector/editar-instituto"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700">
-                                EGRESADOS
-                            </Link>
-                        </div>
-                    )
-                }
-
-                <div className="w-full">
+                    )}
                     <button
-                        className={`${buttonClass} bg-gray-300 text-gray-800`}
-                        type="button"
-                        onClick={handleLogout}>
-                        CERRAR SESIÓN
+                        onClick={handleOfertaMatriculaClick}
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                    >
+                        MATRICULA
                     </button>
-                </div>
 
-                {
-                    showLogoutConfirm && (
-                        <div
-                            className=" text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-3">
+                    <button
+    onClick={handleLogout}
+    className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+>
+    <span className="block sm:inline">CERRAR</span> <span className="block sm:inline">SESIÓN</span>
+</button>
+                    {showLogoutConfirm && (
+                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <button
-                                className={`${buttonClassCierre} block px-4 py-2 text-sm hover:bg-gray-700 mb-1`}
-                                onClick={logout}>
+                                className="bg-sky-400 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                                onClick={logout}
+                            >
                                 CONFIRMAR
                             </button>
                             <button
-                                className={`${buttonClassCancelar} block px-4 py-2 text-sm hover:bg-gray-700`}
-                                onClick={cancelLogout}>
+                                className="bg-gray-400 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                                onClick={cancelLogout}
+                            >
                                 CANCELAR
                             </button>
                         </div>
-                    )
-                }
-
+                    )}
+                </div>
             </div>
 
             <div
-                className="flex flex-col justify-center items-center flex-1 bg-gray-300 relative"
+                className="flex flex-col justify-center items-center flex-1 bg-gray-300 relative min-h-screen overflow-y-auto sm:text-sm md:text-base lg:text-lg xl:text-xl"
                 style={{
                     backgroundImage: `url(${bgImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
-                }}>
-                {
-                    showWelcomeMessage && (
-                        <div className="flex flex-col justify-center items-center h-full">
-                            <img
-                                src={logo}
-                                alt="Data Wave Logo"
-                                className="h-48 w-auto rounded-full border-4 border-gray-400 mb-5"/>
-                            <p
-                                className="font-arial text-4xl font-bold text-blue-800 mb-5 transition-opacity duration-4000 ease-in-out opacity-100">
-                                {
-                                    rol === 'inspector'
-                                        ? 'Bienvenido Inspector'
-                                        : 'Bienvenido'
-                                }
-                            </p>
-                        </div>
-                    )
-                }
+                }}
+            >
+                {showWelcomeMessage && (
+                    <div className="flex flex-col justify-center items-center h-full">
+                        <img
+                            src={logo}
+                            alt="Data Wave Logo"
+                            className="h-48 w-auto rounded-full border-4 border-gray-400 mb-5"
+                        />
+                        <p className="font-arial text-4xl font-bold text-blue-700 mb-5 transition-opacity duration-4000 ease-in-out opacity-100">
+                            {rol === 'inspector' ? 'Bienvenido Inspector' : 'Bienvenido'}
+                        </p>
+                    </div>
+                )}
                 {mainComponent}
             </div>
         </div>

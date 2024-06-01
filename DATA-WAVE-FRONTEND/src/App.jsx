@@ -1,4 +1,4 @@
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import Inicio from './COMPONENTS/Inicio';
@@ -12,11 +12,13 @@ import BMOferta from './COMPONENTS/BMOferta';
 import Inspector from './COMPONENTS/Inspector';
 import CrearInstituto from './COMPONENTS/CrearInstituto';
 import BMInstituto from './COMPONENTS/BMInstituto';
+import EditarInstituto from './COMPONENTS/EditarInstituto';
 import Adepartamento from './COMPONENTS/Adepartamento';
 import OfertaList from "./COMPONENTS/OfertaList";
 import OfertaPorInstitutoList from "./COMPONENTS/OfertaXInstituto";
 import InstitutoTipo from "./COMPONENTS/InstitutoTipo";
 import Egresados from "./COMPONENTS/Egresados"
+import ReporteIOM from "./COMPONENTS/ReporteIOM"
 // Rol Director
 import Director from './COMPONENTS/Director';
 import InstList from './COMPONENTS/InstList';
@@ -28,36 +30,35 @@ function App() {
         <div className="flex flex-col min-h-screen">
             <div className="flex-grow">
                 <Routes>
-                    <Route path="/" element={<Inicio />}/> {/* Rol Secretario */}
+                    <Route path="/" element={<Inicio />}/> 
+                    {/* Rol Secretario */}
                     <Route path="/secretario" element={<Secretario />}/>
                     <Route path="/cargar-matricula" element={<OfertaMatricula />}/>
                     <Route path="/crear-oferta" element={<AltaOferta />}/>
-                    <Route path="/gestionar-oferta" element={<BMOferta />}/> {/* Rol Inspector */}
+                    <Route path="/gestionar-oferta" element={<BMOferta />}/> 
+                    {/* Rol Inspector */}
                     <Route path="/inspector" element={<Inspector />}>
                         <Route path="crear-instituto" element={<CrearInstituto />}/>
-                        <Route path="editar-instituto" element={<BMInstituto />}/>
+                        <Route path="editar-instituto/:id" element={<EditarInstituto />} />
                         <Route path="instituto/nuevo" element={<CrearInstituto />}/>
                         <Route path="instituto/editar" element={<BMInstituto />}/>
                         <Route path="departamento/nuevo" element={<Adepartamento />}/>
                         <Route path="departamento/actualizar" element={<Adepartamento />}/>
                         <Route path="instituto-lista" element={<InstList />}/>
                         <Route path="consulta-oferta" element={<OfertaList />}/>
-                        <Route
-                            path="instituto/oferta-por-instituto"
-                            element={<OfertaPorInstitutoList />
-                            }
-                        />
+                        <Route path="instituto/oferta-por-instituto" element={<OfertaPorInstitutoList />}/>
                         <Route path="instituto/listaqueryfiltro" element={<InstitutoTipo />}/>
+                        <Route path="ofertaxinstituto/lista-instituto-oferta-matricula" element={<ReporteIOM />}/>
                         <Route path="crear-oferta" element={<AltaOferta />}/>
                         <Route path="gestionar-oferta" element={<BMOferta />}/>
                         <Route path="egresados" element={<Egresados />}/>
-
                     </Route>
                     {/* Rol Director */}
                     <Route path="/director" element={<Director />}/>
                     <Route path="/consulta-matricula" element={<ConsultaMatricula />}/>
                     <Route path="/consulta-egresados" element={<ConsultaEgresados />}/>
-                    <Route path="/instituto-lista" element={<InstList />}/> {/* Ruta para 404 */}
+                    <Route path="/instituto-lista" element={<InstList />}/> 
+                    {/* Ruta para 404 */}
                     <Route path="*" element={<div> 404 - Página no encontrada</div>}/>
                 </Routes>
                 <Footer/>
@@ -67,4 +68,3 @@ function App() {
 }
 
 export default App;
-

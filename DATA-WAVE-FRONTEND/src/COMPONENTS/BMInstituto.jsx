@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function BMInstituto(props) {
   const [institutos, setInstitutos] = useState([]);
@@ -121,20 +122,34 @@ function BMInstituto(props) {
   };
 
   const deleteInstituto = (institutoId) => {
-    axios
-      .delete(`http://localhost:3001/instituto/eliminar/${institutoId}`)
-      .then((response) => {
-        loadInstitutos();
-        setSelectedInstituto(null);
-        setNewDenominacion("");
-        setTipoInstitutoId(null);
-        setCiudadId(null);
-        setSucursalId(null);
-        console.log("Instituto eliminado correctamente");
-      })
-      .catch((error) => {
-        console.error("Error al eliminar el instituto:", error);
-      });
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#1e40af",
+      confirmButtonText: "¡Sí, elimínalo!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3001/instituto/eliminar/${institutoId}`)
+          .then((response) => {
+            loadInstitutos();
+            setSelectedInstituto(null);
+            setNewDenominacion("");
+            setTipoInstitutoId(null);
+            setCiudadId(null);
+            setSucursalId(null);
+            Swal.fire("¡Eliminado!", "El instituto ha sido eliminado.", "success");
+            console.log("Instituto eliminado correctamente");
+          })
+          .catch((error) => {
+            Swal.fire("Error", "Hubo un error al eliminar el instituto", "error");
+            console.error("Error al eliminar el instituto:", error);
+          });
+      }
+    });
   };
 
   return (

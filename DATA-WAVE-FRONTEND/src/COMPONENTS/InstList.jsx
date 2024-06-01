@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 
 function InstitutoList() {
   const [institutos, setInstitutos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredInstitutos, setFilteredInstitutos] = useState([]);
+  const [selectedInstituto, setSelectedInstituto] = useState(null);
+  const [newDenominacion, setNewDenominacion] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +21,7 @@ function InstitutoList() {
       .get("http://localhost:3001/instituto/listaquery")
       .then((response) => {
         setInstitutos(response.data);
-        setFilteredInstitutos(response.data); 
+        setFilteredInstitutos(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener la lista de institutos:", error);
@@ -35,6 +39,61 @@ function InstitutoList() {
     );
     setFilteredInstitutos(filtered);
   }, [searchQuery, institutos]);
+
+  const editInstituto = (institutoId) => {
+    const institutoToEdit = institutos.find((instituto) => instituto.id === institutoId);
+    if (institutoToEdit) {
+      setSelectedInstituto(institutoToEdit);
+      setNewDenominacion(institutoToEdit.denominacion);
+    }
+  };
+
+  const cancelEdit = () => {
+    setSelectedInstituto(null);
+    setNewDenominacion("");
+  };
+
+  const confirmEdit = () => {
+    axios
+      .put(`http://localhost:3001/instituto/actualizar/${selectedInstituto.cue}`, {
+        denominacion: newDenominacion,
+      })
+      .then((response) => {
+        setSelectedInstituto(null);
+        setNewDenominacion("");
+        loadInstitutos();
+        console.log("Instituto editado correctamente");
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el instituto:", error);
+      });
+  };
+
+  const deleteInstituto = (institutoId) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#1e40af",
+      confirmButtonText: "¡Sí, elimínalo!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3001/instituto/eliminar/${institutoId}`)
+          .then((response) => {
+            loadInstitutos();
+            Swal.fire("¡Eliminado!", "El instituto ha sido eliminado.", "success");
+            console.log("Instituto eliminado correctamente");
+          })
+          .catch((error) => {
+            Swal.fire("Error", "Hubo un error al eliminar el instituto", "error");
+            console.error("Error al eliminar el instituto:", error);
+          });
+      }
+    });
+  };
 
   const cancelCerrar = () => {
     navigate("/inspector");
@@ -57,14 +116,14 @@ function InstitutoList() {
         <table className="min-w-full divide-y w-full rounded-md text-sm">
           <thead>
             <tr>
-              <th className="mt-2 w-16 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">CUE</th>
-              <th className="mt-2 w-16 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">EE</th>
-              <th className="mt-2 w-64 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">INSTITUTO</th>
-              <th className="mt-2 w-16 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">CUE SEDE</th>
-              <th className="mt-2 w-24 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline text-center">TIPO DE INSTITUTO</th>
-              <th className="mt-2 w-24 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">CIUDAD</th>
-              <th className="mt-2 w-24 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">Departamento</th>
-              <th className="mt-2 w-24 bg-sky-500 text-white font-bold py-2 px-2 focus:outline-none focus:shadow-outline">SUCURSAL</th>
+              <th className="mt-2 w-10 bg-sky-500 text-white font-bold py-2 px-2">CUE</th>
+              <th className="mt-2 w-10 bg-sky-500 text-white font-bold py-2 px-2">EE</th>
+              <th className="mt-2 bg-sky-500 text-white font-bold py-2 px-2">INSTITUTO</th>
+              <th className="mt-2 w-10 bg-sky-500 text-white font-bold py-2 px-2">CUE SEDE</th>
+              <th className="mt-2 w-20 bg-sky-500 text-white font-bold py-2 px-2 text-center">TIPO DE INSTITUTO</th>
+              <th className="mt-2 w-20 bg-sky-500 text-white font-bold py-2 px-2">CIUDAD</th>
+              <th className="mt-2 w-20 bg-sky-500 text-white font-bold py-2 px-2">SUCURSAL</th>
+              <th className="mt-2 w-20 bg-sky-500 text-white font-bold py-2 px-2">Acciones</th>
             </tr>
           </thead>
           <tbody className="bg-sky-600 divide-gray-200 text-white font-bold">
@@ -77,24 +136,59 @@ function InstitutoList() {
                 <td className="px-2 py-4 whitespace-nowrap text-xs">{instituto.instituto}</td>
                 <td className="px-2 py-4 whitespace-nowrap text-xs">{instituto.ciudad}</td>
                 <td className="px-2 py-4 whitespace-nowrap text-xs">{instituto.departamento}</td>
-                <td className="px-2 py-4 whitespace-nowrap text-xs">{instituto.sucursal}</td>
+                <td className="px-2 py-4 whitespace-nowrap text-xs flex space-x-2">
+                  <PencilIcon
+                    className="h-5 w-5 text-blue-500 cursor-pointer"
+                    onClick={() => editInstituto(instituto.id)}
+                  />
+                  <TrashIcon
+                    className="h-5 w-5 text-red-500 cursor-pointer"
+                    onClick={() => deleteInstituto(instituto.cue)}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
+      {selectedInstituto && (
+        <div className="mt-4 p-4 bg-sky-700 rounded-md">
+          <h3 className="text-lg font-bold mb-2">Editar Instituto: {selectedInstituto.denominacion}</h3>
+          <input
+            className="border border-gray-300 rounded-md p-2 mb-2 w-full"
+            type="text"
+            value={newDenominacion}
+            onChange={(e) => setNewDenominacion(e.target.value)}
+          />
+          <div className="flex space-x-2">
+            <button
+              className="mt-2 w-24 bg-green-500 text-white font-bold py-2 px-2 rounded"
+              onClick={confirmEdit}
+            >
+              Confirmar
+            </button>
+            <button
+              className="mt-2 w-24 bg-red-300 text-white font-bold py-2 px-2 rounded"
+              onClick={cancelEdit}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="mt-4 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2">
         <span>Total registros: {institutos.length}</span>
-        <span>Registros filtrados: {filteredInstitutos.length}</span>
+        <div className="space-x-2">
+          <button
+            className="mt-2 w-24 bg-red-300 text-white font-bold py-2 px-2 rounded"
+            onClick={cancelCerrar}
+          >
+            Cerrar
+          </button>
+        </div>
       </div>
-
-      <button
-        className="mt-2 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
-        onClick={cancelCerrar}
-      >
-        Cerrar
-      </button>
     </div>
   );
 }

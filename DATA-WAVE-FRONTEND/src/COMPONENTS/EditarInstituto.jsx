@@ -133,7 +133,7 @@ const Inspector = () => {
                     {consultasMenuOpen && (
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <Link
-                                to="/inspector/instituto-lista"
+                                to="/inspector/instituto/lista"
                                 className="block px-4 py-2 text-sm hover:bg-gray-700"
                             >
                                 INSTITUTOS

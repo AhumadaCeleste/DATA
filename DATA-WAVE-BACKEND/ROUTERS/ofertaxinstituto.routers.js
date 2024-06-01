@@ -14,6 +14,10 @@ Rutas.get('/filtrar/:campo/:valor', ofertaxinstitutocontroller.filtrar);
 // Nueva ofertaxinstituto http://localhost:3001/ofertaxinstituto/nuevo
 Rutas.post('/nuevo', ofertaxinstitutocontroller.nuevo);
 
+//Para obtener la lista de Instituto, Oferta y Matrícula
+Rutas.get('/lista-instituto-oferta-matricula', ofertaxinstitutocontroller.listaInstitutoOfertaMatricula);
+
+
 // Eliminar un ofertaxinstituto
 Rutas.delete('/eliminar/:id', ofertaxinstitutocontroller.eliminar);
 

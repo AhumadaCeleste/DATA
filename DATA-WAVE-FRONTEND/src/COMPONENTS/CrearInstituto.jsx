@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
+
 function CrearInstitutoFull() {
     const [cue, setCue] = useState("");
     const [ee, setEe] = useState("");
@@ -193,13 +194,6 @@ function CrearInstitutoFull() {
                         </button>
                     </div>
                 </form>
-                
-        <button
-            className="mt-2 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
-            onClick={cancelCerrar}
-        >
-            Cerrar
-        </button>
             </div>
         </div>
     );

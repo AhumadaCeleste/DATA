@@ -4,8 +4,10 @@ import axios from "axios";
 function OfertaMatricula() {
 
     const [matricula, setMatricula] = useState("");
-    const currentYear = new Date().getFullYear();
-    const [año, setAño] = useState(currentYear);
+    const [matricula2, setMatricula2] = useState("");
+    const [matricula3, setMatricula3] = useState("");
+    //const currentYear = new Date().getFullYear();
+    //const [año, setAño] = useState(currentYear);
     const [institutoCue, setInstitutoCue] = useState("");
     const [ofertumId, setOfertumId] = useState("");
     const [institutos, setInstitutos] = useState([]);
@@ -38,7 +40,8 @@ function OfertaMatricula() {
             institutoCue,
             ofertumId,
             matricula,
-            año
+            matricula2,
+            matricula3,
         };
         try {
             const res = await axios.post(
@@ -100,31 +103,34 @@ function OfertaMatricula() {
                         </select>
                     </label>
 
-                    <label htmlFor="año" className="block text-white">
-                        Año: 1° 2024, 2° 2023, 3° 2022
-                        <input
-                            type="text"
-                            id="año"
-                            name="año"
-                            value={año}
-                            onChange={(e) => {
-                                console.log("Valor de ofertumId:", ofertumId);
-                                setAño(e.target.value);
-                            }}
-                            required="required"
-                            className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sky-800"/>
-                    </label>
-
                     <label htmlFor="matricula" className="block text-white">
                         Matricula:
-                        <input
-                            type="text"
-                            id="matricula"
-                            name="matricula"
-                            value={matricula}
-                            onChange={(e) => setMatricula(e.target.value)}
-                            required="required"
-                            className="text-sky-800 w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"/>
+                        <div className="flex space-x-2">
+                            <input
+                                type="text"
+                                id="matricula"
+                                name="matricula"
+                                value={matricula}
+                                onChange={(e) => setMatricula(e.target.value)}
+                                required="required"
+                                className="text-sky-800 w-1/3 py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"/>
+                            <input
+                                type="text"
+                                id="matricula2"
+                                name="matricula2"
+                                value={matricula2}
+                                onChange={(e) => setMatricula2(e.target.value)}
+                                required="required"
+                                className="text-sky-800 w-1/3 py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"/>
+                            <input
+                                type="text"
+                                id="matricula3"
+                                name="matricula3"
+                                value={matricula3}
+                                onChange={(e) => setMatricula3(e.target.value)}
+                                required="required"
+                                className="text-sky-800 w-1/3 py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"/>
+                        </div>
                     </label>
 
                     <div className="flex space-x-2 mt-6">
