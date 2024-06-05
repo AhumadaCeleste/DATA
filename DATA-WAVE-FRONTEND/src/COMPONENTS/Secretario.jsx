@@ -1,22 +1,19 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {RolContext} from '../CONTEXT/RolContext';
-import logo from '../IMAGES/Logo Data-wave.png'; // Asegúrate de que esta ruta sea correcta
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { RolContext } from '../CONTEXT/RolContext';
+import logo from '../IMAGES/Logo Data-wave.png';
 import bgImage from '../IMAGES/bg.Data-Wave.png';
-import OfertaMatricula from './OfertaMatricula'; // Importa el componente CargaMatricula
+import OfertaMatricula from './CargarMatricula'; // Importa el componente CargarMatricula
 
 const Secretario = () => {
     const rol = useContext(RolContext);
     const navigate = useNavigate();
     const [institutosMenuOpen, setInstitutosMenuOpen] = useState(false);
     const [reportesMenuOpen, setReportesMenuOpen] = useState(false);
+    const [matriculaMenuOpen, setMatriculaMenuOpen] = useState(false);
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
     const [mainComponent, setMainComponent] = useState(null);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-
-    const handleOfertaMatriculaClick = () => {
-        setMainComponent(<OfertaMatricula />);
-    };
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -29,11 +26,19 @@ const Secretario = () => {
     const toggleInstitutosMenu = () => {
         setInstitutosMenuOpen(!institutosMenuOpen);
         setReportesMenuOpen(false);
+        setMatriculaMenuOpen(false);
     };
 
     const toggleReportesMenu = () => {
         setReportesMenuOpen(!reportesMenuOpen);
         setInstitutosMenuOpen(false);
+        setMatriculaMenuOpen(false);
+    };
+
+    const toggleMatriculaMenu = () => {
+        setMatriculaMenuOpen(!matriculaMenuOpen);
+        setInstitutosMenuOpen(false);
+        setReportesMenuOpen(false);
     };
 
     const handleLogout = () => {
@@ -48,6 +53,10 @@ const Secretario = () => {
         localStorage.clear();
         navigate("/");
         setShowLogoutConfirm(false);
+    };
+
+    const handleMatriculaClick = () => {
+        setMainComponent(<OfertaMatricula />);
     };
 
     return (
@@ -84,18 +93,33 @@ const Secretario = () => {
                         </div>
                     )}
                     <button
-                        onClick={handleOfertaMatriculaClick}
+                        onClick={toggleMatriculaMenu}
                         className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         MATRICULA
                     </button>
-
+                    {matriculaMenuOpen && (
+                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4">
+                            <button
+                                onClick={handleMatriculaClick}
+                                className="block px-4 py-2 text-sm hover:bg-gray-700 w-full"
+                            >
+                                CARGAR MATRICULA
+                            </button>
+                            <button
+                                onClick={handleMatriculaClick}
+                                className="block px-4 py-2 text-sm hover:bg-gray-700 w-full"
+                            >
+                                EGRESADOS
+                            </button>
+                        </div>
+                    )}
                     <button
-    onClick={handleLogout}
-    className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
->
-    <span className="block sm:inline">CERRAR</span> <span className="block sm:inline">SESIÓN</span>
-</button>
+                        onClick={handleLogout}
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                    >
+                        <span className="block sm:inline">CERRAR</span> <span className="block sm:inline">SESIÓN</span>
+                    </button>
                     {showLogoutConfirm && (
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <button

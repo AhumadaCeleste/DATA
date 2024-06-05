@@ -5,7 +5,7 @@ import Inicio from './COMPONENTS/Inicio';
 import Footer from './COMPONENTS/Footer';
 // Rol Secretario
 import Secretario from './COMPONENTS/Secretario';
-import OfertaMatricula from './COMPONENTS/OfertaMatricula';
+import CargarMatricula from './COMPONENTS/CargarMatricula';
 import AltaOferta from './COMPONENTS/AltaOferta';
 import BMOferta from './COMPONENTS/BMOferta';
 // Rol Inspector
@@ -33,13 +33,15 @@ function App() {
                     <Route path="/" element={<Inicio />}/> 
                     {/* Rol Secretario */}
                     <Route path="/secretario" element={<Secretario />}/>
-                    <Route path="/cargar-matricula" element={<OfertaMatricula />}/>
+                    {/*<Route path="/cargar-matricula" element={<CargarMatricula />}/> */}
                     <Route path="/crear-oferta" element={<AltaOferta />}/>
                     <Route path="/gestionar-oferta" element={<BMOferta />}/> 
                     {/* Rol Inspector */}
                     <Route path="/inspector" element={<Inspector />}>
                         <Route path="crear-instituto" element={<CrearInstituto />}/>
                         <Route path="editar-instituto/:id" element={<EditarInstituto />} />
+                        <Route path="editar-instituto" element={<EditarInstituto />} />
+                        <Route path="matricula" element={<CargarMatricula />}/>
                         <Route path="instituto/nuevo" element={<CrearInstituto />}/>
                         <Route path="instituto/editar" element={<BMInstituto />}/>
                         <Route path="departamento/nuevo" element={<Adepartamento />}/>
@@ -48,7 +50,7 @@ function App() {
                         <Route path="consulta-oferta" element={<OfertaList />}/>
                         <Route path="instituto/oferta-por-instituto" element={<OfertaPorInstitutoList />}/>
                         <Route path="instituto/listaqueryfiltro" element={<InstitutoTipo />}/>
-                        <Route path="ofertaxinstituto/lista-instituto-oferta-matricula" element={<ReporteIOM />}/>
+                        <Route path="instituto/oferta-por-instituto" element={<ReporteIOM />}/>
                         <Route path="crear-oferta" element={<AltaOferta />}/>
                         <Route path="gestionar-oferta" element={<BMOferta />}/>
                         <Route path="egresados" element={<Egresados />}/>

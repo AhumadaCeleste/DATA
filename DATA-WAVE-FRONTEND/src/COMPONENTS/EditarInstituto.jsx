@@ -1,225 +1,277 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
-import { RolContext } from '../CONTEXT/RolContext';
-import logo from '../IMAGES/Logo Data-wave.png';
-import bgImage from '../IMAGES/bg.Data-Wave.png';
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+function EditarInstituto(props) {
+  const { id } = useParams();
+  const [institutoIdInput, setInstitutoIdInput] = useState(id || "");
+  const [institutos, setInstitutos] = useState([]);
+  const [selectedInstituto, setSelectedInstituto] = useState(null);
+  const [newEe, setNewEe] = useState("");
+  const [newDenominacion, setNewDenominacion] = useState("");
+  const [newCuesede, setNewCuesede] = useState("");
+  const [tipoinstitutos, setTipoInstitutos] = useState([]);
+  const [ciudades, setCiudades] = useState([]);
+  const [sucursales, setSucursales] = useState([]);
+  const [tipoInstitutoId, setTipoInstitutoId] = useState(null);
+  const [ciudadId, setCiudadId] = useState(null);
+  const [sucursalId, setSucursalId] = useState(null);
+  const inputRef = useRef(null);
+  const navigate = useNavigate();
 
 
-const Inspector = () => {
-    const rol = useContext(RolContext);
-    const [institutosMenuOpen, setInstitutosMenuOpen] = useState(false);
-    const [ofertasMenuOpen, setOfertasMenuOpen] = useState(false);
-    const [consultasMenuOpen, setConsultasMenuOpen] = useState(false);
-    const [reportesMenuOpen, setReportesMenuOpen] = useState(false);
-    const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
-    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  useEffect(() => {
+    loadInstitutos();
+    loadTiposInstitutos();
+    loadCiudades();
+    loadSucursales();
+    console.log("Valor de institutoIdInput en useEffect: ", institutoIdInput);
+    editInstituto(institutoIdInput);
+  }, []);
 
-    const { institutoId } = useParams();
-    const navigate = useNavigate();
+  
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setShowWelcomeMessage(false);
-        }, 2000);
+  const loadInstitutos = () => {
+    axios.get("http://localhost:3001/instituto/lista")
+      .then((response) => {
+        setInstitutos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los institutos:", error);
+      });
+  };
 
-        return () => clearTimeout(timer);
-    }, []);
+  const loadTiposInstitutos = () => {
+    axios.get("http://localhost:3001/tipoinstituto/lista")
+      .then((response) => {
+        setTipoInstitutos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los tipos de instituto:", error);
+      });
+  };
 
-    const toggleInstitutosMenu = () => {
-        setInstitutosMenuOpen(!institutosMenuOpen);
-        setOfertasMenuOpen(false);
-        setConsultasMenuOpen(false);
-        setReportesMenuOpen(false);
-    };
+  const loadCiudades = () => {
+    axios.get("http://localhost:3001/ciudad/lista")
+      .then((response) => {
+        setCiudades(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las ciudades:", error);
+      });
+  };
 
-    const toggleOfertasMenu = () => {
-        setOfertasMenuOpen(!ofertasMenuOpen);
-        setInstitutosMenuOpen(false);
-        setConsultasMenuOpen(false);
-        setReportesMenuOpen(false);
-    };
+  const loadSucursales = () => {
+    axios.get("http://localhost:3001/sucursal/lista")
+      .then((response) => {
+        setSucursales(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las sucursales:", error);
+      });
+  };
 
-    const toggleConsultasMenu = () => {
-        setConsultasMenuOpen(!consultasMenuOpen);
-        setInstitutosMenuOpen(false);
-        setOfertasMenuOpen(false);
-        setReportesMenuOpen(false);
-    };
+  const editInstituto = (institutoId) => {
+    console.log("ID a buscar:", institutoId);
+    console.log("Lista de institutos:", institutos);
 
-    const toggleReportesMenu = () => {
-        setReportesMenuOpen(!reportesMenuOpen);
-        setInstitutosMenuOpen(false);
-        setOfertasMenuOpen(false);
-        setConsultasMenuOpen(false);
-    };
+    const institutoToEdit = institutos.find((instituto) => instituto.cue === institutoId);
+    
+    if (institutoToEdit) {
+      console.log("Instituto encontrado:", institutoToEdit);
+      setSelectedInstituto(institutoToEdit);
+      setNewEe(institutoToEdit.ee);
+      setNewDenominacion(institutoToEdit.denominacion);
+      setNewCuesede(institutoToEdit.cuesede);
+      setTipoInstitutoId(institutoToEdit.tipoinstitutoId);
+      setCiudadId(institutoToEdit.CiudadId);
+      setSucursalId(institutoToEdit.sucursalId);
+    } else {
+      Swal.fire("Error", "Instituto no encontrado", "error");
+    }
+  };
 
-    const handleLogout = () => {
-        setShowLogoutConfirm(true);
-    };
+  const handleEditInput = (e) => {
+    if (e.key === "Enter") {
+      if (institutos.length === 0) {
+        Swal.fire("Error", "Los datos de los institutos no se han cargado aún.", "error");
+        return;
+      }
+      editInstituto(institutoIdInput);
+    }
+  };
 
-    const logout = () => {
-        localStorage.clear();
-        navigate("/");
-        setShowLogoutConfirm(false);
-    };
+  
+  const cancelEdit = () => {
+    setSelectedInstituto(null);
+    setNewEe("");
+    setNewDenominacion("");
+    setNewCuesede("");
+    setTipoInstitutoId(null);
+    setCiudadId(null);
+    setSucursalId(null);
+  };
 
-    const cancelLogout = () => {
-        setShowLogoutConfirm(false);
-    };
+  const confirmEdit = () => {
+    console.log("llego al confirmar");
+    axios
+      .put(`http://localhost:3001/instituto/actualizar/${selectedInstituto.cue}`, {
+        ee: newEe,
+        denominacion: newDenominacion,
+        cuesede: newCuesede,
+        tipoinstitutoId: tipoInstitutoId,
+        CiudadId: ciudadId,
+        sucursalId: sucursalId,
+      })
+      .then((response) => {
+        setSelectedInstituto(null);
+        setNewEe("");
+        setNewDenominacion("");
+        setNewCuesede("");
+        setTipoInstitutoId(null);
+        setCiudadId(null);
+        setSucursalId(null);
+        console.log("Instituto editado correctamente");
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el instituto:", error);
+      });
+  };
 
-    return (
-        <div className="flex min-h-screen">
-            <div className="flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center min-h-screen">
-                <div className="bg-gray-800 rounded-full p-1 shadow-md mb-4">
-                    <img
-                        src={logo}
-                        alt="Data Wave Logo"
-                        className="h-15 w-28 object-cover rounded-full border-4 border-gray-400 sm:h-25 sm:w-25"
-                    />
-                </div>
-                <div className="flex flex-col items-center flex-1">
-                    <button
-                        onClick={toggleInstitutosMenu}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
-                    >
-                        INSTITUTOS
-                    </button>
-                    {institutosMenuOpen && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                            <Link
-                                to="/inspector/crear-instituto"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                CREAR INSTITUTO
-                            </Link>
-                            <Link
-                                to="/inspector/instituto/editar"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                GESTIONAR INSTITUTO
-                            </Link>
-                        </div>
-                    )}
+  return (
+    <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
+      <h2 className="text-lg font-bold text-center py-2">EDITAR INSTITUTO</h2>
 
-                    <button
-                        onClick={toggleOfertasMenu}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
-                    >
-                        OFERTAS
-                    </button>
-                    {ofertasMenuOpen && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                            <Link
-                                to="/inspector/crear-oferta"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                CREAR OFERTA
-                            </Link>
-                            <Link
-                                to="/inspector/gestionar-oferta"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                GESTIONAR OFERTA
-                            </Link>
-                        </div>
-                    )}
+      <div className="flex items-center space-x-2">
+        <input
+          className="border border-gray-300 rounded-md p-2 w-full bg-primary"
+          type="text"
+          placeholder="Ingrese ID del Instituto"
+          value={institutoIdInput}
+          onChange={(e) => setInstitutoIdInput(e.target.value)}
+          onKeyDown={handleEditInput}
+        />
+        <button
+          className="bg-sky-600 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded"
+          onClick={() => editInstituto(institutoIdInput)}
+        >
+          Editar
+        </button>
+      </div>
 
-                    <button
-                        onClick={toggleConsultasMenu}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
-                    >
-                        CONSULTAS
-                    </button>
-                    {consultasMenuOpen && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                            <Link
-                                to="/inspector/instituto/lista"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                INSTITUTOS
-                            </Link>
-                            <Link
-                                to="/inspector/consulta-oferta"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                OFERTAS
-                            </Link>
-                        </div>
-                    )}
+      {selectedInstituto ? (
+        <div className="mt-4 rounded-md w-full">
+          <label className="block mb-2 text-white">
+              EE: 
+          <input
+                    ref={inputRef}
+                    autoFocus={true}
+                    className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+                    type="text"
+                    value={newEe}
+                    onChange={(e) => setNewEe(e.target.value)}
+          />
+          </label>
+          <label className="block mb-2 text-white">
+              Denominación:
+          <input
+                    ref={inputRef}
+                    autoFocus={true}
+                    className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+                    type="text"
+                    value={newDenominacion}
+                    onChange={(e) => setNewDenominacion(e.target.value)}
+          />
+          </label>
+          <label className="block mb-2 text-white">
+              CUE Sede:
+              <input
+                ref={inputRef}
+                autoFocus={true}
+                className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+                type="text"
+                value={newCuesede}
+                onChange={(e) => setNewCuesede(e.target.value)}
+              />
+          </label>
+          <label htmlFor="tipoinstitutoId" className="block">
+              Tipoinstituto:
+              <select
+                  id="tipoinstitutoId"
+                  name="tipoinstitutoId"
+                  value={tipoInstitutoId}
+                  onChange={(e) => setTipoInstitutoId(e.target.value)}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+              >
+                  <option value="">Seleccionar Tipo de Instituto</option>
+                  {tipoinstitutos.map((tipo) => (
+                      <option key={tipo.id} value={tipo.id}>
+                          {tipo.descripcion}
+                      </option>
+                  ))}
+              </select>
+          </label>
+          <label htmlFor="ciudadId" className="block">
+              Ciudad:
+              <select
+                  id="ciudadId"
+                  name="ciudadId"
+                  value={ciudadId}
+                  onChange={(e) => setCiudadId(e.target.value)}
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+              >
+                  <option value="">Seleccionar Ciudad</option>
+                  {ciudades.map((ciudad) => (
+                      <option key={ciudad.id} value={ciudad.id}>
+                          {ciudad.nombre}
+                      </option>
+                  ))}
+              </select>
+          </label>
+          <label htmlFor="sucursalId" className="block">
+                Sucursal:
+                <select
+                    id="sucursalId"
+                    name="sucursalId"
+                    value={sucursalId}
+                    onChange={(e) => setSucursalId(e.target.value)}
+                    className="w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-black"
+                >
+                    <option value="">Seleccionar Sucursal</option>
+                    {sucursales.map((sucursal) => (
+                        <option key={sucursal.id} value={sucursal.id}>
+                            {sucursal.descripcion}
+                        </option>
+                    ))}
+                </select>
+            </label>
 
-                    <button
-                        onClick={toggleReportesMenu}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
-                    >
-                        REPORTES
-                    </button>
-                    {reportesMenuOpen && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                            <Link
-                                to="/inspector/instituto/oferta-por-instituto"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                OFERTA POR INSTITUTO
-                            </Link>
-                            <Link
-                                to="/inspector/egresados"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
-                            >
-                                EGRESADOS
-                            </Link>
-                        </div>
-                    )}
 
-                    <button
-                        onClick={handleLogout}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
-                    >
-                        CERRAR SESION
-                    </button>
-                    {showLogoutConfirm && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                            <button
-                                className="bg-sky-400 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
-                                onClick={logout}
-                            >
-                                CONFIRMAR
-                            </button>
-                            <button
-                                className="bg-gray-400 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
-                                onClick={cancelLogout}
-                            >
-                                CANCELAR
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            <div
-                className="flex flex-col justify-center items-center flex-1 bg-gray-300 relative min-h-screen overflow-y-auto"
-                style={{
-                    backgroundImage: `url(${bgImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                }}
+          <div className="flex items-center space-x-2 justify-center">
+            <button
+              className="bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700"
+              onClick={confirmEdit}
             >
-                {showWelcomeMessage && (
-                    <div className="flex flex-col justify-center items-center h-full">
-                        <img
-                            src={logo}
-                            alt="Data Wave Logo"
-                            className="h-48 w-auto rounded-full border-4 border-gray-400 mb-5"
-                        />
-                        <p className="font-arial text-4xl font-bold text-blue-700 mb-5 transition-opacity duration-4000 ease-in-out opacity-100">
-                            {rol === 'inspector' ? 'Bienvenido Inspector' : 'Bienvenido'}
-                        </p>
-                    </div>
-                )}
-                <Outlet />
-            </div>
+              Guardar
+            </button>
+            <button
+              className="bg-red-600 text-white font-bold py-2 px-4 rounded hover:bg-red-700"
+              onClick={cancelEdit}
+            >
+              Cancelar
+            </button>
+          </div>
         </div>
-    );
-};
+      ) : (
+        <div className="mt-4">
+          <h3 className="text-xl font-bold mb-2 text-center">
+            Seleccione un Instituto para editar
+          </h3>
+        </div>
+      )}
+    </div>
+  );
+}
 
-export default Inspector;
+export default EditarInstituto;

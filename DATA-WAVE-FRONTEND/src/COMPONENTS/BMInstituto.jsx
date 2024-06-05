@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -77,6 +77,7 @@ function BMInstituto(props) {
   const editInstituto = (institutoId) => {
     const institutoToEdit = institutos.find((instituto) => instituto.id === institutoId);
     if (institutoToEdit) {
+      console.log("ingreso a editar");
       setSelectedInstituto(institutoToEdit);
       setNewDenominacion(institutoToEdit.denominacion);
       setTipoInstitutoId(institutoToEdit.tipoinstitutoId);

@@ -10,7 +10,7 @@ import logo4 from "../IMAGES/LogoWiseOwl.jpg";
 import logo5 from "../IMAGES/LogoAcademy.png";
 
 const Inicio = () => {
-    const [, setError] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
     const [, setSiglaRol] = useState(0);
 
@@ -88,33 +88,42 @@ const Inicio = () => {
                             </div>
                             <div className="mb-6">
                                 <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
-                                    Contraseña
+                                Contraseña
                                 </label>
                                 <input
                                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                                     id="password"
                                     type="password"
-                                    placeholder="******************"/>
+                                    placeholder="******************"
+                                />
                             </div>
+                            {error && (
+                                <div className="mb-4 text-red-500 text-sm">
+                                    {error}
+                                </div>
+                            )}
                             <div className="flex flex-row justify-between p-1">
                                 <button
                                     className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
                                     type="button"
-                                    onClick={handleLogin}>
+                                    onClick={handleLogin}
+                                >
                                     Iniciar sesión
                                 </button>
                                 <button
                                     className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2"
-                                    type="button">
+                                    type="button"
+                                >
                                     Solicitar Usuario
                                 </button>
                             </div>
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <div className="mt-4">
                                 <a
                                     className="inline-block align-baseline font-bold text-sm text-white hover:text-blue-800"
-                                    href="datawave.com">
+                                    href="datawave.com"
+                                >
                                     ¿Olvidaste tu contraseña?
                                 </a>
                             </div>
@@ -124,15 +133,18 @@ const Inicio = () => {
                 <br/>
                 <div className="p-8 bg-color shadow-md rounded text-white text-sm text-center">
                     <div className="bg-gray-600 rounded">
-
-                        <p className="ml-2 font-bold text-lg text-gray-300 p-6">
-                            Bienvenido a Data Wave! Esta es una plataforma integral de gestión educativa
-                            diseñada para transformar la manera en que las instituciones educativas
-                            administran y analizan sus datos. Con una interfaz intuitiva y poderosas
-                            herramientas analíticas, Data Wave permite la tomar decisiones informadas y
-                            estratégicas para mejorar el rendimiento estudiantil y la eficiencia operativa.
+                    <p
+                            className="ml-2 font-bold text-lg text-gray-300 p-6 font-serif tracking-widest shadow-lg animate-fadeInMoveUp"
+                            style={{
+                                fontFamily: 'Roboto',
+                                fontSize: '15px',
+                                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
+                            }}
+                        >
+                            Bienvenido a Data Wave! La plataforma integral de gestión educativa diseñada para transformar la manera en que las instituciones educativas administran y analizan sus datos. Con una interfaz intuitiva y poderosas herramientas analíticas, Data Wave permite la tomar decisiones informadas y estratégicas para mejorar el rendimiento estudiantil y la eficiencia operativa.
                         </p>
                     </div>
+            
                 </div>
 
                 <div className="row mb-4">
@@ -304,5 +316,6 @@ const Inicio = () => {
         </div>
     );
 }
+
 
 export default Inicio;

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 
 function CrearInstitutoFull() {
     const [cue, setCue] = useState("");
@@ -62,9 +62,9 @@ function CrearInstitutoFull() {
                 nuevoinstitutofull
             );
             console.log(res);
-            alert("Instituto Agregado");
+            Swal.fire('Instituto Agregado', '', 'success');
         } catch (error) {
-            alert(`Error tipo: ${error.response.data.msg}`);
+            Swal.fire('Error', `Error tipo: ${error.response.data.msg}`, 'error');
             console.log("Error al enviar el mensaje al back:", error);
         }
     };
