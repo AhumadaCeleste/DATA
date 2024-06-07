@@ -18,7 +18,7 @@ import OfertaList from "./COMPONENTS/OfertaList";
 import OfertaPorInstitutoList from "./COMPONENTS/OfertaXInstituto";
 import InstitutoTipo from "./COMPONENTS/InstitutoTipo";
 import Egresados from "./COMPONENTS/Egresados"
-import ReporteIOM from "./COMPONENTS/ReporteIOM"
+
 // Rol Director
 import Director from './COMPONENTS/Director';
 import InstList from './COMPONENTS/InstList';
@@ -50,7 +50,7 @@ function App() {
                         <Route path="consulta-oferta" element={<OfertaList />}/>
                         <Route path="instituto/oferta-por-instituto" element={<OfertaPorInstitutoList />}/>
                         <Route path="instituto/listaqueryfiltro" element={<InstitutoTipo />}/>
-                        <Route path="instituto/oferta-por-instituto" element={<ReporteIOM />}/>
+                       
                         <Route path="crear-oferta" element={<AltaOferta />}/>
                         <Route path="gestionar-oferta" element={<BMOferta />}/>
                         <Route path="egresados" element={<Egresados />}/>

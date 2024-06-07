@@ -13,7 +13,7 @@ const Inspector = () => {
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
     const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
     const [institutosSubMenuOpen, setInstitutosSubMenuOpen] = useState(false);
-const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useState(false);
+    const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useState(false);
 
     const { institutoId } = useParams();
     const navigate = useNavigate();
@@ -33,16 +33,16 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
         setReportesMenuOpen(false);
     };
 
-
     const toggleInstitutosSubMenu = () => {
         setInstitutosSubMenuOpen(!institutosSubMenuOpen);
         setMatriculaEgresadosSubMenuOpen(false);
     };
-    
+
     const toggleMatriculaEgresadosSubMenu = () => {
         setMatriculaEgresadosSubMenuOpen(!matriculaEgresadosSubMenuOpen);
         setInstitutosSubMenuOpen(false);
     };
+
     const toggleOfertasMenu = () => {
         setOfertasMenuOpen(!ofertasMenuOpen);
         setInstitutosMenuOpen(false);
@@ -89,76 +89,6 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                     />
                 </div>
                 <div className="flex flex-col items-center flex-1">
-                <button
-    onClick={toggleInstitutosMenu}
-    className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
->
-    GESTION
-</button>
-{institutosMenuOpen && (
-    <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-        <div>
-        <button
-        onClick={toggleInstitutosSubMenu}
-        className="w-full block px-4 py-4 text-sm hover:bg-gray-700 text-center font-bold" // Añade la clase text-left para alinear el texto a la izquierda
-    >
-        INSTITUTO
-    </button>
-    {institutosSubMenuOpen && (
-        <div className="bg-sky-600 text-white sub-menu-link font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-            <Link
-        to="/inspector/crear-instituto"
-        className="block px-4 py-2 text-sm hover:bg-gray-500 sub-menu-link"
-        style={{ fontSize: '0.7rem' }} // Aplica el estilo de tamaño de fuente más pequeño
-    >
-        CREAR INSTITUTO
-                    </Link>
-                    <Link
-                        to="/inspector/instituto/editar"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500 sub-menu-link text-left"
-                        style={{ fontSize: '0.7rem' }}
-                    >
-                        GESTIONAR INSTITUTO
-                    </Link>
-                    <Link
-                        to="/inspector/editar-instituto"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500"
-                        style={{ fontSize: '0.7rem' }}
-                    >
-                        INSTITUTO PRUEBA
-                    </Link>
-                </div>
-            )}
-        </div>
-        <div>
-            <button
-                onClick={toggleMatriculaEgresadosSubMenu}
-                className="w-full block px-4 py-2 text-sm hover:bg-gray-700"
-            >
-                MATRICULA
-            </button>
-            {matriculaEgresadosSubMenuOpen && (
-                <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                    <Link
-                        to="/inspector/matricula"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500"
-                        style={{ fontSize: '0.7rem' }}
-                    >
-                         CARGAR MATRICULA
-                    </Link>
-                    <Link
-                        to="/secretario/matricula"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500"
-                        style={{ fontSize: '0.7rem' }}
-                    >
-                         CARGAR EGRESADOS
-                    </Link>
-                </div>
-            )}
-        </div>
-    </div>
-)}
-
                     <button
                         onClick={toggleConsultasMenu}
                         className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
@@ -169,9 +99,9 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <Link
                                 to="/inspector/instituto-lista"
-                                 className="block px-4 py-2 text-sm hover:bg-gray-700 text-center" // Añade la clase text-center para alinear el texto al centro
->
-    INSTITUTO
+                                className="block px-4 py-2 text-sm hover:bg-gray-700 text-center"
+                            >
+                                INSTITUTO
                             </Link>
                             <Link
                                 to="/inspector/consulta-oferta"
@@ -179,6 +109,76 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                             >
                                 OFERTAS
                             </Link>
+                        </div>
+                    )}
+
+                    <button
+                        onClick={toggleInstitutosMenu}
+                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                    >
+                        GESTION
+                    </button>
+                    {institutosMenuOpen && (
+                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+                            <div>
+                                <button
+                                    onClick={toggleInstitutosSubMenu}
+                                    className="w-full block px-4 py-4 text-sm hover:bg-gray-700 text-center font-bold"
+                                >
+                                    INSTITUTO
+                                </button>
+                                {institutosSubMenuOpen && (
+                                    <div className="bg-sky-600 text-white sub-menu-link font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+                                        <Link
+                                            to="/inspector/crear-instituto"
+                                            className="block px-4 py-2 text-sm hover:bg-gray-500 sub-menu-link"
+                                            style={{ fontSize: '0.7rem' }}
+                                        >
+                                            CREAR INSTITUTO
+                                        </Link>
+                                        <Link
+                                            to="/inspector/instituto/editar"
+                                            className="block px-4 py-2 text-sm hover:bg-gray-500 sub-menu-link text-left"
+                                            style={{ fontSize: '0.7rem' }}
+                                        >
+                                            GESTIONAR INSTITUTO
+                                        </Link>
+                                        <Link
+                                            to="/inspector/editar-instituto"
+                                            className="block px-4 py-2 text-sm hover:bg-gray-500"
+                                            style={{ fontSize: '0.7rem' }}
+                                        >
+                                            INSTITUTO PRUEBA
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            <div>
+                                <button
+                                    onClick={toggleMatriculaEgresadosSubMenu}
+                                    className="w-full block px-4 py-2 text-sm hover:bg-gray-700"
+                                >
+                                    MATRICULA
+                                </button>
+                                {matriculaEgresadosSubMenuOpen && (
+                                    <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+                                        <Link
+                                            to="/inspector/matricula"
+                                            className="block px-4 py-2 text-sm hover:bg-gray-500"
+                                            style={{ fontSize: '0.7rem' }}
+                                        >
+                                            CARGAR MATRICULA
+                                        </Link>
+                                        <Link
+                                            to="/secretario/matricula"
+                                            className="block px-4 py-2 text-sm hover:bg-gray-500"
+                                            style={{ fontSize: '0.7rem' }}
+                                        >
+                                            CARGAR EGRESADOS
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
 
@@ -215,27 +215,32 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                         onClick={handleLogout}
                         className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
-                        CERRAR SESION
+                        CERRAR SESIÓN
                     </button>
-                    {showLogoutConfirm && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
-                            <button
-                                className="bg-sky-600 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
-                                onClick={logout}
-                            >
-                                CONFIRMAR
-                            </button>
-                            <button
-                                className="bg-red-300 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
-                                onClick={cancelLogout}
-                            >
-                                CANCELAR
-                            </button>
-                        </div>
-                    )}
                 </div>
-            </div>
 
+                {showLogoutConfirm && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="bg-white p-6 rounded shadow-lg">
+                            <p>¿Está seguro que desea cerrar sesión?</p>
+                            <div className="mt-4">
+                                <button
+                                    onClick={logout}
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                >
+                                    Cerrar sesión
+                                </button>
+                                <button
+                                    onClick={cancelLogout}
+                                    className="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                >
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
             <div
                 className="flex flex-col justify-center items-center flex-1 bg-gray-300 relative min-h-screen overflow-y-auto"
                 style={{

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+//import { getOfertas } from "../SERVICE/Reportes.service";
 
 function OfertaPorInstitutoList() {
   const [ofertas, setOfertas] = useState([]);
@@ -11,19 +12,19 @@ function OfertaPorInstitutoList() {
   }, [institutoId]);
 
   const loadOfertasPorInstituto = () => {
-    axios
-      .get(`http://localhost:3001/instituto/oferta-por-instituto`)
+    axios.get("http://localhost:3001/ofertaxinstituto/lista-instituto-oferta-matricula")
       .then((response) => {
         setOfertas(response.data);
       })
       .catch((error) => {
-        console.error("Error al obtener la lista de ofertas por instituto:", error);
+        console.error("Error al obtener los tipos de instituto:", error);
       });
   };
 
-  return (
+
+ return (
     <div className="bg-sky-800 text-white py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[800px] xl:w-[1000px] max-w-screen-lg mx-auto">
-      <h2 className="text-lg font-bold mb-4 text-center">Ofertas por Instituto</h2>
+      <h2 className="text-lg font-bold mb-4 text-center">Ofertas por Institutoooo</h2>
       <table className="min-w-full divide-y divide-gray-200">
         <thead>
           <tr>
@@ -35,9 +36,7 @@ function OfertaPorInstitutoList() {
         <tbody className="bg-white divide-y divide-gray-200">
           {ofertas.map((oferta) => (
             <tr key={oferta.id}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{oferta.oferta.nombre}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{oferta.matricula}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{oferta.año}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{oferta.instituto_denominacion}</td>
             </tr>
           ))}
         </tbody>
