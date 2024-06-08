@@ -181,14 +181,14 @@ function CrearInstitutoFull() {
                         </select>
                     </label>
 
-                    <div className="flex justify-end space-x-2">
+                    <div className="flex justify-end mt-4 space-x-4 font-bold">
                         <button
                             type="submit"
-                            className="w-24 bg-sky-600 text-white font-bold hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline">
+                            className="rounded-lg h-10 w-20 text-sm bg-green-700 text-white hover:bg-green-600">
                             Agregar
                         </button>
                         <button
-                            className="w-24 border-red-300 font-bold bg-red-300 text-white hover:bg-gray-700 py-1 rounded focus:outline-none focus:shadow-outline"
+                            className="rounded-lg h-10 w-20 text-sm bg-red-700 text-white hover:bg-red-600"
                             onClick={cancelCerrar}>
                             Cancelar
                         </button>

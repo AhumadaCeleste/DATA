@@ -3,88 +3,99 @@ const sequelize = db.sequelize;
 const {Op} = require('sequelize');
 
 //-----------------------------------lista
-exports.lista = (req, res) => {
-    console.log('Procesamiento de lista de Institutos');
-    db
-        .instituto
-        .findAll()
-        .then(registros => {
-            res
-                .status(200)
-                .send(registros);
-        })
-        .catch(error => {
-            res
-                .status(500)
-                .send(error);
+exports.lista = async (req, res) => {
+    console.log('Procesamiento de lista de Institutos con paginación');
+    const page = req.query.page || 1; // Obtener el número de página de la query
+    const limit = 30; // Establecer el límite de registros por página
+    const offset = (page - 1) * limit; // Calcular el offset
+    try {
+        const registros = await db.instituto.findAll({
+            limit,
+            offset
         });
+        res.status(200).send(registros);
+    } catch (error) {
+        console.error(
+            'Error al obtener la lista de Institutos con paginación:',
+            error
+        );
+        res.status(500).send(error);
+    }
 };
 
-// lista con query
+// listaquery con paginación de 5 registros por página
 exports.listaquery = async (req, res) => {
-    console.log('Procesamiento de lista de Institutos full');
+    console.log('Procesamiento de lista de Institutos full con paginación');
+    const page = req.query.page || 1; // Obtener el número de página de la query
+    const limit = 5; // Establecer el límite de registros por página
+    const offset = (page - 1) * limit; // Calcular el offset
     try {
         const registros = await sequelize.query(
             `
-        SELECT i.cue, i.ee, i.denominacion, i.cuesede,
-	t.id as id_tipo, t.descripcion as instituto, 
-    c.id as id_ciudad, c.nombre as ciudad,
-    d.id as id_dpto, d.nombre as departamento,
-    s.id as id_sucursal, s.descripcion as sucursal
-from instituto i
-	inner join tipoinstituto t ON i.tipoinstitutoId = t.id
-    inner join ciudad c on i.CiudadId=c.id
-    inner join sucursal s on i.sucursalId=s.id
-    inner join departamento d on c.departamentoId=d.id `,
-            {type: sequelize.QueryTypes.SELECT}
+            SELECT i.cue, i.ee, i.denominacion, i.cuesede,
+                t.id as id_tipo, t.descripcion as instituto, 
+                c.id as id_ciudad, c.nombre as ciudad,
+                d.id as id_dpto, d.nombre as departamento,
+                s.id as id_sucursal, s.descripcion as sucursal
+            FROM instituto i
+                INNER JOIN tipoinstituto t ON i.tipoinstitutoId = t.id
+                INNER JOIN ciudad c ON i.CiudadId=c.id
+                INNER JOIN sucursal s ON i.sucursalId=s.id
+                INNER JOIN departamento d ON c.departamentoId=d.id
+            ORDER BY i.cue
+            LIMIT ${limit}
+            OFFSET ${offset}
+        `,
+            { type: sequelize.QueryTypes.SELECT }
         );
-        res
-            .status(200)
-            .send(registros);
+        const totalCount = await sequelize.query(
+            `
+            SELECT COUNT(*) as total FROM instituto
+        `,
+            { type: sequelize.QueryTypes.SELECT }
+        );
+        const totalRecords = totalCount[0].total;
+        const totalPages = Math.ceil(totalRecords / limit);
+
+        res.status(200).send({ registros, totalPages });
     } catch (error) {
         console.error(
-            'Error al obtener la lista completa de Institutos con tipo y sucursal:',
+            'Error al obtener la lista completa de Institutos con tipo y sucursal con paginación:',
             error
         );
-        res
-            .status(500)
-            .send({error: 'Error al obtener la lista completa de Institutos con Ofertas'});
+        res.status(500).send({ error: 'Error al obtener la lista completa de Institutos con Ofertas con paginación' });
     }
 };
 
 // lista con query con filtrado
 exports.listaqueryfiltro = async (req, res) => {
-    console.log('Procesamiento de lista de Institutos full');
-    const institutoId = req.params.institutoId; // Obtener el parámetro de entrada
-    //Evitar Error Object-Object
+    console.log('Procesamiento de lista de Institutos con paginación');
+    const page = req.query.page || 1; // Obtener el número de página de la query
+    const limit = 5; // Establecer el límite de registros por página
+    const offset = (page - 1) * limit; // Calcular el offset
     try {
         const registros = await sequelize.query(
             `
-        SELECT i.cue, i.ee, t.descripcion as tipo_isntituto, c.nombre as ciudad, s.descripcion as sucursal
-        from instituto i 
-        inner join tipoinstituto t ON i.tipoinstitutoId = t.id 
-        inner join ciudad c on i.CiudadId=c.id 
-        inner join sucursal s on i.sucursalId=s.id 
-        where i.cue=:institutoId
+            SELECT i.cue, i.ee, t.descripcion as tipo_isntituto, c.nombre as ciudad, s.descripcion as sucursal
+            FROM instituto i 
+            INNER JOIN tipoinstituto t ON i.tipoinstitutoId = t.id 
+            INNER JOIN ciudad c ON i.CiudadId = c.id 
+            INNER JOIN sucursal s ON i.sucursalId = s.id 
+            ORDER BY i.cue
+            LIMIT ${limit}
+            OFFSET ${offset}
         `,
             {
-                replacements: {
-                    institutoId: institutoId
-                },
                 type: sequelize.QueryTypes.SELECT
             }
         );
-        res
-            .status(200)
-            .send(registros);
+        res.status(200).send(registros);
     } catch (error) {
         console.error(
-            'Error al obtener la lista completa de Institutos con Ofertas:',
+            'Error al obtener la lista de Institutos con paginación:',
             error
         );
-        res
-            .status(500)
-            .send({error: 'Error al obtener la lista completa de Institutos con Ofertas'});
+        res.status(500).send({ error: 'Error al obtener la lista de Institutos con paginación' });
     }
 };
 

@@ -114,11 +114,11 @@ const Secretario = () => {
                             </button>
                         </div>
                     )}
-                    <button
+                     <button
                         onClick={handleLogout}
                         className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
-                        <span className="block sm:inline">CERRAR</span> <span className="block sm:inline">SESIÓN</span>
+                        CERRAR SESIÓN
                     </button>
                     {showLogoutConfirm && (
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
