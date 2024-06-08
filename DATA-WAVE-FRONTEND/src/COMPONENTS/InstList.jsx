@@ -196,69 +196,64 @@ function InstitutoList(props) {
 
   return (
     <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
-      <h2 className="text-lg font-bold text-center py-2">EDITAR - ELIMINAR INSTITUTO</h2>
+      <h2 className="text-lg font-bold text-center py-3">EDITAR - ELIMINAR INSTITUTO</h2>
 
       {!selectedInstituto && !showDetails && (
-        <>
-          <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
-            <div className="rounded-md w-full bg-sky-600 text-white font-bold">
-              <input
-                id="searchQuery"
-                className="border-primary rounded-md w-full h-[50px]"
-                placeholder="Buscar instituto"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  loadInstitutos(true);
-                }}
-              />
-            </div>
-          </div>
+  <>
+    <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
+  <div className="rounded-md w-full bg-sky-600 text-sky-800 font-bold">
+    <input
+      id="searchQuery"
+      className="border-primary rounded-md w-full h-[50px]"
+      placeholder="Buscar instituto"
+      value={searchQuery}
+      onChange={(e) => {
+        setSearchQuery(e.target.value);
+        loadInstitutos(true);
+      }}
+    />
+  </div>
+</div>
 
-          <ul className="rounded-md mt-4 space-y-5 overflow-x-auto">
-            {filteredInstitutos.map((instituto) => (
-              <li
-                key={instituto.id}
-                className="bg-sky-600 text-white font-bold rounded cursor-pointer flex flex-col px-4 py-2 relative"
-              >
-                <div>{instituto.denominacion}</div>
-                {instituto.tipoinstituto && (
-                  <div className="text-sm">Tipo de Instituto: {instituto.tipoinstituto.descripcion}</div>
-                )}
-                {instituto.ciudad && (
-                  <div className="text-sm">Ciudad: {instituto.ciudad.nombre}</div>
-                )}
-                {instituto.sucursal && (
-                  <div className="text-sm">Sucursal: {instituto.sucursal.descripcion}</div>
-                )}
-                <div className="absolute top-0 right-0 mr-2 mt-2">
-                </div>
-  
-                <div className="flex justify-end mt-2 space-x-2">
-                  <button
-                    className="p-1 border-2 rounded-lg bg-white text-sky-600"
-                    onClick={() => showInstitutoDetail(instituto.id)}
-                  >
-                    <EyeIcon className="h-5 w-5 mr-1" />
-                  </button>
-                  <button
-                    className="p-1 border-2 rounded-lg bg-white text-sky-600"
-                    onClick={() => editInstituto(instituto.id)}
-                  >
-                    <PencilIcon className="h-5 w-5 mr-1" />
-                  </button>
-                  <button
-                    className="flex items-center justify-center border-2 rounded-lg border-red-300 h-8 w-9 text-sm bg-red-300 text-white"
-                    onClick={() => deleteInstituto(instituto.cue)}
-                  >
-                    <TrashIcon className="h-5 w-5 mr-1" />
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+    <table className="mt-4 w-full">
+      <thead>
+        <tr>
+          <th className="bg-sky-600 text-white font-bold px-4 py-2">Denominación</th>
+          <th className="bg-sky-600 text-white font-bold px-4 py-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredInstitutos.map((instituto, index) => (
+          <tr key={instituto.id} className={`bg-${index % 2 === 0 ? 'sky-600' : 'sky-500'} text-white font-bold rounded my-4`}>
+            <td className="px-4 py-4">{instituto.denominacion}</td>
+            <td className="px-4 py-2">
+              <div className="flex space-x-2">
+                <button
+                  className="p-1 border-2 rounded-lg bg-white text-sky-600"
+                  onClick={() => showInstitutoDetail(instituto.id)}
+                >
+                  <EyeIcon className="h-5 w-5 mr-1" />
+                </button>
+                <button
+                  className="p-1 border-2 rounded-lg bg-white text-sky-600"
+                  onClick={() => editInstituto(instituto.id)}
+                >
+                  <PencilIcon className="h-5 w-5 mr-1" />
+                </button>
+                <button
+                  className="flex items-center justify-center border-2 rounded-lg border-red-300 h-8 w-9 text-sm bg-red-300 text-white"
+                  onClick={() => deleteInstituto(instituto.cue)}
+                >
+                  <TrashIcon className="h-5 w-5 mr-1" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </>
+)}
 
       {selectedInstituto && (
         <div className="mt-4 rounded-md w-full">
