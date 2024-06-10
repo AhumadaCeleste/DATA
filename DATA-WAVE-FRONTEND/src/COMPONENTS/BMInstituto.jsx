@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { PencilIcon, TrashIcon} from "@heroicons/react/20/solid";
+import { PencilIcon, TrashIcon, EyeIcon,  CheckCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 function BMInstituto(props) {
   const [institutos, setInstitutos] = useState([]);
@@ -18,7 +18,7 @@ function BMInstituto(props) {
   const [tipoInstitutoId, setTipoInstitutoId] = useState(null);
   const [ciudadId, setCiudadId] = useState(null);
   const [sucursalId, setSucursalId] = useState(null);
-  const [showDetails, setShowDetails] = useState(null); //useState([]);  useState(false);
+  const [showDetails, setShowDetails] = useState(null); 
   const [ofertas, setOfertas] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRegistros, setTotalRegistros] = useState(0);
@@ -96,8 +96,11 @@ function BMInstituto(props) {
       });
   };
 
+
   const editInstituto = (institutoId) => {
-    const institutoToEdit = institutos.find((instituto) => instituto.id === institutoId);
+    console.log("valor de institutoid 1", institutoId);
+    const institutoToEdit = institutos.find((instituto) => instituto.cue === institutoId);
+    console.log("valor de institutoid 2", institutoId);
     if (institutoToEdit) {
       console.log("ingreso a editar");
       setSelectedInstituto(institutoToEdit);
@@ -124,6 +127,22 @@ function BMInstituto(props) {
   };
   
   const confirmEdit = () => {
+    if (
+      selectedInstituto.ee === newEe &&
+      selectedInstituto.denominacion === newDenominacion &&
+      selectedInstituto.cuesede === newCuesede &&
+      selectedInstituto.tipoinstitutoId === tipoInstitutoId &&
+      selectedInstituto.CiudadId === ciudadId &&
+      selectedInstituto.sucursalId === sucursalId
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Sin cambios",
+        text: "No se ha realizado ninguna modificación.",
+      });
+      return;
+    }
+  
     axios
       .put(`http://localhost:3001/instituto/actualizar/${selectedInstituto.cue}`, {
         ee: newEe,
@@ -135,7 +154,7 @@ function BMInstituto(props) {
       })
       .then((response) => {
         setSelectedInstituto(null);
-        setNewEe ("");
+        setNewEe("");
         setNewDenominacion("");
         setNewCuesede("");
         setTipoInstitutoId(null);
@@ -143,6 +162,11 @@ function BMInstituto(props) {
         setSucursalId(null);
         loadInstitutos();
         console.log("Instituto editado correctamente");
+        Swal.fire({
+          icon: "success",
+          title: "¡Éxito!",
+          text: "Instituto Editado Correctamente",
+        });
       })
       .catch((error) => {
         console.error("Error al actualizar el instituto:", error);
@@ -183,10 +207,7 @@ function BMInstituto(props) {
   };
 
   const showInstitutoDetail  = (institutoId) => {
-    const fixedInstitutoId = "14151622";
-    console.log("institutoId:", fixedInstitutoId);
-
-    axios.get(`http://localhost:3001/instituto/listaqueryfiltro/${fixedInstitutoId}`)
+    axios.get(`http://localhost:3001/instituto/listaqueryfiltro?cue=${institutoId}`)
       .then((response) => {
         setShowDetails(response.data);
         console.log("institutoId show:", institutoId);
@@ -196,6 +217,7 @@ function BMInstituto(props) {
         console.error("Error al obtener el detalle de ofertas:", error);
       });
   };
+  
   const nextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -209,195 +231,210 @@ function BMInstituto(props) {
   };
 
   return (
-    <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
-      <h2 className="text-lg font-bold text-center py-3">CONSULTA - INSTITUTOS</h2>
+    <div className="bg-sky-800 text-sky-800 mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
+  <h2 className="text-lg font-bold py-2 flex items-center justify-center bg-gray-300 mt-8 h-16 rounded-md">CONSULTA - INSTITUTOS</h2>
 
       {!selectedInstituto && !showDetails && (
-  <>
-    <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
-  <div className="rounded-md w-full bg-sky-600 text-sky-800 font-bold">
-    <input
-      id="searchQuery"
-      className="border-primary rounded-md w-full h-[50px]"
-      placeholder="Buscar instituto"
-      value={searchQuery}
-      onChange={(e) => {
-        setSearchQuery(e.target.value);
-        loadInstitutos(true);
-      }}
-    />
-  </div>
-</div>
+        <>
+          <div className="flex justify-between items-center text-white font-bold rounded-md">
+            <div className="rounded-md mt-3 w-full text-sky-800 font-bold">
+              <input
+                id="searchQuery"
+                className="border-primary rounded-md w-full h-[50px]"
+                placeholder="Buscar instituto"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  loadInstitutos(true);
+                }}
+              />
+            </div>
+          </div>
 
-<table className="min-w-full divide-y w-full rounded-md text-sm">
-        <thead>
-          <tr>
-            <th className="bg-sky-600 text-white font-bold py-2 px-4 rounded-md">INSTITUTO</th>
-            <th className="bg-sky-600 text-white font-bold px-4 py-2 rounded-md"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredInstitutos.map((instituto, index) => (
-            <tr key={instituto.id} className={`bg-${index % 2 === 0 ? 'sky-600' : 'sky-500'} text-white font-bold rounded-md my-4`}>
-              <td className="px-4 py-4">{instituto.denominacion}</td>
-              <td className="px-4 py-2">
-                <div className="flex justify-end space-x-4">
-                  
-                  <button
-                    className="p-1 border-2 rounded-lg bg-white text-sky-600"
-                    onClick={() => editInstituto(instituto.id)}
-                  >
-                    <PencilIcon className="h-5 w-5 mr-1" />
-                  </button>
-                  <button
-                    className="flex items-center justify-center border-2 rounded-lg border-red-300 h-8 w-9 text-sm bg-red-300 text-white"
-                    onClick={() => deleteInstituto(instituto.cue)}
-                  >
-                    <TrashIcon className="h-5 w-5 mr-1" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-  </>
-)}
+          <table className="min-w-full divide-y w-full rounded-md text-sm mt-12">
+            <thead>
+              <tr>
+                <th className="bg-sky-600 text-white font-bold py-2 px-4 rounded-tl-md">INSTITUTO</th>
+                <th className="bg-sky-600 text-white font-bold py-2 px-8 rounded-tr-md"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredInstitutos.map((instituto, index) => (
+                <tr key={instituto.id} className={`bg-${index % 2 === 0 ? 'sky-600' : 'sky-500'} text-white font-bold rounded-md my-4`}>
+                  <td className="px-4 py-4">{instituto.denominacion}</td>
+                  <td className="px-4 py-2 flex justify-between items-center">
+                    <div className="flex justify-end space-x-4">
+                      <button
+                        className="p-1 border-2 rounded-lg bg-white text-sky-600"
+                        onClick={() => editInstituto(instituto.cue)}
+                      >
+                        <PencilIcon className="h-5 w-5" />
+                      </button>
+                      <button
+                        className="p-1 border-2 rounded-lg bg-white text-sky-600"
+                        onClick={() => editInstituto(instituto.cue)}
+                      >
+                       
+                        <TrashIcon className="h-5 w-5 mr-1" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
 
       {selectedInstituto && (
         <div className="mt-4 rounded-md w-full">
-          <h3 className="text-xl font-bold mb-2 cursor-pointer">
+          <h3 className="text-xl font-bold mb-2 cursor-pointer text-white">
             Editar Instituto: {selectedInstituto.denominacion}
           </h3>
+          <p className="text-white font-bold">EE</p>
           <input
             ref={inputRef}
             autoFocus={true}
-            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary text-white font-bold"
             type="text"
             value={newEe}
             onChange={(e) => setNewEe(e.target.value)}
           />
-
+    <p className="text-white font-bold mt-2">NOMBRE DEL INSTITUTO</p>
           <input
             ref={inputRef}
             autoFocus={true}
-            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary text-white font-bold"
             type="text"
             value={newDenominacion}
             onChange={(e) => setNewDenominacion(e.target.value)}
           />
-
+   <p className="text-white font-bold mt-2">CUE ANEXO-EXTENSIÓN ÁULICA</p>
           <input
             ref={inputRef}
             autoFocus={true}
-            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary"
+            className="border border-gray-300 rounded-md p-2 mb-2 w-full bg-primary text-white font-bold"
             type="text"
-            value={newCuesede }
-            onChange={(e) => setNewCuesede (e.target.value)}
+            value={newCuesede}
+            onChange={(e) => setNewCuesede(e.target.value)}
           />
 
           <label htmlFor="tipoinstitutoId" className="block">
-            Tipoinstituto:
-            <div className="text-sky-900">
-            <select
-              id="tipoinstitutoId"
-              name="tipoinstitutoId"
-              value={tipoInstitutoId}
-              onChange={(e) => setTipoInstitutoId(e.target.value)}
-              className="w-full py-2 px-3 border border-gray-300 rounded-md"
-            >
-              <option value="">Selecciona un tipo de instituto</option>
-              {tipoinstitutos.map((tipo) => (
-                <option key={tipo.id} value={tipo.id}>
-                  {tipo.descripcion}
-                </option>
-              ))}
-            </select>
+          <p className="text-white font-bold mt-2">TIPO DE INSTITUTO</p>
+            <div className="text-sky-900 font-bold">
+              <select
+                id="tipoinstitutoId"
+                name="tipoinstitutoId"
+                value={tipoInstitutoId}
+                onChange={(e) => setTipoInstitutoId(e.target.value)}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md"
+              >
+                <option value="">Selecciona un tipo de instituto</option>
+                {tipoinstitutos.map((tipo) => (
+                  <option key={tipo.id} value={tipo.id}>
+                    {tipo.descripcion}
+                  </option>
+                ))}
+              </select>
             </div>
           </label>
 
           <label htmlFor="ciudadId" className="block">
-          <div className="text-sky-900">
-            Ciudad:
-            <select
-              id="ciudadId"
-              name="ciudadId"
-              value={ciudadId}
-              onChange={(e) => setCiudadId(e.target.value)}
-              className="w-full py-2 px-3 border border-gray-300 rounded-md"
-            >
-              <option value="">Selecciona una ciudad</option>
-              {ciudades.map((ciudad) => (
-                <option key={ciudad.id} value={ciudad.id}>
-                  {ciudad.nombre}
-                </option>
-              ))}
-            </select>
+            <div className="text-sky-900 font-bold">
+            <p className="text-white mt-3">CIUDAD</p>
+              <select
+                id="ciudadId"
+                name="ciudadId"
+                value={ciudadId}
+                onChange={(e) => setCiudadId(e.target.value)}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md"
+              >
+                <option value="">Selecciona una ciudad</option>
+                {ciudades.map((ciudad) => (
+                  <option key={ciudad.id} value={ciudad.id}>
+                    {ciudad.nombre}
+                  </option>
+                ))}
+              </select>
             </div>
           </label>
 
           <label htmlFor="sucursalId" className="block">
-          <div className="text-sky-900">
-            Sucursal:
-            <select
-              id="sucursalId"
-              name="sucursalId"
-              value={sucursalId}
-              onChange={(e) => setSucursalId(e.target.value)}
-              className="w-full py-2 px-3 border border-gray-300 rounded-md"
-            >
-              <option value="">Selecciona una sucursal</option>
-              {sucursales.map((sucursal) => (
-                <option key={sucursal.id} value={sucursal.id}>
-                  {sucursal.descripcion}
-                </option>
-              ))}
-            </select>
+            <div className="text-sky-900 font-bold">
+            <p className="text-white font-bold mt-3">SUCURSAL</p>
+              <select
+                id="sucursalId"
+                name="sucursalId"
+                value={sucursalId}
+                onChange={(e) => setSucursalId(e.target.value)}
+                className="w-full py-2 px-3 border border-gray-300 rounded-md"
+              >
+                <option value="">Selecciona una sucursal</option>
+                {sucursales.map((sucursal) => (
+                  <option key={sucursal.id} value={sucursal.id}>
+                    {sucursal.descripcion}
+                  </option>
+                ))}
+              </select>
             </div>
           </label>
 
           <div className="flex justify-end mt-4 space-x-4 font-bold">
-            <button
-              className="rounded-lg h-10 w-20 text-sm bg-green-700 text-white hover:bg-green-600"
-              onClick={confirmEdit}
-            >
-              Confirmar
-            </button>
-            <button
-  className="rounded-lg h-10 w-20 text-sm bg-red-700 text-white hover:bg-red-600"
-  onClick={cancelEdit}
->
-  Cancelar
-</button>
-          </div>
-        </div>
-      )}
-      {/* FINAL selectedInstituto */}
-      {showDetails && (
-  <div>
-    <h3 className="text-center text-lg font-bold mb-4">Detalles del Instituto</h3>
-    <div className="mb-4">
-      <p><strong>Cue:</strong> {showDetails.cue}</p>
-      <p><strong>Ee:</strong> {showDetails.ee}</p>
-      <p><strong>Tipo:</strong> {showDetails.tipo_isntituto}</p>
-    
+  <button
+    className="flex items-center justify-center rounded-lg h-10 w-28 text-sm bg-green-700 text-white hover:bg-green-600"
+    onClick={confirmEdit}
+  >
+    <CheckCircleIcon className="h-5 w-5 mr-2" />
+    Confirmar
+  </button>
+  <button
+    className="flex items-center justify-center rounded-lg h-10 w-28 text-sm bg-red-700 text-white hover:bg-red-600"
+    onClick={cancelEdit}
+  >
+    <XCircleIcon className="h-5 w-5 mr-2" />
+    Cancelar
+  </button>
 </div>
         </div>
       )}
+      {/* FINAL selectedInstituto */}
+      {console.log("Valor de showDetails antes de entrar:", showDetails)}
+      {showDetails && (
+        <div className="text-white font-bold bg-gray-700 rounded p-4">
+        <h3>Detalles del Instituto</h3>
+        <div>
+          <p><strong>Cue:</strong> {showDetails[0].cue}</p>
+          <p><strong>Ee:</strong> {showDetails[0].ee}</p>
+          <p><strong>Nombre:</strong> {showDetails[0].denominacion}</p>
+          <p><strong>Cue Sede:</strong> {showDetails[0].cuesede}</p>
+          <p><strong>Tipo:</strong> {showDetails[0].tipo_instituto}</p>
+          <p><strong>Ciudad:</strong> {showDetails[0].ciudad}</p>
+          <p><strong>Sucursal:</strong> {showDetails[0].sucursal}</p>
+        </div>
+        {console.log("El bloque se está ejecutando")}
+      </div>
+      )}
       {/*FINAL showDetails */}
-      <div className="mt-4 bg-sky-600 text-white font-bold rounded-md p-2 text-xm">
-      <span>Total registros: {institutos.length}</span>
-      <span>Registros filtrados: {filteredInstitutos.length}</span>
-    </div>
+      <hr className="my-4 border-t-2 border-white" />
 
+      <div className="justify-center items-center">
+  <div className="p-2 rounded-md flex flex-col items-center">
     <button
-      className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex justify-center"
+      className="w-24 bg-gray-700 text-white font-bold hover:bg-gray-600 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
       onClick={cancelCerrar}
     >
+      <XMarkIcon className="h-5 w-5 mr-2" />
       Cerrar
     </button>
   </div>
-    );
-  }
+</div>
+
+<div className="mt-3 mb-3 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm leading-8">
+  <span>Total Registros: {institutos.length}</span>
+  <span>Registros filtrados: {filteredInstitutos.length}</span>
+</div>
+    </div>
+  );
+}
 
 export default BMInstituto;
