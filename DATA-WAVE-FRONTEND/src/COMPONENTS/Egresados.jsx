@@ -10,6 +10,7 @@ const Egresados = () => {
       
         <h1 className=" text-sky-800 ">
           EN CONSTRUCCIÓN
+          
         </h1>
       </div>
   );

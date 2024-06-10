@@ -69,22 +69,52 @@ exports.listaquery = async (req, res) => {
 
 // lista con query con filtrado
 exports.listaqueryfiltro = async (req, res) => {
-    console.log('Procesamiento de lista de Institutos con paginación');
-    const page = req.query.page || 1; // Obtener el número de página de la query
-    const limit = 5; // Establecer el límite de registros por página
-    const offset = (page - 1) * limit; // Calcular el offset
     try {
-        const registros = await sequelize.query(
-            `
-            SELECT i.cue, i.ee, t.descripcion as tipo_isntituto, c.nombre as ciudad, s.descripcion as sucursal
+        // Obtén el parámetro de consulta 'cue'
+        const { cue } = req.query;
+
+        // Construye la consulta SQL
+        let query = `
+            SELECT i.cue, i.ee, i.denominacion, i.cuesede,
+                t.descripcion as tipo_instituto, c.nombre as ciudad, s.descripcion as sucursal
             FROM instituto i 
             INNER JOIN tipoinstituto t ON i.tipoinstitutoId = t.id 
             INNER JOIN ciudad c ON i.CiudadId = c.id 
-            INNER JOIN sucursal s ON i.sucursalId = s.id 
-            ORDER BY i.cue
-            LIMIT ${limit}
-            OFFSET ${offset}
-        `,
+            INNER JOIN sucursal s ON i.sucursalId = s.id
+        `;
+
+        // Agrega la condición si se proporciona 'cue'
+        if (cue) {
+            query += ' WHERE i.cue = :cue';
+        }
+
+        // Agrega la cláusula ORDER BY
+        query += ' ORDER BY i.cue';
+
+        // Ejecuta la consulta con el parámetro 'cue' si se proporciona
+        const registros = await sequelize.query(query, {
+            type: sequelize.QueryTypes.SELECT,
+            replacements: cue ? { cue } : {},
+        });
+
+        res.status(200).send(registros);
+    } catch (error) {
+        console.error('Error al obtener la lista de Institutos', error);
+        res.status(500).send({ error: 'Error al obtener la lista de Institutos' });
+    }
+};
+
+/*
+exports.listaqueryfiltro = async (req, res) => {
+    try {
+        const registros = await sequelize.query(
+            `SELECT i.cue, i.ee, i.denominacion, i.cuesede,
+                t.descripcion as tipo_instituto, c.nombre as ciudad, s.descripcion as sucursal
+                FROM instituto i 
+                INNER JOIN tipoinstituto t ON i.tipoinstitutoId = t.id 
+                INNER JOIN ciudad c ON i.CiudadId = c.id 
+                INNER JOIN sucursal s ON i.sucursalId = s.id
+            ORDER BY i.cue `,
             {
                 type: sequelize.QueryTypes.SELECT
             }
@@ -92,12 +122,13 @@ exports.listaqueryfiltro = async (req, res) => {
         res.status(200).send(registros);
     } catch (error) {
         console.error(
-            'Error al obtener la lista de Institutos con paginación:',
+            'Error al obtener la lista de Institutos',
             error
         );
-        res.status(500).send({ error: 'Error al obtener la lista de Institutos con paginación' });
+        res.status(500).send({ error: 'Error al obtener la lista de Institutos' });
     }
 };
+*/
 
 //-----------------------------------listafull
 exports.listafull = (req, res) => {

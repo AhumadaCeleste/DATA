@@ -94,7 +94,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                 <button
                         onClick={toggleConsultasMenu}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-3 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                        className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-3 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         CONSULTAS
                     </button>
@@ -102,13 +102,13 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <Link
                                 to="/inspector/instituto-lista"
-                                 className="block px-4 py-2 text-sm hover:bg-gray-700 text-center" // Añade la clase text-center para alinear el texto al centro
+                                 className="block px-4 py-2 text-sm hover:bg-gray-600 text-center" // Añade la clase text-center para alinear el texto al centro
 >
     INSTITUTO
                             </Link>
                             <Link
                                 to="/inspector/consulta-oferta"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                                className="block px-4 py-2 text-sm hover:bg-gray-600"
                             >
                                 OFERTAS
                             </Link>
@@ -119,7 +119,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                 <button
     onClick={toggleInstitutosMenu}
-    className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+    className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
 >
     GESTION
 </button>
@@ -128,7 +128,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
         <div>
         <button
         onClick={toggleInstitutosSubMenu}
-        className="w-full block px-4 py-2 text-sm hover:bg-gray-700" // Añade la clase text-left para alinear el texto a la izquierda
+        className="w-full block px-4 py-2 text-sm hover:bg-gray-600" // Añade la clase text-left para alinear el texto a la izquierda
     >
         INSTITUTO
     </button>
@@ -143,14 +143,14 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                     </Link>
                     <Link
                         to="/inspector/instituto/editar"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500 sub-menu-link text-left"
+                        className="block px-4 py-2 text-sm hover:bg-gray-600 sub-menu-link text-left"
                         style={{ fontSize: '0.7rem' }}
                     >
                         GESTIONAR INSTITUTO
                     </Link>
                     <Link
-                        to="/inspector/editar-instituto"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500"
+                        to="inspector/instituto/listaqueryfiltro"
+                        className="block px-4 py-2 text-sm hover:bg-gray-600"
                         style={{ fontSize: '0.7rem' }}
                     >
                         INSTITUTO PRUEBA
@@ -161,7 +161,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
         <div>
             <button
                 onClick={toggleMatriculaEgresadosSubMenu}
-                className="w-full block px-4 py-2 text-sm hover:bg-gray-700"
+                className="w-full block px-4 py-2 text-sm hover:bg-gray-600"
             >
                 MATRICULA
             </button>
@@ -169,14 +169,14 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                 <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                     <Link
                         to="/inspector/matricula"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500"
+                        className="block px-4 py-2 text-sm hover:bg-gray-600"
                         style={{ fontSize: '0.7rem' }}
                     >
                          CARGAR MATRICULA
                     </Link>
                     <Link
                         to="/secretario/matricula"
-                        className="block px-4 py-2 text-sm hover:bg-gray-500"
+                        className="block px-4 py-2 text-sm hover:bg-gray-600"
                         style={{ fontSize: '0.7rem' }}
                     >
                          CARGAR EGRESADOS
@@ -191,7 +191,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                     <button
                         onClick={toggleReportesMenu}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                        className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         REPORTES
                     </button>
@@ -199,19 +199,19 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <Link
                                 to="/inspector/instituto/oferta-por-instituto"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                                className="block px-4 py-2 text-sm hover:bg-gray-600"
                             >
                                 OFERTA POR INSTITUTO
                             </Link>
                             <Link
                                 to="/inspector/egresados"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                                className="block px-4 py-2 text-sm hover:bg-gray-600"
                             >
                                 EGRESADOS
                             </Link>
                             <Link
                                 to="/inspector/matricula"
-                                className="block px-4 py-2 text-sm hover:bg-gray-700"
+                                className="block px-4 py-2 text-sm hover:bg-gray-600"
                             >
                                 MATRÍCULA
                             </Link>
@@ -220,20 +220,20 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                     <button
                         onClick={handleLogout}
-                        className="bg-sky-800 hover:bg-gray-700 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                        className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         CERRAR SESION
                     </button>
                     {showLogoutConfirm && (
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <button
-                                className="bg-green-700 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
+                                className="bg-green-700 block px-4 py-2 text-sm hover:bg-gray-600 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
                                 onClick={logout}
                             >
                                 CONFIRMAR
                             </button>
                             <button
-                                className="bg-red-700 block px-4 py-2 text-sm hover:bg-gray-700 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
+                                className="bg-red-700 block px-4 py-2 text-sm hover:bg-gray-600 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
                                 onClick={cancelLogout}
                             >
                                 CANCELAR

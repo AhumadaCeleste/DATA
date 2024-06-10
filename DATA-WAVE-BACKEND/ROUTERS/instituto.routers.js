@@ -8,7 +8,9 @@ Rutas.get('/listafull', institutocontroller.listafull);
 
 Rutas.get('/listaquery', institutocontroller.listaquery);
 
-Rutas.get('/listaqueryfiltro/:institutoId',institutocontroller.listaqueryfiltro);
+//Rutas.get('/listaqueryfiltro/:institutoId',institutocontroller.listaqueryfiltro);
+Rutas.get('/listaqueryfiltro',institutocontroller.listaqueryfiltro);
+
 
 Rutas.get('/lista/:pag', institutocontroller.listaPag);
 Rutas.get('/lista/:pag/:text', institutocontroller.listaPag);

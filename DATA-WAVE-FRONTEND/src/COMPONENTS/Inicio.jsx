@@ -136,8 +136,8 @@ const Inicio = () => {
                     <p
                             className="ml-2 font-bold text-lg text-gray-300 p-6 font-serif tracking-widest shadow-lg animate-fadeInMoveUp"
                             style={{
-                                fontFamily: 'Roboto',
-                                fontSize: '15px',
+                                fontFamily: 'Roboto, sans-serif',
+                                fontSize: '17px',
                                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'
                             }}
                         >

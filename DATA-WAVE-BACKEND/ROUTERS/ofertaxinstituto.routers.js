@@ -18,6 +18,7 @@ Rutas.post('/nuevo', ofertaxinstitutocontroller.nuevo);
 Rutas.get('/lista-instituto-oferta-matricula', ofertaxinstitutocontroller.listaInstitutoOfertaMatricula);
 
 
+
 // Eliminar un ofertaxinstituto
 Rutas.delete('/eliminar/:id', ofertaxinstitutocontroller.eliminar);
 

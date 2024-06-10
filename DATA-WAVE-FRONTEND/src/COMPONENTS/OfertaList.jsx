@@ -46,12 +46,12 @@ function OfertaList() {
   };
 
   return (
-    <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
-      <h2 className="text-lg font-bold text-center py-2">LISTA DE OFERTAS</h2>
+    <div className="bg-sky-800 text-sky-800 mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
+    <h2 className="text-lg font-bold py-2 flex items-center justify-center bg-gray-300 mt-8 h-16 rounded-md">CONSULTA OFERTAS</h2>
   
-      <div className="mb-4">
+      <div className="mt-8">
         <input
-          className="border-primary rounded-md w-full h-[50px] p-2 text-sky-800 font-bold"
+          className="border-primary rounded-md w-full h-[50px] p-2 mt-3  text-sky-800 font-bold"
           placeholder="Buscar ofertas"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
