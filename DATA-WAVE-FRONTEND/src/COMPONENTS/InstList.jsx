@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, navigate} from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { PencilIcon, TrashIcon, EyeIcon,  CheckCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { PencilIcon, TrashIcon, EyeIcon,  CheckCircleIcon, XCircleIcon, XMarkIcon, ArrowLeftIcon } from "@heroicons/react/20/solid";
 
 function InstitutoList(props) {
   const [institutos, setInstitutos] = useState([]);
@@ -116,6 +116,11 @@ function InstitutoList(props) {
   const cancelCerrar = () => {
     navigate("/inspector");
   };
+
+  const regresar = () => {
+    navigate("/inspector/instituto-lista");
+  };
+
   const cancelEdit = () => {
     setSelectedInstituto(null);
     setNewEe("");
@@ -265,7 +270,7 @@ function InstitutoList(props) {
                   <td className="px-4 py-2 flex justify-between items-center">
                     <div className="flex justify-end space-x-4">
                       <button
-                        className="p-1 border-2 rounded-lg bg-white text-sky-600"
+                        className="flex items-center justify-center border-2 rounded-lg border-gray-300 h-8 w-9 text-sm bg-gray-300 text-white"
                         onClick={() => showInstitutoDetail(instituto.cue)}
                       >
                         <EyeIcon className="h-5 w-5" />
@@ -291,6 +296,8 @@ function InstitutoList(props) {
         </>
       )}
 
+
+     
 {selectedInstituto && (
         <div className="mt-4 rounded-md w-full">
           <h3 className="text-xl font-bold mb-2 cursor-pointer text-white">
@@ -406,34 +413,55 @@ function InstitutoList(props) {
       {/* FINAL selectedInstituto */}
       {console.log("Valor de showDetails antes de entrar:", showDetails)}
       {showDetails && (
-        <div className="text-white font-bold bg-gray-700 rounded p-4">
-        <h3>Detalles del Instituto</h3>
-        <div>
-          <p><strong>Cue:</strong> {showDetails[0].cue}</p>
-          <p><strong>Ee:</strong> {showDetails[0].ee}</p>
-          <p><strong>Nombre:</strong> {showDetails[0].denominacion}</p>
-          <p><strong>Cue Sede:</strong> {showDetails[0].cuesede}</p>
-          <p><strong>Tipo:</strong> {showDetails[0].tipo_instituto}</p>
-          <p><strong>Ciudad:</strong> {showDetails[0].ciudad}</p>
-          <p><strong>Sucursal:</strong> {showDetails[0].sucursal}</p>
-        </div>
+         <div className="text-white font-bold bg-gray-700 rounded p-14 relative">
+         <h3>Detalles del Instituto</h3>
+         <hr className="my-8 border-t-2 border-white" />
+         <div className="">
+           <p className="my-2"><strong>Cue:</strong> {showDetails[0].cue}</p>
+           <p className="my-2"><strong>Ee:</strong> {showDetails[0].ee}</p>
+           <p className="my-2"><strong>Nombre:</strong> {showDetails[0].denominacion}</p>
+           <p className="my-2"><strong>Cue Sede:</strong> {showDetails[0].cuesede}</p>
+           <p className="my-2"><strong>Tipo:</strong> {showDetails[0].tipo_instituto}</p>
+           <p className="my-2"><strong>Ciudad:</strong> {showDetails[0].ciudad}</p>
+           <p className="my-2"><strong>Sucursal:</strong> {showDetails[0].sucursal}</p>
+         </div>
+         <button
+  onClick={() => {
+    setSelectedInstituto(null);
+    setShowDetails(null);
+  }}
+  className="p-2 bg-gray-400 text-white rounded absolute top-45 right-4 flex items-center"
+>
+  <ArrowLeftIcon className="h-5 w-5 mr-2" />
+  Regresar
+</button>
         {console.log("El bloque se está ejecutando")}
       </div>
+      
       )}
+      
       {/*FINAL showDetails */}
-      <div className="mt-4 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm leading-8">
-  <span>Total Registros: {institutos.length}</span>
-  <span>Registros filtrados: {filteredInstitutos.length}</span>
+      <hr className="my-4 border-t-2 border-white" />
+
+      <div className="justify-center items-center">
+  <div className="p-2 rounded-md flex flex-col items-center">
+    <button
+      className="w-24 bg-gray-700 text-white font-bold hover:bg-gray-600 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
+      onClick={cancelCerrar}
+    >
+
+
+      <XMarkIcon className="h-5 w-5 mr-2" />
+      Cerrar
+    </button>
+  </div>
 </div>
 
-<button
-  className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-600 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
-  onClick={cancelCerrar}
->
-  <XMarkIcon className="h-5 w-5 mr-2" />
-  Cerrar
-</button>
-    </div>
+<div className="mt-3 mb-3 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm leading-8">
+  <span>Total Registros: {institutos.length}</span>
+  <span>Registros filtrados: {filteredInstitutos.length}</span>
+  </div>
+</div>
   );
 }
 

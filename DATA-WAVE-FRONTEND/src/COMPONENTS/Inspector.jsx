@@ -79,9 +79,9 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
     };
 
     return (
-        <div className="flex min-h-screen">
-            <div className="flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center min-h-screen">
-                <div className="bg-gray-800 rounded-full p-1 shadow-md mb-4">
+        <div className="flex min-h-screen print-container">
+        <div className="print-menu flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center min-h-screen">
+          <div className="no-print bg-gray-800 rounded-full p-1 shadow-md mb-4">
                     <img
                         src={logo}
                         alt="Data Wave Logo"
@@ -94,12 +94,12 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                 <button
                         onClick={toggleConsultasMenu}
-                        className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-3 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                        className="no-print bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-3 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         CONSULTAS
                     </button>
                     {consultasMenuOpen && (
-                        <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+                        <div className="no-print bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <Link
                                 to="/inspector/instituto-lista"
                                  className="block px-4 py-2 text-sm hover:bg-gray-600 text-center" // Añade la clase text-center para alinear el texto al centro
@@ -108,7 +108,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                             </Link>
                             <Link
                                 to="/inspector/consulta-oferta"
-                                className="block px-4 py-2 text-sm hover:bg-gray-600"
+                                className="no-print block px-4 py-2 text-sm hover:bg-gray-600"
                             >
                                 OFERTAS
                             </Link>
@@ -119,7 +119,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                 <button
     onClick={toggleInstitutosMenu}
-    className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+    className="no-print bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
 >
     GESTION
 </button>
@@ -191,7 +191,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                     <button
                         onClick={toggleReportesMenu}
-                        className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                        className="no-print bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         REPORTES
                     </button>
@@ -220,7 +220,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
 
                     <button
                         onClick={handleLogout}
-                        className="bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
+                        className="no-print bg-sky-800 hover:bg-gray-600 text-white font-bold py-3 px-2 rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl"
                     >
                         CERRAR SESION
                     </button>
@@ -259,7 +259,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                             alt="Data Wave Logo"
                             className="h-48 w-auto rounded-full border-4 border-gray-400 mb-5"
                         />
-                        <p className="font-arial text-4xl font-bold text-blue-700 mb-5 transition-opacity duration-4000 ease-in-out opacity-100">
+                        <p className="font-arial text-4xl font-bold text-gray-700 mb-5 transition-opacity duration-4000 ease-in-out opacity-100">
                             {rol === 'inspector' ? 'Bienvenido Inspector' : 'Bienvenido'}
                         </p>
                     </div>

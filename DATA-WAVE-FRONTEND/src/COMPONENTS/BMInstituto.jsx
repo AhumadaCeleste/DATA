@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { PencilIcon, TrashIcon, EyeIcon,  CheckCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { PencilIcon, TrashIcon,  CheckCircleIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 function BMInstituto(props) {
   const [institutos, setInstitutos] = useState([]);
@@ -206,17 +206,7 @@ function BMInstituto(props) {
     });
   };
 
-  const showInstitutoDetail  = (institutoId) => {
-    axios.get(`http://localhost:3001/instituto/listaqueryfiltro?cue=${institutoId}`)
-      .then((response) => {
-        setShowDetails(response.data);
-        console.log("institutoId show:", institutoId);
-        console.log("Datos obtenidos show:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener el detalle de ofertas:", error);
-      });
-  };
+
   
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -264,17 +254,16 @@ function BMInstituto(props) {
                   <td className="px-4 py-4">{instituto.denominacion}</td>
                   <td className="px-4 py-2 flex justify-between items-center">
                     <div className="flex justify-end space-x-4">
-                      <button
+                    <button
                         className="p-1 border-2 rounded-lg bg-white text-sky-600"
                         onClick={() => editInstituto(instituto.cue)}
                       >
-                        <PencilIcon className="h-5 w-5" />
+                        <PencilIcon className="h-5 w-5 mr-1" />
                       </button>
                       <button
-                        className="p-1 border-2 rounded-lg bg-white text-sky-600"
-                        onClick={() => editInstituto(instituto.cue)}
+                        className="flex items-center justify-center border-2 rounded-lg border-red-300 h-8 w-9 text-sm bg-red-300 text-white"
+                        onClick={() => deleteInstituto(instituto.cue)}
                       >
-                       
                         <TrashIcon className="h-5 w-5 mr-1" />
                       </button>
                     </div>
