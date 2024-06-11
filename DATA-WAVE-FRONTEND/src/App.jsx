@@ -18,6 +18,8 @@ import OfertaList from "./COMPONENTS/OfertaList";
 import OfertaPorInstitutoList from "./COMPONENTS/OfertaXInstituto";
 import InstitutoTipo from "./COMPONENTS/InstitutoTipo";
 import Egresados from "./COMPONENTS/Egresados"
+import ReporteInstOfMatricula from "./COMPONENTS/ReporteInstOfMatricula";
+import ReporteGlobal from "./COMPONENTS/ReporteGlobal";
 
 // Rol Director
 import Director from './COMPONENTS/Director';
@@ -45,16 +47,13 @@ function App() {
                         <Route path="departamento/actualizar" element={<Adepartamento />}/>
                         <Route path="instituto-lista" element={<InstList />}/>
                         <Route path="/inspector/consulta-oferta" element={<OfertaList />}/>
-
-                        <Route
-                            path="instituto/oferta-por-instituto"
-                            element={<OfertaPorInstitutoList />
-                            }
-                        />
+                        <Route path="instituto/oferta-por-instituto"element={<OfertaPorInstitutoList />}/>
+                        <Route path="instituto/reporte-instituto-oferta-matricula"element={<ReporteInstOfMatricula/>}/>
                         <Route path="instituto/listaqueryfiltro" element={<InstitutoTipo />}/>
                         <Route path="crear-oferta" element={<AltaOferta />}/>
                         <Route path="gestionar-oferta" element={<BMOferta />}/>
                         <Route path="egresados" element={<Egresados />}/>
+                        <Route path="instituto/reporte-global" element={<ReporteGlobal />}/>
                     </Route>
                     {/* Rol Director */}
                     <Route path="/director" element={<Director />}/>

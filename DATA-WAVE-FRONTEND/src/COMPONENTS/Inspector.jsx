@@ -210,11 +210,19 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                                 EGRESADOS
                             </Link>
                             <Link
-                                to="/inspector/matricula"
+                                to="instituto/reporte-instituto-oferta-matricula"
                                 className="block px-4 py-2 text-sm hover:bg-gray-600"
                             >
                                 MATRÍCULA
                             </Link>
+                            <Link
+                                to="instituto/reporte-global"
+                                className="block px-4 py-2 text-sm hover:bg-gray-600"
+                            >
+                                GLOBAL
+                            </Link>
+
+
                         </div>
                     )}
 
