@@ -12,6 +12,7 @@ function OfertaPorInstitutoList() {
   const [showDetails, setShowDetails] = useState(null);
   const [selectedOferta, setSelectedOferta] = useState(null);
 
+
   useEffect(() => {
     loadOfertasPorInstituto();
   }, [institutoId]);
@@ -35,10 +36,11 @@ function OfertaPorInstitutoList() {
     }
   };
 
-  const showInstitutoDetail  = (institutoId) => {
+  const showInstitutoDetail = (institutoId) => {
     axios.get(`http://localhost:3001/ofertaxinstituto/filtrar-instituto-oferta-matricula/${institutoId}`)
       .then((response) => {
-        setShowDetails(response.data);
+        setSelectedOferta(response.data);
+        setShowDetails(true);
         console.log("institutoId show:", institutoId);
         console.log("Datos obtenidos show:", response.data);
       })
@@ -52,81 +54,81 @@ function OfertaPorInstitutoList() {
   };
 
   return (
-    <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
-      <h2 className="text-lg font-bold text-center py-3">OFERTA POR INSTITUTOS</h2>
+  <div className="bg-sky-800 text-white mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
+    <h2 className="text-lg font-bold text-center py-3">OFERTA POR INSTITUTOS</h2>
 
-      {!showDetails && (
-        <>
-          <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
-            <div className="rounded-md w-full bg-sky-600 text-sky-800 font-bold">
-              <input
-                id="searchQuery"
-                className="border-primary rounded-md w-full h-[50px]"
-                placeholder="Buscar instituto"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  loadOfertasPorInstituto(true);
-                }}
-              />
-            </div>
+    {!showDetails && (
+      <>
+        <div className="flex justify-between items-center bg-sky-600 text-white font-bold rounded">
+          <div className="rounded-md w-full bg-sky-600 text-sky-800 font-bold">
+            <input
+              id="searchQuery"
+              className="border-primary rounded-md w-full h-[50px]"
+              placeholder="Buscar instituto"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                loadOfertasPorInstituto(true);
+              }}
+            />
           </div>
-        </>
-      )}
-
-      <table className="min-w-full divide-y w-full rounded-md text-sm">
-        <thead>
-          <tr>
-            <th className="bg-sky-600 text-white font-bold py-2 px-4 rounded-tl-md">Nombre de la Oferta</th>
-            <th className="bg-sky-600 text-white font-bold py-2 px-4 rounded-tr-md">Matrícula</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOfertas.map((oferta, index) => (
-            <tr key={oferta.id} className={`bg-${index % 2 === 0 ? 'sky-600' : 'sky-500'} text-white font-bold rounded-md my-4`}>
-              <td className="px-4 py-4">{oferta.instituto_denominacion}</td>
-              <td className="px-4 py-2 flex justify-between items-center">
-                <div className="flex justify-end space-x-4">
-                  <span>{oferta.matricula}</span>
-                  <button
-  className="p-1 border-2 rounded-lg bg-white text-sky-600"
-  onClick={() => showInstitutoDetail(oferta.id)}
->
-  <EyeIcon className="h-5 w-5" />
-</button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {showDetails && (
-        <div>
-          <h3 className="text-center text-lg font-bold mb-4">Detalles de la Oferta</h3>
-          <div className="mb-4">
-            <p><strong>Nombre:</strong> {selectedOferta.oferta.nombre}</p>
-            <p><strong>Descripción:</strong> {selectedOferta.oferta.descripcion}</p>
-            <p><strong>Duración:</strong> {selectedOferta.oferta.duracion}</p>
-            <p><strong>Cue:</strong> {showDetails.institutoCue}</p>
-            <p><strong>Matrícula:</strong> {showDetails.matricula}</p>
-          </div>
-
-          <div className="mt-4 bg-sky-600 text-white font-bold rounded-md p-2 text-xm">
-            <span>Total registros: {ofertas.length}</span>
-            <span>Registros filtrados: {filteredOfertas.length}</span>
-          </div>
-
-          <button
-            className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex justify-center"
-            onClick={cancelCerrar}
-          >
-            Cerrar
-          </button>
         </div>
-      )}
-    </div>
-  );
+      </>
+    )}
+
+    <table className="min-w-full divide-y w-full rounded-md text-sm">
+      <thead>
+        <tr>
+          <th className="bg-sky-600 text-white font-bold py-2 px-4 rounded-tl-md">Nombre de la Oferta</th>
+          <th className="bg-sky-600 text-white font-bold py-2 px-4 rounded-tr-md">Matrícula</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredOfertas.map((oferta, index) => (
+          <tr key={oferta.id} className={`bg-${index % 2 === 0 ? 'sky-600' : 'sky-500'} text-white font-bold rounded-md my-4`}>
+            <td className="px-4 py-4">{oferta.instituto_denominacion}</td>
+            <td className="px-4 py-2 flex justify-between items-center">
+              <div className="flex justify-end space-x-4">
+                <span>{oferta.matricula}</span>
+                <button
+                  className="p-1 border-2 rounded-lg bg-white text-sky-600"
+                  onClick={() => showInstitutoDetail(oferta.id)}
+                >
+                  <EyeIcon className="h-5 w-5" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    {showDetails && (
+      <div>
+        <h3 className="text-center text-lg font-bold mb-4">Detalles de la Oferta</h3>
+        <div className="mb-4">
+          <p><strong>Nombre:</strong> {selectedOferta.nombre}</p>
+          <p><strong>Descripción:</strong> {selectedOferta.descripcion}</p>
+          <p><strong>Duración:</strong> {selectedOferta.duracion}</p>
+          <p><strong>Cue:</strong> {selectedOferta.institutoCue}</p>
+          <p><strong>Matrícula:</strong> {selectedOferta.matricula}</p>
+        </div>
+
+        <div className="mt-4 bg-sky-600 text-white font-bold rounded-md p-2 text-xm">
+          <span>Total registros: {ofertas.length}</span>
+          <span>Registros filtrados: {filteredOfertas.length}</span>
+        </div>
+
+        <button
+          className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex justify-center"
+          onClick={cancelCerrar}
+        >
+          Cerrar
+        </button>
+      </div>
+    )}
+  </div>
+);
 }
 
 export default OfertaPorInstitutoList;

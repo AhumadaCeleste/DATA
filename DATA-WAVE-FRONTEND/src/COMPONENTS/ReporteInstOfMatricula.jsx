@@ -112,31 +112,39 @@ const ReporteInstitutoOfertaMatricula = () => {
     </tbody>
   </table>
 </div>
-                <div className="mt-4 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm">
-                    <span>Total registros: {data.length}</span>
-                    <span>Registros filtrados: {filteredData.length}</span>
-                    <button
-                        className="print bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
-                        onClick={printList}
-                    >
-                        Imprimir
-                    </button>
-                    <button
-                        className="bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
-                        onClick={exportToExcel}
-                    >
-                        Exportar a Excel
-                    </button>
-                </div>
-                <button
-                    className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
-                    onClick={cancelCerrar}
-                >
-                    Cerrar
-                </button>
-            </div>
-        </div>
-    );
-};
 
-export default ReporteInstitutoOfertaMatricula;
+<div className="flex justify-end">
+              <div className="bg-sky-600 text-white font-bold rounded-md p-2 text-sm mt-4">
+                <span>Total Matrícula: {filteredData.reduce((total, item) => total + item.oferta_matricula + item.oferta_año2 + item.oferta_año3, 0)}</span>
+              </div>
+            </div>
+<div className="mt-4 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm">
+              <span>Total registros: {data.length}</span>
+              <span>Registros filtrados: {filteredData.length}</span>
+              <button
+                className="print bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+                onClick={printList}
+              >
+                Imprimir
+              </button>
+              <button
+                className="bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+                onClick={exportToExcel}
+              >
+                Exportar a Excel
+              </button>
+            </div>
+            
+            <button
+              className="mt-4 w-24 bg-gray-700 text-white font-bold hover:bg-gray-700 py-2 px-2 rounded focus:outline-none focus:shadow-outline"
+              onClick={cancelCerrar}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+    
+    );
+  };
+  
+  export default ReporteInstitutoOfertaMatricula;

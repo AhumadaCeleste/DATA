@@ -1,6 +1,6 @@
 const db = require('../MODELS');
 const sequelize = db.sequelize;
-const {Op} = require('sequelize');
+const { Op } = require('sequelize');
 
 // Retornar todos los ofertaxinstituto
 exports.lista = (req, res) => {
@@ -20,13 +20,34 @@ exports.lista = (req, res) => {
     });
 };
 
+exports.obtenerDetalleOfertaPorInstituto = async (req, res) => {
+    const institutoId = req.params.institutoId;
+    try {
+        const registros = await sequelize.query(
+            `SELECT * FROM v_instituto_oferta_matricula WHERE institutoCue = :institutoId`,
+            {
+                replacements: { institutoId: institutoId },
+                type: sequelize.QueryTypes.SELECT
+            }
+        );
+        if (registros.length > 0) {
+            res.status(200).send(registros[0]);
+        } else {
+            res.status(404).send({ message: 'No se encontraron detalles para el instituto especificado' });
+        }
+    } catch (error) {
+        console.error('Error al obtener el detalle de ofertas por instituto:', error);
+        res.status(500).send({ error: 'Error al obtener el detalle de ofertas por instituto' });
+    }
+};
+
 // Filtrar ofertaxinstituto
 exports.filtrar = (req, res) => {
     console.log('Procesamiento de oferta filtrado');
     const campo = req.params.campo;
     const valor = req.params.valor;
     console.log(`campo: ${campo} valor:${valor}`);
-    db.ofertaxinstituto.findAll({
+    db.OfertaXInstituto.findAll({
         include: [{
             model: db.oferta,
             where: { [campo]: { [Op.like]: `%${valor}%` } }
@@ -41,12 +62,12 @@ exports.filtrar = (req, res) => {
     });
 };
 
-//Vista v_instituto_oferta_matricula
+// Vista v_instituto_oferta_matricula
 exports.listaInstitutoOfertaMatricula = async (req, res) => {
     console.log('Procesamiento de lista de Instituto, Oferta y Matrícula');
     try {
         const registros = await sequelize.query(
-            `Select * from v_instituto_oferta_matricula`,
+            `SELECT * FROM v_instituto_oferta_matricula`,
             { type: sequelize.QueryTypes.SELECT }
         );
         res.status(200).send(registros);
@@ -147,7 +168,6 @@ exports.eliminar = (req, res) => {
 };
 
 // Retornar ofertas por instituto
-
 exports.listaPorInstituto = (req, res) => {
     console.log('Procesamiento de lista de ofertas por instituto');
     const institutoId = req.params.institutoId;
@@ -166,5 +186,3 @@ exports.listaPorInstituto = (req, res) => {
         res.status(500).send({ error: 'Error al obtener lista de ofertas por instituto' });
     });
 };
-
-

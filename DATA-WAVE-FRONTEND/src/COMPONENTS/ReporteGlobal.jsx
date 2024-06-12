@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { EyeIcon, ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from 'react-router-dom';
 
 const ReporteGlobal = () => {
   const [data, setData] = useState([]);
@@ -8,18 +9,32 @@ const ReporteGlobal = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [institutosContados, setInstitutosContados] = useState([]);
+  const [totalMatricula, setTotalMatricula] = useState(0);
+  const [ofertaResolucionCount, setOfertaResolucionCount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadData = () => {
-      axios
-        .get('http://localhost:3001/instituto/lista')
-        .then(response => {
-          setData(response.data);
-          setFilteredData(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
+      Promise.all([
+        axios.get('http://localhost:3001/instituto/lista'),
+        axios.get('http://localhost:3001/ofertaxinstituto/lista-instituto-oferta-matricula')
+      ])
+      .then(([institutosResponse, ofertaResponse]) => {
+        const institutosData = institutosResponse.data;
+        const ofertaData = ofertaResponse.data;
+
+        setData(institutosData);
+        setFilteredData(institutosData);
+
+        const totalMatricula = ofertaData.reduce((total, item) => total + item.oferta_matricula + item.oferta_año2 + item.oferta_año3, 0);
+        setTotalMatricula(totalMatricula);
+
+        const ofertaResolucionCount = new Set(ofertaData.map(item => item.oferta_resolucion)).size;
+        setOfertaResolucionCount(ofertaResolucionCount);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
     };
     loadData();
   }, []);
@@ -41,30 +56,22 @@ const ReporteGlobal = () => {
 
   const showInstitutoDetail = (tipo) => {
     let institutos;
-    if (tipo === 'PURO') {
+    if (tipo === 'TOTAL') {
+      institutos = filteredData;
+    } else if (tipo === 'PURO') {
       institutos = filteredData.filter(item => item.tipoinstitutoId === 1);
     } else if (tipo === 'MIXTO') {
       institutos = filteredData.filter(item => item.tipoinstitutoId === 2);
-    } else {
-      institutos = filteredData;
     }
     setInstitutosContados(institutos);
     setShowDetails(true);
   };
 
+  const navigateToReporteInstituto = () => {
+    navigate('/inspector/instituto/reporte-instituto-oferta-matricula');
+  };
+
   const totalInstitutos = data.length || 0;
-  const totalMatriculaPuros = filteredData.reduce((total, item) => {
-    if (item.tipoinstitutoId === 1) {
-      return total + (item.oferta_matricula + item.oferta_año2 + item.oferta_año3);
-    }
-    return total;
-  }, 0);
-  const totalMatriculaMixtos = filteredData.reduce((total, item) => {
-    if (item.tipoinstitutoId === 2) {
-      return total + (item.oferta_matricula + item.oferta_año2 + item.oferta_año3);
-    }
-    return total;
-  }, 0);
   const totalPuros = filteredData.filter(item => item.tipoinstitutoId === 1).length;
   const totalMixtos = filteredData.filter(item => item.tipoinstitutoId === 2).length;
 
@@ -148,10 +155,10 @@ const ReporteGlobal = () => {
               </tr>
               <tr>
                 <th colSpan="8" className="bg-sky-500 text-white font-bold py-4 px-4 w-full relative">
-                  TOTAL MATRICULA PUROS: {totalMatriculaPuros}
+                  TOTAL MATRICULA: {totalMatricula}
                   <div className="absolute top-0 right-0 mt-3 mr-32">
                     <button
-                      onClick={() => showInstitutoDetail('PURO')}
+                      onClick={navigateToReporteInstituto}
                       className="flex items-center justify-center border-2 rounded-lg border-gray-400 h-8 w-9 text-sm bg-gray-400 text-white"
                     >
                       <EyeIcon className="h-5 w-5" />
@@ -161,10 +168,10 @@ const ReporteGlobal = () => {
               </tr>
               <tr>
                 <th colSpan="8" className="bg-sky-600 text-white font-bold py-4 px-4 w-full relative">
-                  TOTAL MATRICULA MIXTOS: {totalMatriculaMixtos}
+                  TOTAL DE OFERTAS: {ofertaResolucionCount}
                   <div className="absolute top-0 right-0 mt-3 mr-32">
                     <button
-                      onClick={() => showInstitutoDetail('MIXTO')}
+                      onClick={navigateToReporteInstituto}
                       className="flex items-center justify-center border-2 rounded-lg border-gray-400 h-8 w-9 text-sm bg-gray-400 text-white"
                     >
                       <EyeIcon className="h-5 w-5" />

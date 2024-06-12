@@ -54,6 +54,7 @@ function App() {
                         <Route path="gestionar-oferta" element={<BMOferta />}/>
                         <Route path="egresados" element={<Egresados />}/>
                         <Route path="instituto/reporte-global" element={<ReporteGlobal />}/>
+                      
                     </Route>
                     {/* Rol Director */}
                     <Route path="/director" element={<Director />}/>

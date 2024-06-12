@@ -11,6 +11,9 @@ Rutas.get('/lista', ofertaxinstitutocontroller.lista);
 // Retornar ofertaxinstituto según filtro
 Rutas.get('/filtrar/:campo/:valor', ofertaxinstitutocontroller.filtrar);
 
+Rutas.get('/instituto/:institutoId/ofertas',ofertaxinstitutocontroller.listaPorInstituto);
+
+
 // Nueva ofertaxinstituto http://localhost:3001/ofertaxinstituto/nuevo
 Rutas.post('/nuevo', ofertaxinstitutocontroller.nuevo);
 
