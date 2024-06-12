@@ -81,7 +81,7 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
     return (
         <div className="flex min-h-screen print-container">
         <div className="print-menu flex-none w-1/5 bg-gray-800 p-4 flex flex-col items-center min-h-screen">
-          <div className="no-print bg-gray-800 rounded-full p-1 shadow-md mb-4">
+          <div className="bg-gray-800 rounded-full p-1 shadow-md mb-4">
                     <img
                         src={logo}
                         alt="Data Wave Logo"
@@ -143,14 +143,14 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                     </Link>
                     <Link
                         to="/inspector/instituto/editar"
-                        className="block px-4 py-2 text-sm hover:bg-gray-600 sub-menu-link text-left"
+                        className="block px-4 py-2 text-sm hover:bg-gray-500 sub-menu-link text-left"
                         style={{ fontSize: '0.7rem' }}
                     >
                         GESTIONAR INSTITUTO
                     </Link>
                     <Link
                         to="inspector/instituto/listaqueryfiltro"
-                        className="block px-4 py-2 text-sm hover:bg-gray-600"
+                        className="block px-4 py-2 text-sm hover:bg-gray-500"
                         style={{ fontSize: '0.7rem' }}
                     >
                         INSTITUTO PRUEBA
@@ -169,14 +169,14 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                 <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                     <Link
                         to="/inspector/matricula"
-                        className="block px-4 py-2 text-sm hover:bg-gray-600"
+                        className="block px-4 py-2 text-sm hover:bg-gray-500"
                         style={{ fontSize: '0.7rem' }}
                     >
                          CARGAR MATRICULA
                     </Link>
                     <Link
                         to="/secretario/matricula"
-                        className="block px-4 py-2 text-sm hover:bg-gray-600"
+                        className="block px-4 py-2 text-sm hover:bg-gray-500"
                         style={{ fontSize: '0.7rem' }}
                     >
                          CARGAR EGRESADOS
@@ -235,13 +235,13 @@ const [matriculaEgresadosSubMenuOpen, setMatriculaEgresadosSubMenuOpen] = useSta
                     {showLogoutConfirm && (
                         <div className="bg-sky-600 text-white font-bold rounded focus:outline-none focus:shadow-outline text-center block w-full mb-4 sm:text-sm md:text-base lg:text-lg xl:text-xl">
                             <button
-                                className="bg-green-700 block px-4 py-2 text-sm hover:bg-gray-600 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
+                                className=" no-print bg-green-700 block px-4 py-2 text-sm hover:bg-green-600 w-full text-white font-bold rounded-t focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
                                 onClick={logout}
                             >
                                 CONFIRMAR
                             </button>
                             <button
-                                className="bg-red-700 block px-4 py-2 text-sm hover:bg-gray-600 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
+                                className="no-print bg-red-700 block px-4 py-2 text-sm hover:bg-red-600 w-full text-white font-bold rounded-b focus:outline-none focus:shadow-outline sm:text-xs md:text-sm lg:text-base xl:text-lg"
                                 onClick={cancelLogout}
                             >
                                 CANCELAR

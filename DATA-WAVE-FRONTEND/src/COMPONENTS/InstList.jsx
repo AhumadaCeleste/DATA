@@ -268,9 +268,9 @@ function InstitutoList(props) {
                 <tr key={instituto.id} className={`bg-${index % 2 === 0 ? 'sky-600' : 'sky-500'} text-white font-bold rounded-md my-4`}>
                   <td className="px-4 py-4">{instituto.denominacion}</td>
                   <td className="px-4 py-2 flex justify-between items-center">
-                    <div className="flex justify-end space-x-4">
+                    <div className="flex justify-end space-x-4 mt-2">
                       <button
-                        className="flex items-center justify-center border-2 rounded-lg border-gray-300 h-8 w-9 text-sm bg-gray-300 text-white"
+                        className="flex items-center justify-center border-2 rounded-lg border-gray-400 h-8 w-9 text-sm bg-gray-400 text-white"
                         onClick={() => showInstitutoDetail(instituto.cue)}
                       >
                         <EyeIcon className="h-5 w-5" />
@@ -414,7 +414,7 @@ function InstitutoList(props) {
       {console.log("Valor de showDetails antes de entrar:", showDetails)}
       {showDetails && (
          <div className="text-white font-bold bg-gray-700 rounded p-14 relative">
-         <h3>Detalles del Instituto</h3>
+         <h3>DETALLES DEL INSTITUTO</h3>
          <hr className="my-8 border-t-2 border-white" />
          <div className="">
            <p className="my-2"><strong>Cue:</strong> {showDetails[0].cue}</p>
@@ -439,22 +439,11 @@ function InstitutoList(props) {
       </div>
       
       )}
-      
       {/*FINAL showDetails */}
       <hr className="my-4 border-t-2 border-white" />
 
       <div className="justify-center items-center">
-  <div className="p-2 rounded-md flex flex-col items-center">
-    <button
-      className="w-24 bg-gray-700 text-white font-bold hover:bg-gray-600 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
-      onClick={cancelCerrar}
-    >
 
-
-      <XMarkIcon className="h-5 w-5 mr-2" />
-      Cerrar
-    </button>
-  </div>
 </div>
 
 <div className="mt-3 mb-3 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm leading-8">

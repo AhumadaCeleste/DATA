@@ -66,26 +66,5 @@
     font-size: 12px; 
   }
 
-  .print-container {
- 
-    padding: 5px; 
-  }
 
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-left: -20px; 
-  }
-
-  th, td {
-    border: 1px solid #ddd; 
-    padding: 2px;
-    text-align: center;
-  }
-
-
-  .print-container button {
-    display: none; 
-  }
 }

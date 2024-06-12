@@ -113,9 +113,7 @@ function BMInstituto(props) {
     }
   };
 
-  const cancelCerrar = () => {
-    navigate("/inspector");
-  };
+
   const cancelEdit = () => {
     setSelectedInstituto(null);
     setNewEe("");
@@ -406,17 +404,7 @@ function BMInstituto(props) {
       {/*FINAL showDetails */}
       <hr className="my-4 border-t-2 border-white" />
 
-      <div className="justify-center items-center">
-  <div className="p-2 rounded-md flex flex-col items-center">
-    <button
-      className="w-24 bg-gray-700 text-white font-bold hover:bg-gray-600 py-2 px-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
-      onClick={cancelCerrar}
-    >
-      <XMarkIcon className="h-5 w-5 mr-2" />
-      Cerrar
-    </button>
-  </div>
-</div>
+ 
 
 <div className="mt-3 mb-3 flex justify-between items-center bg-sky-600 text-white font-bold rounded-md p-2 text-sm leading-8">
   <span>Total Registros: {institutos.length}</span>

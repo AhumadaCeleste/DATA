@@ -3,6 +3,11 @@ const sequelize = db.sequelize;
 const {Op} = require('sequelize');
 
 //-----------------------------------lista
+
+
+
+
+
 exports.lista = async (req, res) => {
     console.log('Procesamiento de lista de Institutos con paginación');
     const page = req.query.page || 1; // Obtener el número de página de la query
