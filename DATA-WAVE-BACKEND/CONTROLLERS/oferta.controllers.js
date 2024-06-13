@@ -42,7 +42,6 @@ exports.listafull = (req, res) => {
 exports.listafullquery = async (req, res) => {
     console.log('Procesamiento de lista de Ofertas full');
     try {
-        //         Select * from v_oferta_full 
         const registros = await sequelize.query(
             ` Select * from v_oferta_full `,
             {type: sequelize.QueryTypes.SELECT}
@@ -254,4 +253,75 @@ exports.listaPag = (req, res) => {
                     .send(error);
             });
     }
+};
+
+
+//---------------------------------------------------------
+exports.listaOfertaUnicaPag = (req, res) => {
+    console.log('Procesamiento de lista de ofertas filtrada por página');
+    let pag = req.params.pag;
+    const text = req.params.text;
+    if (!pag) {
+        pag = 1;
+    }
+    const limit = 6; // número de registros por página
+    const offset = (pag - 1) * limit;
+    console.log(`Página: ${pag}, Texto: ${text}`);
+
+    let query = `
+        select *
+        from v_ofertaunica v
+        ORDER BY v.nombre ASC
+        LIMIT ${limit}
+        OFFSET ${offset}
+    `;
+
+    let countQuery = `
+        SELECT COUNT(*) AS count
+        FROM v_ofertaunica v
+    `;
+
+    let whereClause = '';
+    let replacements = {};
+
+    if (text) {
+        whereClause = `WHERE denominacion LIKE :text`;
+        replacements = { text: `%${text}%` };
+
+        query = `
+            SELECT *
+            v_ofertaunica v
+            ${whereClause}
+            ORDER BY v.nombre ASC
+            LIMIT ${limit}
+            OFFSET ${offset}
+        `;
+
+        countQuery = `
+            SELECT COUNT(*) AS count
+            v_ofertaunica v
+            ${whereClause}
+        `;
+    }
+
+    db.sequelize.query(query, { replacements, type: db.sequelize.QueryTypes.SELECT })
+        .then(registros => {
+            db.sequelize.query(countQuery, { replacements, type: db.sequelize.QueryTypes.SELECT })
+                .then(countResult => {
+                    const count = countResult[0].count;
+                    const response = {
+                        registros,
+                        count,
+                        currentPage: pag,
+                        totalPages: Math.ceil(count / limit)
+                    };
+                    res.status(200).send(response);
+                })
+                .catch(error => {
+                    res.status(500).send(error);
+                });
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        });
 };

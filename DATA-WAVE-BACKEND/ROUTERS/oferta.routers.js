@@ -6,6 +6,8 @@ Rutas.get('/lista', ofertacontroller.lista);
 Rutas.get('/listafull', ofertacontroller.listafull);
 Rutas.get('/listafullquery', ofertacontroller.listafullquery);
 
+Rutas.get('/OfertasUnicas/:pag', ofertacontroller.listaOfertaUnicaPag);
+
 Rutas.get('/lista/:pag', ofertacontroller.listaPag);
 Rutas.get('/lista/:pag/:text', ofertacontroller.listaPag);
 

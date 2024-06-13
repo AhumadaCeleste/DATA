@@ -64,7 +64,7 @@ const ReporteInstitutoOfertaMatricula = () => {
     return (
         <div className="print-container">
             <div className="bg-sky-800 text-sky-800 mt-4 space-y-5 overflow-x-auto py-2 px-4 rounded-md w-full sm:w-[400px] lg:w-[850px] xl:w-[1000px] max-w-screen-lg mx-auto">
-                <h2 className="text-lg font-bold py-2 flex items-center justify-center bg-gray-300 mt-8 h-16 rounded-md">REPORTE - GLOBAL</h2>
+                <h2 className="text-lg font-bold py-2 flex items-center justify-center bg-gray-300 mt-8 h-16 rounded-md">CONSULTA - OFERTASS</h2>
                 
                 <div className="mt-8">
                     <input

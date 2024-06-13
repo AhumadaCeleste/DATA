@@ -122,7 +122,7 @@ const ReporteGlobal = () => {
                       onClick={() => showInstitutoDetail('TOTAL')}
                       className="flex items-center justify-center border-2 rounded-lg border-gray-400 h-8 w-9 text-sm bg-gray-400 text-white"
                     >
-                      <EyeIcon className="h-5 w-5" />
+                      <EyeIcon className="h-5 w-40" />
                     </button>
                   </div>
                 </th>

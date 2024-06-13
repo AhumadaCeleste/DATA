@@ -60,7 +60,7 @@ function App() {
                     <Route path="/director" element={<Director />}/>
                     <Route path="/consulta-matricula" element={<ConsultaMatricula />}/>
                     <Route path="/consulta-egresados" element={<ConsultaEgresados />}/>
-                    <Route path="/instituto-lista" element={<InstList />}/> {/* Ruta para 404 */}
+                    <Route path="/instituto-lista" element={<InstList />}/> 
                     <Route path="*" element={<div> 404 - Página no encontrada</div>}/>
                 </Routes>
                 <Footer/>

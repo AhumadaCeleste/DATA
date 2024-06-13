@@ -1,39 +1,28 @@
 const db = require('../MODELS');
 const sequelize = db.sequelize;
-const {Op} = require('sequelize');
+const { Op } = require('sequelize');
 
 //-----------------------------------lista
-
-
-
-
-
 exports.lista = async (req, res) => {
     console.log('Procesamiento de lista de Institutos con paginación');
-    const page = req.query.page || 1; // Obtener el número de página de la query
-    const limit = 30; // Establecer el límite de registros por página
-    const offset = (page - 1) * limit; // Calcular el offset
+    const page = parseInt(req.query.page, 10) || 1;
+    console.log(page, 'Procesamiento de lista de Institutos con paginación');
+    const limit = 5;
+    const offset = (page - 1) * limit;
     try {
-        const registros = await db.instituto.findAll({
-            limit,
-            offset
-        });
+        const registros = await db.instituto.findAll({ limit, offset });
         res.status(200).send(registros);
     } catch (error) {
-        console.error(
-            'Error al obtener la lista de Institutos con paginación:',
-            error
-        );
+        console.error('Error al obtener la lista de Institutos con paginación:', error);
         res.status(500).send(error);
     }
 };
 
-// listaquery con paginación de 5 registros por página
 exports.listaquery = async (req, res) => {
     console.log('Procesamiento de lista de Institutos full con paginación');
-    const page = req.query.page || 1; // Obtener el número de página de la query
-    const limit = 5; // Establecer el límite de registros por página
-    const offset = (page - 1) * limit; // Calcular el offset
+    const page = parseInt(req.params.pag, 10) || 1;
+    const limit = 5;
+    const offset = (page - 1) * limit;
     try {
         const registros = await sequelize.query(
             `
@@ -48,15 +37,16 @@ exports.listaquery = async (req, res) => {
                 INNER JOIN sucursal s ON i.sucursalId=s.id
                 INNER JOIN departamento d ON c.departamentoId=d.id
             ORDER BY i.cue
-            LIMIT ${limit}
-            OFFSET ${offset}
+            LIMIT :limit
+            OFFSET :offset
         `,
-            { type: sequelize.QueryTypes.SELECT }
+            { 
+                type: sequelize.QueryTypes.SELECT,
+                replacements: { limit, offset }
+            }
         );
         const totalCount = await sequelize.query(
-            `
-            SELECT COUNT(*) as total FROM instituto
-        `,
+            `SELECT COUNT(*) as total FROM instituto`,
             { type: sequelize.QueryTypes.SELECT }
         );
         const totalRecords = totalCount[0].total;
@@ -64,10 +54,7 @@ exports.listaquery = async (req, res) => {
 
         res.status(200).send({ registros, totalPages });
     } catch (error) {
-        console.error(
-            'Error al obtener la lista completa de Institutos con tipo y sucursal con paginación:',
-            error
-        );
+        console.error('Error al obtener la lista completa de Institutos con tipo y sucursal con paginación:', error);
         res.status(500).send({ error: 'Error al obtener la lista completa de Institutos con Ofertas con paginación' });
     }
 };
@@ -75,10 +62,7 @@ exports.listaquery = async (req, res) => {
 // lista con query con filtrado
 exports.listaqueryfiltro = async (req, res) => {
     try {
-        // Obtén el parámetro de consulta 'cue'
         const { cue } = req.query;
-
-        // Construye la consulta SQL
         let query = `
             SELECT i.cue, i.ee, i.denominacion, i.cuesede,
                 t.descripcion as tipo_instituto, c.nombre as ciudad, s.descripcion as sucursal
@@ -87,21 +71,14 @@ exports.listaqueryfiltro = async (req, res) => {
             INNER JOIN ciudad c ON i.CiudadId = c.id 
             INNER JOIN sucursal s ON i.sucursalId = s.id
         `;
-
-        // Agrega la condición si se proporciona 'cue'
         if (cue) {
             query += ' WHERE i.cue = :cue';
         }
-
-        // Agrega la cláusula ORDER BY
         query += ' ORDER BY i.cue';
-
-        // Ejecuta la consulta con el parámetro 'cue' si se proporciona
         const registros = await sequelize.query(query, {
             type: sequelize.QueryTypes.SELECT,
             replacements: cue ? { cue } : {},
         });
-
         res.status(200).send(registros);
     } catch (error) {
         console.error('Error al obtener la lista de Institutos', error);
@@ -109,47 +86,15 @@ exports.listaqueryfiltro = async (req, res) => {
     }
 };
 
-/*
-exports.listaqueryfiltro = async (req, res) => {
-    try {
-        const registros = await sequelize.query(
-            `SELECT i.cue, i.ee, i.denominacion, i.cuesede,
-                t.descripcion as tipo_instituto, c.nombre as ciudad, s.descripcion as sucursal
-                FROM instituto i 
-                INNER JOIN tipoinstituto t ON i.tipoinstitutoId = t.id 
-                INNER JOIN ciudad c ON i.CiudadId = c.id 
-                INNER JOIN sucursal s ON i.sucursalId = s.id
-            ORDER BY i.cue `,
-            {
-                type: sequelize.QueryTypes.SELECT
-            }
-        );
-        res.status(200).send(registros);
-    } catch (error) {
-        console.error(
-            'Error al obtener la lista de Institutos',
-            error
-        );
-        res.status(500).send({ error: 'Error al obtener la lista de Institutos' });
-    }
-};
-*/
-
 //-----------------------------------listafull
 exports.listafull = (req, res) => {
     console.log('Procesamiento de lista de Institutos full');
-    db
-        .instituto
-        .findAll({include: db.tipoinstituto})
+    db.instituto.findAll({ include: db.tipoinstituto })
         .then(registros => {
-            res
-                .status(200)
-                .send(registros);
+            res.status(200).send(registros);
         })
         .catch(error => {
-            res
-                .status(500)
-                .send(error);
+            res.status(500).send(error);
         });
 };
 
@@ -158,26 +103,20 @@ exports.filtrar = (req, res) => {
     console.log('Procesamiento de instituto filtrado');
     const campo = req.params.campo;
     const valor = req.params.valor;
-    console.log(`campo: ${campo} valor:${valor}`)
-    db
-        .instituto
-        .findAll({
-            where: {
-                [campo]: {
-                    [Op.like]: `%${valor}%`
-                }
+    console.log(`campo: ${campo} valor:${valor}`);
+    db.instituto.findAll({
+        where: {
+            [campo]: {
+                [Op.like]: `%${valor}%`
             }
-        })
-        .then(registros => {
-            res
-                .status(200)
-                .send(registros);
-        })
-        .catch(error => {
-            res
-                .status(500)
-                .send(error);
-        });
+        }
+    })
+    .then(registros => {
+        res.status(200).send(registros);
+    })
+    .catch(error => {
+        res.status(500).send(error);
+    });
 };
 
 //-----------------------------------nuevo
@@ -193,18 +132,12 @@ exports.nuevo = (req, res) => {
         CiudadId: req.body.CiudadId,
         sucursalId: req.body.sucursalId
     };
-    db
-        .instituto
-        .create(datanuevoinstituto)
+    db.instituto.create(datanuevoinstituto)
         .then(registro => {
-            res
-                .status(201)
-                .send({resultado: true, data: registro});
+            res.status(201).send({ resultado: true, data: registro });
         })
         .catch(error => {
-            res
-                .status(500)
-                .send({resultado: false, msg: error});
+            res.status(500).send({ resultado: false, msg: error });
         });
 };
 
@@ -212,7 +145,6 @@ exports.nuevo = (req, res) => {
 exports.actualizar = (req, res) => {
     const cue = req.params.cue;
     console.log('Actualizar Instituto');
-
     const datanuevoinstituto = {
         ee: req.body.ee,
         denominacion: req.body.denominacion,
@@ -222,109 +154,58 @@ exports.actualizar = (req, res) => {
         sucursalId: req.body.sucursalId
     };
     console.log('Data a actualizar:', datanuevoinstituto);
-    db
-        .instituto
-        .update(datanuevoinstituto, {
-            where: {
-                cue: cue
-            }
-        })
+    db.instituto.update(datanuevoinstituto, { where: { cue: cue } })
         .then(num => {
             if (num > 0) {
-                res
-                    .status(201)
-                    .send({resultado: true, msg: 'Instituto actualizado correctamente'});
+                res.status(201).send({ resultado: true, msg: 'Instituto actualizado correctamente' });
             } else {
-                res
-                    .status(500)
-                    .send({
-                        resultado: false,
-                        msg: 'No se pudo actualizar el Instituto',
-                        body: {
-                            data: datanuevoinstituto,
-                            cue: cue
-                        }
-                    });
+                res.status(500).send({
+                    resultado: false,
+                    msg: 'No se pudo actualizar el Instituto',
+                    body: { data: datanuevoinstituto, cue: cue }
+                });
             }
         })
         .catch(error => {
-            res
-                .status(501)
-                .send({resultado: false, msg: error});
+            res.status(501).send({ resultado: false, msg: error });
         });
 };
+
 //-----------------------------------eliminar
 exports.eliminar = (req, res) => {
     const cue = req.params.cue;
-    db
-        .instituto
-        .destroy({
-            where: {
-                cue: cue
-            }
-        })
+    db.instituto.destroy({ where: { cue: cue } })
         .then(num => {
             if (num > 0) {
-                res
-                    .status(200)
-                    .send({resultado: true, msg: 'Instituto eliminado correctamente'});
+                res.status(200).send({ resultado: true, msg: 'Instituto eliminado correctamente' });
             } else {
-                res
-                    .status(404)
-                    .send({
-                        resultado: false,
-                        msg: 'No se pudo encontrar el Instituto',
-                        body: {
-                            cue: cue
-                        }
-                    });
+                res.status(404).send({
+                    resultado: false,
+                    msg: 'No se pudo encontrar el Instituto',
+                    body: { cue: cue }
+                });
             }
         })
         .catch(error => {
             console.error('Error al eliminar el Instituto:', error);
-            res
-                .status(500)
-                .send(
-                    {resultado: false, msg: 'Error al eliminar el Instituto', error: error.message}
-                );
+            res.status(500).send({ resultado: false, msg: 'Error al eliminar el Instituto', error: error.message });
         });
 };
 
 //-----------------------------------listaPag
 exports.listaPag = (req, res) => {
     console.log('Procesamiento de lista filtrada por pagina');
-    let pag = req.params.pag || 1;
-    const text = req.params.text || "";
-    const limit = 3; // number of records per page
+    let pag = parseInt(req.params.pag, 10) || 1;
+    const text = req.query.text || "";
+    const limit = 5;
     const offset = (pag - 1) * limit;
-    console.log(`pagina: ${pag} texto:${text}`)
-
-    const whereCondition = text
-        ? {
-            denominacion: {
-                [Op.like]: `%${text}%`
-            }
-        }
-        : {};
-
-    db
-        .instituto
-        .findAndCountAll({
-            where: whereCondition,
-            limit: limit,
-            offset: offset,
-            order: [
-                ['id', 'ASC']
-            ]
-        })
+    console.log(`pagina: ${pag} texto:${text}`);
+    const whereCondition = text ? { denominacion: { [Op.like]: `%${text}%` } } : {};
+    db.instituto.findAndCountAll({ where: whereCondition, limit, offset })
         .then(registros => {
-            res
-                .status(200)
-                .send(registros);
+            res.status(200).send(registros);
         })
         .catch(error => {
-            res
-                .status(500)
-                .send(error);
+            res.status(500).send(error);
         });
 };
