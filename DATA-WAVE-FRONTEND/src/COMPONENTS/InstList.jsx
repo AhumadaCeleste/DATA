@@ -260,7 +260,14 @@ function InstitutoList() {
   onChange={(e) => setSearchQuery(e.target.value)}
 />
             </div>
-          
+
+          {/*<button
+      className="flex items-center justify-center border-2 rounded-lg border-gray-400 h-8 w-32 text-sm bg-gray-400 text-white"
+      onClick={navigateToCrearInstituto}
+    >
+      <PlusIcon className="h-5 w-5 mr-1" />
+      Crear instituto
+    </button>*/} 
 
            <table className="min-w-full divide-y w-full rounded-md text-sm mt-12" style={{ minHeight: '400px' }}>
   <thead>
@@ -308,10 +315,10 @@ function InstitutoList() {
   </tbody>
 </table>
 
-<div className="flex items-center justify-center mt-4"> {/* Cambiado justify-between por justify-center para centrar horizontalmente */}
+<div className="flex flex-col items-center justify-center mt-4"> {/* Cambiado justify-center para centrar horizontalmente y flex-col para disposición vertical */}
   <div className="flex gap-2"> {/* Mantenido gap-2 para separación entre botones */}
     <button
-      className={`bg-sky-500 text-white font-bold rounded-md px-4 py-2 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 ${
+      className={`bg-sky-500 text-white font-bold rounded-md px-4 py-2 hover:bg-sky-600 focus:outline-none ${
         currentPage === 1 ? "hidden" : "block"
       }`}
       onClick={() => handlePrevPage()}
@@ -319,18 +326,19 @@ function InstitutoList() {
       Anterior
     </button>
     <button
-      className={`bg-sky-500 text-white font-bold rounded-md px-4 py-2 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 ${
+      className={`bg-sky-500 text-white font-bold rounded-md px-4 py-2 hover:bg-sky-600 focus:outline-none ${
         currentPage === totalPages ? "hidden" : "block"
       }`}
       onClick={() => handleNextPage()}
     >
       Siguiente
     </button>
-        </div>
-        <p className="text-white text-xs sm:text-sm font-bold">
-          Página {currentPage} de {totalPages}
-        </p>
-      </div>
+  </div>
+  <p className="text-white text-xs sm:text-sm font-bold mt-2"> {/* Agregado mt-2 para separación desde arriba */}
+    Página {currentPage} de {totalPages}
+  </p>
+</div>
+
   
         </>
       )}

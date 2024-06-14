@@ -259,21 +259,18 @@ exports.listaPag = (req, res) => {
 //---------------------------------------------------------
 exports.listaOfertaUnicaPag = (req, res) => {
     console.log('Procesamiento de lista de ofertas filtrada por página');
-    let pag = req.params.pag;
-    const text = req.params.text;
-    if (!pag) {
-        pag = 1;
-    }
-    const limit = 6; // número de registros por página
+    let pag = parseInt(req.params.pag) || 1;
+    const text = req.params.text || '';
+    const limit = 4; // número de registros por página
     const offset = (pag - 1) * limit;
     console.log(`Página: ${pag}, Texto: ${text}`);
 
     let query = `
-        select *
-        from v_ofertaunica v
+        SELECT *
+        FROM v_ofertaunica v
         ORDER BY v.nombre ASC
-        LIMIT ${limit}
-        OFFSET ${offset}
+        LIMIT :limit
+        OFFSET :offset
     `;
 
     let countQuery = `
@@ -281,25 +278,24 @@ exports.listaOfertaUnicaPag = (req, res) => {
         FROM v_ofertaunica v
     `;
 
-    let whereClause = '';
-    let replacements = {};
+    let replacements = { limit, offset };
 
     if (text) {
-        whereClause = `WHERE denominacion LIKE :text`;
-        replacements = { text: `%${text}%` };
+        const whereClause = `WHERE v.denominacion LIKE :text`;
+        replacements.text = `%${text}%`;
 
         query = `
             SELECT *
-            v_ofertaunica v
+            FROM v_ofertaunica v
             ${whereClause}
             ORDER BY v.nombre ASC
-            LIMIT ${limit}
-            OFFSET ${offset}
+            LIMIT :limit
+            OFFSET :offset
         `;
 
         countQuery = `
             SELECT COUNT(*) AS count
-            v_ofertaunica v
+            FROM v_ofertaunica v
             ${whereClause}
         `;
     }
@@ -318,10 +314,12 @@ exports.listaOfertaUnicaPag = (req, res) => {
                     res.status(200).send(response);
                 })
                 .catch(error => {
+                    console.error('Error al obtener el conteo:', error);
                     res.status(500).send(error);
                 });
         })
         .catch(error => {
+            console.error('Error al obtener los registros:', error);
             res.status(500).send(error);
         });
 };

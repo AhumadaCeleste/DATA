@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { PencilIcon, TrashIcon, EyeIcon, CheckCircleIcon, XCircleIcon, ArrowLeftIcon } from "@heroicons/react/20/solid";
+
 
 function CrearInstitutoFull() {
     const [cue, setCue] = useState("");
@@ -184,12 +186,16 @@ function CrearInstitutoFull() {
                     <div className="flex justify-end mt-4 space-x-4 font-bold">
                         <button
                             type="submit"
-                            className="rounded-lg h-10 w-20 text-sm bg-green-700 text-white hover:bg-green-600">
-                            Agregar
+                            className="flex items-center justify-center rounded-lg h-10 w-28 text-sm bg-green-700 text-white hover:bg-green-600">
+                            
+                            <CheckCircleIcon className="h-5 w-5 mr-2" />
+                            Confirmar
+                         
                         </button>
                         <button
-                            className="rounded-lg h-10 w-20 text-sm bg-red-700 text-white hover:bg-red-600"
+                            className="flex items-center justify-center rounded-lg h-10 w-28 text-sm bg-red-700 text-white hover:bg-red-600"
                             onClick={cancelCerrar}>
+                            <XCircleIcon className="h-5 w-5 mr-2" />
                             Cancelar
                         </button>
                     </div>
